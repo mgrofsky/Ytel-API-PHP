@@ -1,0 +1,29 @@
+{
+    "name": "apimatic/message360apiv2",
+    "type": "library",
+    "description": "message360 API version 2",
+    "keywords": ["message360 API V2","API","SDK"],
+    "homepage": "https://apimatic.io",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Zeeshan @ APIMATIC",
+            "email": "zeeshan@apimatic.io",
+            "homepage": "https://github.com/apimatic",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "mashape/unirest-php": "~3.0.1",
+        "apimatic/jsonmapper": "~1.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Message360Lib\\": "src/"
+        }
+    }
+}
