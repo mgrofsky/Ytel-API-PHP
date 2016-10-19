@@ -134,6 +134,7 @@ $client = new Message360Client($basicAuthUserName, $basicAuthPassword);
 * [TranscriptionController](#transcription_controller)
 * [PhoneNumberController](#phone_number_controller)
 * [UsageController](#usage_controller)
+* [EmailController](#email_controller)
 * [SMSController](#sms_controller)
 * [AccountController](#account_controller)
 * [RecordingController](#recording_controller)
@@ -216,10 +217,10 @@ function createListParticipant(
 
 ```php
 $conferenceSid = 'ConferenceSid';
-$page = 176;
-$pagesize = 176;
-$muted = true;
-$deaf = true;
+$page = 108;
+$pagesize = 108;
+$muted = false;
+$deaf = false;
 $responseType = 'json';
 
 $result = $conference->createListParticipant($conferenceSid, $page, $pagesize, $muted, $deaf, $responseType);
@@ -260,9 +261,9 @@ function addParticipant(
 ```php
 $conferencesid = 'conferencesid';
 $participantnumber = 'participantnumber';
-$tocountrycode = 176;
-$muted = true;
-$deaf = true;
+$tocountrycode = 108;
+$muted = false;
+$deaf = false;
 $responseType = 'json';
 
 $result = $conference->addParticipant($conferencesid, $participantnumber, $tocountrycode, $muted, $deaf, $responseType);
@@ -334,8 +335,8 @@ function createListConference(
 #### Example Usage
 
 ```php
-$page = 176;
-$pageSize = 176;
+$page = 108;
+$pageSize = 108;
 $friendlyName = 'FriendlyName';
 $status = string::CANCELED;
 $dateCreated = 'DateCreated';
@@ -388,8 +389,8 @@ function createListTranscription(
 #### Example Usage
 
 ```php
-$page = 176;
-$pageSize = 176;
+$page = 108;
+$pageSize = 108;
 $status = string::INPROGRESS;
 $dateTranscribed = 'DateTranscribed';
 $responseType = 'json';
@@ -533,7 +534,7 @@ function createAvailablePhoneNumber(
 ```php
 $numberType = 'NumberType';
 $areaCode = 'AreaCode';
-$pageSize = 176;
+$pageSize = 108;
 $responseType = 'json';
 
 $result = $phoneNumber->createAvailablePhoneNumber($numberType, $areaCode, $pageSize, $responseType);
@@ -570,8 +571,8 @@ function createListNumber(
 #### Example Usage
 
 ```php
-$page = 176;
-$pageSize = 176;
+$page = 108;
+$pageSize = 108;
 $numberType = 'NumberType';
 $friendlyName = 'FriendlyName';
 $responseType = 'json';
@@ -795,6 +796,395 @@ $result = $usage->createListUsage($productCode, $startDate, $endDate, $responseT
 
 [Back to List of Controllers](#list_of_controllers)
 
+### <a name="email_controller"></a>![Class: ](http://apidocs.io/img/class.png ".EmailController") EmailController
+
+#### Get singleton instance
+
+The singleton instance of the ``` EmailController ``` class can be accessed from the API Client.
+
+```php
+$email = $client->getEmail();
+```
+
+#### <a name="create_send_email"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createSendEmail") createSendEmail
+
+> Send out an email
+
+
+```php
+function createSendEmail(
+        $to,
+        $from,
+        $type,
+        $subject,
+        $message,
+        $cc = NULL,
+        $bcc = NULL,
+        $attachment = NULL,
+        $responseType = 'json')
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| to |  ``` Required ```  | The to email address |
+| from |  ``` Required ```  | The from email address |
+| type |  ``` Required ```  ``` DefaultValue ```  | email format type, html or text |
+| subject |  ``` Required ```  | Email subject |
+| message |  ``` Required ```  | The body of the email message |
+| cc |  ``` Optional ```  | CC Email address |
+| bcc |  ``` Optional ```  | BCC Email address |
+| attachment |  ``` Optional ```  | File to be attached.File must be less than 7MB. |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+
+
+
+#### Example Usage
+
+```php
+$to = 'to';
+$from = 'from';
+$type = 'html';
+$subject = 'subject';
+$message = 'message';
+$cc = 'cc';
+$bcc = 'bcc';
+$attachment = "PathToFile";
+$responseType = 'json';
+
+$result = $email->createSendEmail($to, $from, $type, $subject, $message, $cc, $bcc, $attachment, $responseType);
+
+```
+
+
+#### <a name="create_delete_unsubscribes"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createDeleteUnsubscribes") createDeleteUnsubscribes
+
+> Delete emails from the unsubscribe list
+
+
+```php
+function createDeleteUnsubscribes(
+        $email,
+        $responseType = 'json')
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| email |  ``` Required ```  | The email to remove from the unsubscribe list |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+
+
+
+#### Example Usage
+
+```php
+$email = 'email';
+$responseType = 'json';
+
+$result = $email->createDeleteUnsubscribes($email, $responseType);
+
+```
+
+
+#### <a name="create_list_unsubscribes"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createListUnsubscribes") createListUnsubscribes
+
+> List all unsubscribed email addresses
+
+
+```php
+function createListUnsubscribes(
+        $responseType = 'json',
+        $offset = NULL,
+        $limit = NULL)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+| offset |  ``` Optional ```  | Starting record of the list |
+| limit |  ``` Optional ```  | Maximum number of records to be returned |
+
+
+
+#### Example Usage
+
+```php
+$responseType = 'json';
+$offset = 'offset';
+$limit = 'limit';
+
+$result = $email->createListUnsubscribes($responseType, $offset, $limit);
+
+```
+
+
+#### <a name="add_unsubscribes"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.addUnsubscribes") addUnsubscribes
+
+> Add an email to the unsubscribe list
+
+
+```php
+function addUnsubscribes(
+        $email,
+        $responseType = 'json')
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| email |  ``` Required ```  | The email to add to the unsubscribe list |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+
+
+
+#### Example Usage
+
+```php
+$email = 'email';
+$responseType = 'json';
+
+$result = $email->addUnsubscribes($email, $responseType);
+
+```
+
+
+#### <a name="create_delete_spam"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createDeleteSpam") createDeleteSpam
+
+> Deletes a email address marked as spam from the spam list
+
+
+```php
+function createDeleteSpam(
+        $email,
+        $responseType = 'json')
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| email |  ``` Required ```  | Email address |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+
+
+
+#### Example Usage
+
+```php
+$email = 'email';
+$responseType = 'json';
+
+$result = $email->createDeleteSpam($email, $responseType);
+
+```
+
+
+#### <a name="create_delete_block"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createDeleteBlock") createDeleteBlock
+
+> Deletes a blocked email
+
+
+```php
+function createDeleteBlock(
+        $email,
+        $responseType = 'json')
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| email |  ``` Required ```  | Email address to remove from block list |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+
+
+
+#### Example Usage
+
+```php
+$email = 'email';
+$responseType = 'json';
+
+$result = $email->createDeleteBlock($email, $responseType);
+
+```
+
+
+#### <a name="create_list_invalid"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createListInvalid") createListInvalid
+
+> List out all invalid email addresses
+
+
+```php
+function createListInvalid(
+        $responseType = 'json',
+        $offet = NULL,
+        $limit = NULL)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+| offet |  ``` Optional ```  | Starting record for listing out emails |
+| limit |  ``` Optional ```  | Maximum number of records to return |
+
+
+
+#### Example Usage
+
+```php
+$responseType = 'json';
+$offet = 'offet';
+$limit = 'limit';
+
+$result = $email->createListInvalid($responseType, $offet, $limit);
+
+```
+
+
+#### <a name="create_delete_bounces"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createDeleteBounces") createDeleteBounces
+
+> Delete an email address from the bounced address list
+
+
+```php
+function createDeleteBounces(
+        $email,
+        $responseType = 'json')
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| email |  ``` Required ```  | The email address to remove from the bounce list |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+
+
+
+#### Example Usage
+
+```php
+$email = 'email';
+$responseType = 'json';
+
+$result = $email->createDeleteBounces($email, $responseType);
+
+```
+
+
+#### <a name="create_list_bounces"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createListBounces") createListBounces
+
+> List out all email addresses that have bounced
+
+
+```php
+function createListBounces(
+        $responseType = 'json',
+        $offset = NULL,
+        $limit = NULL)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+| offset |  ``` Optional ```  | The record to start the list at |
+| limit |  ``` Optional ```  | The maximum number of records to return |
+
+
+
+#### Example Usage
+
+```php
+$responseType = 'json';
+$offset = 'offset';
+$limit = 'limit';
+
+$result = $email->createListBounces($responseType, $offset, $limit);
+
+```
+
+
+#### <a name="create_list_spam"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createListSpam") createListSpam
+
+> List out all email addresses marked as spam
+
+
+```php
+function createListSpam(
+        $responseType,
+        $offset = NULL,
+        $limit = NULL)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| responseType |  ``` Required ```  ``` DefaultValue ```  | Response format, xml or json |
+| offset |  ``` Optional ```  | The record number to start the list at |
+| limit |  ``` Optional ```  | Maximum number of records to return |
+
+
+
+#### Example Usage
+
+```php
+$responseType = 'json';
+$offset = 'offset';
+$limit = 'limit';
+
+$result = $email->createListSpam($responseType, $offset, $limit);
+
+```
+
+
+#### <a name="create_list_blocks"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createListBlocks") createListBlocks
+
+> Outputs email addresses on your blocklist
+
+
+```php
+function createListBlocks(
+        $offset = NULL,
+        $limit = NULL,
+        $responseType = 'json')
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| offset |  ``` Optional ```  | Where to start in the output list |
+| limit |  ``` Optional ```  | Maximum number of records to return |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+
+
+
+#### Example Usage
+
+```php
+$offset = 'offset';
+$limit = 'limit';
+$responseType = 'json';
+
+$result = $email->createListBlocks($offset, $limit, $responseType);
+
+```
+
+
+[Back to List of Controllers](#list_of_controllers)
+
 ### <a name="sms_controller"></a>![Class: ](http://apidocs.io/img/class.png ".SMSController") SMSController
 
 #### Get singleton instance
@@ -916,8 +1306,8 @@ function createListSMS(
 #### Example Usage
 
 ```php
-$page = 134;
-$pagesize = 134;
+$page = 16;
+$pagesize = 16;
 $from = 'from';
 $to = 'to';
 $datesent = 'datesent';
@@ -957,7 +1347,7 @@ function createListInboundSMS(
 #### Example Usage
 
 ```php
-$page = 134;
+$page = 16;
 $pagesize = 'pagesize';
 $from = 'from';
 $to = 'to';
@@ -1114,8 +1504,8 @@ function createListRecording(
 #### Example Usage
 
 ```php
-$page = 134;
-$pageSize = 134;
+$page = 16;
+$pageSize = 16;
 $dateCreated = 'DateCreated';
 $callSid = 'CallSid';
 $responseType = 'json';
@@ -1242,14 +1632,14 @@ $statusCallBackMethod = string::GET;
 $fallBackUrl = 'FallBackUrl';
 $fallBackMethod = string::GET;
 $heartBeatUrl = 'HeartBeatUrl';
-$heartBeatMethod = true;
-$timeout = 134;
+$heartBeatMethod = false;
+$timeout = 58;
 $playDtmf = 'PlayDtmf';
-$hideCallerId = true;
-$record = true;
+$hideCallerId = false;
+$record = false;
 $recordCallBackUrl = 'RecordCallBackUrl';
 $recordCallBackMethod = string::GET;
-$transcribe = true;
+$transcribe = false;
 $transcribeCallBackUrl = 'TranscribeCallBackUrl';
 $ifMachine = string::CONTINUE;
 $responseType = 'json';
@@ -1292,10 +1682,10 @@ function createPlayAudio(
 #### Example Usage
 
 ```php
-$length = 134;
+$length = 58;
 $direction = string::IN;
-$loop = true;
-$mix = true;
+$loop = false;
+$mix = false;
 $callSid = 'CallSid';
 $audioUrl = 'AudioUrl';
 $responseType = 'json';
@@ -1339,9 +1729,9 @@ function createRecordCall(
 
 ```php
 $callSid = 'CallSid';
-$record = true;
+$record = false;
 $direction = string::IN;
-$timeLimit = 134;
+$timeLimit = 58;
 $callBackUrl = 'CallBackUrl';
 $fileformat = string::MP3;
 $responseType = 'json';
@@ -1388,11 +1778,11 @@ function createVoiceEffect(
 ```php
 $callSid = 'CallSid';
 $audioDirection = string::IN;
-$pitchSemiTones = 134.688177779172;
-$pitchOctaves = 134.688177779172;
-$pitch = 134.688177779172;
-$rate = 134.688177779172;
-$tempo = 134.688177779172;
+$pitchSemiTones = 58.2378551379022;
+$pitchOctaves = 58.2378551379022;
+$pitch = 58.2378551379022;
+$rate = 58.2378551379022;
+$tempo = 58.2378551379022;
 $responseType = 'json';
 
 $result = $call->createVoiceEffect($callSid, $audioDirection, $pitchSemiTones, $pitchOctaves, $pitch, $rate, $tempo, $responseType);
