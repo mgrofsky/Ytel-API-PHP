@@ -1,4 +1,4 @@
-# Getting Started
+#
 
 ## How to Build
 
@@ -217,10 +217,10 @@ function createListParticipant(
 
 ```php
 $conferenceSid = 'ConferenceSid';
-$page = 108;
-$pagesize = 108;
-$muted = false;
-$deaf = false;
+$page = 201;
+$pagesize = 201;
+$muted = true;
+$deaf = true;
 $responseType = 'json';
 
 $result = $conference->createListParticipant($conferenceSid, $page, $pagesize, $muted, $deaf, $responseType);
@@ -261,9 +261,9 @@ function addParticipant(
 ```php
 $conferencesid = 'conferencesid';
 $participantnumber = 'participantnumber';
-$tocountrycode = 108;
-$muted = false;
-$deaf = false;
+$tocountrycode = 201;
+$muted = true;
+$deaf = true;
 $responseType = 'json';
 
 $result = $conference->addParticipant($conferencesid, $participantnumber, $tocountrycode, $muted, $deaf, $responseType);
@@ -335,8 +335,8 @@ function createListConference(
 #### Example Usage
 
 ```php
-$page = 108;
-$pageSize = 108;
+$page = 201;
+$pageSize = 201;
 $friendlyName = 'FriendlyName';
 $status = string::CANCELED;
 $dateCreated = 'DateCreated';
@@ -389,8 +389,8 @@ function createListTranscription(
 #### Example Usage
 
 ```php
-$page = 108;
-$pageSize = 108;
+$page = 201;
+$pageSize = 201;
 $status = string::INPROGRESS;
 $dateTranscribed = 'DateTranscribed';
 $responseType = 'json';
@@ -534,7 +534,7 @@ function createAvailablePhoneNumber(
 ```php
 $numberType = 'NumberType';
 $areaCode = 'AreaCode';
-$pageSize = 108;
+$pageSize = 110;
 $responseType = 'json';
 
 $result = $phoneNumber->createAvailablePhoneNumber($numberType, $areaCode, $pageSize, $responseType);
@@ -571,8 +571,8 @@ function createListNumber(
 #### Example Usage
 
 ```php
-$page = 108;
-$pageSize = 108;
+$page = 110;
+$pageSize = 110;
 $numberType = 'NumberType';
 $friendlyName = 'FriendlyName';
 $responseType = 'json';
@@ -845,12 +845,12 @@ function createSendEmail(
 ```php
 $to = 'to';
 $from = 'from';
-$type = 'html';
+$type = string::HTML;
 $subject = 'subject';
 $message = 'message';
 $cc = 'cc';
 $bcc = 'bcc';
-$attachment = "PathToFile";
+$attachment = 'attachment';
 $responseType = 'json';
 
 $result = $email->createSendEmail($to, $from, $type, $subject, $message, $cc, $bcc, $attachment, $responseType);
@@ -1306,8 +1306,8 @@ function createListSMS(
 #### Example Usage
 
 ```php
-$page = 16;
-$pagesize = 16;
+$page = 110;
+$pagesize = 110;
 $from = 'from';
 $to = 'to';
 $datesent = 'datesent';
@@ -1347,7 +1347,7 @@ function createListInboundSMS(
 #### Example Usage
 
 ```php
-$page = 16;
+$page = 110;
 $pagesize = 'pagesize';
 $from = 'from';
 $to = 'to';
@@ -1504,8 +1504,8 @@ function createListRecording(
 #### Example Usage
 
 ```php
-$page = 16;
-$pageSize = 16;
+$page = 152;
+$pageSize = 152;
 $dateCreated = 'DateCreated';
 $callSid = 'CallSid';
 $responseType = 'json';
@@ -1632,14 +1632,14 @@ $statusCallBackMethod = string::GET;
 $fallBackUrl = 'FallBackUrl';
 $fallBackMethod = string::GET;
 $heartBeatUrl = 'HeartBeatUrl';
-$heartBeatMethod = false;
-$timeout = 58;
+$heartBeatMethod = true;
+$timeout = 152;
 $playDtmf = 'PlayDtmf';
-$hideCallerId = false;
-$record = false;
+$hideCallerId = true;
+$record = true;
 $recordCallBackUrl = 'RecordCallBackUrl';
 $recordCallBackMethod = string::GET;
-$transcribe = false;
+$transcribe = true;
 $transcribeCallBackUrl = 'TranscribeCallBackUrl';
 $ifMachine = string::CONTINUE;
 $responseType = 'json';
@@ -1682,10 +1682,10 @@ function createPlayAudio(
 #### Example Usage
 
 ```php
-$length = 58;
+$length = 152;
 $direction = string::IN;
-$loop = false;
-$mix = false;
+$loop = true;
+$mix = true;
 $callSid = 'CallSid';
 $audioUrl = 'AudioUrl';
 $responseType = 'json';
@@ -1729,9 +1729,9 @@ function createRecordCall(
 
 ```php
 $callSid = 'CallSid';
-$record = false;
+$record = true;
 $direction = string::IN;
-$timeLimit = 58;
+$timeLimit = 152;
 $callBackUrl = 'CallBackUrl';
 $fileformat = string::MP3;
 $responseType = 'json';
@@ -1778,11 +1778,11 @@ function createVoiceEffect(
 ```php
 $callSid = 'CallSid';
 $audioDirection = string::IN;
-$pitchSemiTones = 58.2378551379022;
-$pitchOctaves = 58.2378551379022;
-$pitch = 58.2378551379022;
-$rate = 58.2378551379022;
-$tempo = 58.2378551379022;
+$pitchSemiTones = 152.004367544783;
+$pitchOctaves = 152.004367544783;
+$pitch = 152.004367544783;
+$rate = 152.004367544783;
+$tempo = 152.004367544783;
 $responseType = 'json';
 
 $result = $call->createVoiceEffect($callSid, $audioDirection, $pitchSemiTones, $pitchOctaves, $pitch, $rate, $tempo, $responseType);
