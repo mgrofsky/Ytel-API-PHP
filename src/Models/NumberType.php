@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 10/18/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 10/21/2016
  */
 
 namespace Message360Lib\Models;
@@ -10,7 +10,7 @@ namespace Message360Lib\Models;
 /**
  * Phone Number Type All,SMS or Voice
  */
-class NumberTypeEnum {
+class NumberType {
     /**
      * Get all phone Number type
      */

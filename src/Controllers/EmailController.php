@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 10/18/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 10/21/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -99,7 +99,7 @@ class EmailController extends BaseController {
             'message'      => $message,
             'cc'           => $cc,
             'bcc'          => $bcc,
-            "file"       => Request\Body::File($attachment)
+            'attachment'   => $attachment
         );
 
         //set HTTP basic auth parameters
@@ -112,7 +112,7 @@ class EmailController extends BaseController {
         }
 
         //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, APIHelper::httpBuildQueryDevelop($_parameters));
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
 
         //call on-after Http callback
         if($this->getHttpCallBack() != null) {
