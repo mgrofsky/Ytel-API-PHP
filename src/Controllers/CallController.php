@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 10/21/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/04/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -64,7 +64,7 @@ class CallController extends BaseController {
         $_queryBuilder = $_queryBuilder.'/calls/viewcalls.{ResponseType}';
 
         //process optional query parameters
-        APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType' => (null != $responseType) ? $responseType : 'json',
             ));
 
@@ -172,7 +172,7 @@ class CallController extends BaseController {
         $_queryBuilder = $_queryBuilder.'/calls/makecall.{ResponseType}';
 
         //process optional query parameters
-        APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType'          => (null != $responseType) ? $responseType : 'json',
             ));
 
@@ -274,7 +274,7 @@ class CallController extends BaseController {
         $_queryBuilder = $_queryBuilder.'/calls/playaudios.{ResponseType}';
 
         //process optional query parameters
-        APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType' => (null != $responseType) ? $responseType : 'json',
             ));
 
@@ -357,7 +357,7 @@ class CallController extends BaseController {
         $_queryBuilder = $_queryBuilder.'/calls/recordcalls.{ResponseType}';
 
         //process optional query parameters
-        APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType' => (null != $responseType) ? $responseType : 'json',
             ));
 
@@ -442,7 +442,7 @@ class CallController extends BaseController {
         $_queryBuilder = $_queryBuilder.'/calls/voiceeffect.{ResponseType}';
 
         //process optional query parameters
-        APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType'   => (null != $responseType) ? $responseType : 'json',
             ));
 
@@ -520,7 +520,7 @@ class CallController extends BaseController {
         $_queryBuilder = $_queryBuilder.'/calls/senddigits.{ResponseType}';
 
         //process optional query parameters
-        APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType'      => (null != $responseType) ? $responseType : 'json',
             ));
 
@@ -596,7 +596,7 @@ class CallController extends BaseController {
         $_queryBuilder = $_queryBuilder.'/calls/interruptcalls.{ResponseType}';
 
         //process optional query parameters
-        APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType' => (null != $responseType) ? $responseType : 'json',
             ));
 
@@ -670,7 +670,7 @@ class CallController extends BaseController {
         $_queryBuilder = $_queryBuilder.'/calls/listcalls.{ResponseType}';
 
         //process optional query parameters
-        APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType' => (null != $responseType) ? $responseType : 'json',
             ));
 

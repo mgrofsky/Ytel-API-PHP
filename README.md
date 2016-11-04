@@ -1,4 +1,4 @@
-#
+#Getting started
 
 ## How to Build
 
@@ -106,7 +106,7 @@ You can change the PHPUnit test configuration in the `phpunit.xml` file.
 
 ## Initialization
 
-### Authentication and Initialization
+### Authentication and 
 In order to setup authentication and initialization of the API client, you need the following information.
 
 | Parameter | Description |
@@ -217,8 +217,8 @@ function createListParticipant(
 
 ```php
 $conferenceSid = 'ConferenceSid';
-$page = 201;
-$pagesize = 201;
+$page = 186;
+$pagesize = 186;
 $muted = true;
 $deaf = true;
 $responseType = 'json';
@@ -261,7 +261,7 @@ function addParticipant(
 ```php
 $conferencesid = 'conferencesid';
 $participantnumber = 'participantnumber';
-$tocountrycode = 201;
+$tocountrycode = 186;
 $muted = true;
 $deaf = true;
 $responseType = 'json';
@@ -335,8 +335,8 @@ function createListConference(
 #### Example Usage
 
 ```php
-$page = 201;
-$pageSize = 201;
+$page = 186;
+$pageSize = 186;
 $friendlyName = 'FriendlyName';
 $status = string::CANCELED;
 $dateCreated = 'DateCreated';
@@ -389,8 +389,8 @@ function createListTranscription(
 #### Example Usage
 
 ```php
-$page = 201;
-$pageSize = 201;
+$page = 186;
+$pageSize = 186;
 $status = string::INPROGRESS;
 $dateTranscribed = 'DateTranscribed';
 $responseType = 'json';
@@ -534,7 +534,7 @@ function createAvailablePhoneNumber(
 ```php
 $numberType = 'NumberType';
 $areaCode = 'AreaCode';
-$pageSize = 110;
+$pageSize = 186;
 $responseType = 'json';
 
 $result = $phoneNumber->createAvailablePhoneNumber($numberType, $areaCode, $pageSize, $responseType);
@@ -571,8 +571,8 @@ function createListNumber(
 #### Example Usage
 
 ```php
-$page = 110;
-$pageSize = 110;
+$page = 186;
+$pageSize = 186;
 $numberType = 'NumberType';
 $friendlyName = 'FriendlyName';
 $responseType = 'json';
@@ -1306,8 +1306,8 @@ function createListSMS(
 #### Example Usage
 
 ```php
-$page = 110;
-$pagesize = 110;
+$page = 23;
+$pagesize = 23;
 $from = 'from';
 $to = 'to';
 $datesent = 'datesent';
@@ -1347,7 +1347,7 @@ function createListInboundSMS(
 #### Example Usage
 
 ```php
-$page = 110;
+$page = 23;
 $pagesize = 'pagesize';
 $from = 'from';
 $to = 'to';
@@ -1504,8 +1504,8 @@ function createListRecording(
 #### Example Usage
 
 ```php
-$page = 152;
-$pageSize = 152;
+$page = 23;
+$pageSize = 23;
 $dateCreated = 'DateCreated';
 $callSid = 'CallSid';
 $responseType = 'json';
@@ -1632,14 +1632,14 @@ $statusCallBackMethod = string::GET;
 $fallBackUrl = 'FallBackUrl';
 $fallBackMethod = string::GET;
 $heartBeatUrl = 'HeartBeatUrl';
-$heartBeatMethod = true;
-$timeout = 152;
+$heartBeatMethod = false;
+$timeout = 23;
 $playDtmf = 'PlayDtmf';
-$hideCallerId = true;
-$record = true;
+$hideCallerId = false;
+$record = false;
 $recordCallBackUrl = 'RecordCallBackUrl';
 $recordCallBackMethod = string::GET;
-$transcribe = true;
+$transcribe = false;
 $transcribeCallBackUrl = 'TranscribeCallBackUrl';
 $ifMachine = string::CONTINUE;
 $responseType = 'json';
@@ -1682,10 +1682,10 @@ function createPlayAudio(
 #### Example Usage
 
 ```php
-$length = 152;
+$length = 23;
 $direction = string::IN;
-$loop = true;
-$mix = true;
+$loop = false;
+$mix = false;
 $callSid = 'CallSid';
 $audioUrl = 'AudioUrl';
 $responseType = 'json';
@@ -1729,9 +1729,9 @@ function createRecordCall(
 
 ```php
 $callSid = 'CallSid';
-$record = true;
+$record = false;
 $direction = string::IN;
-$timeLimit = 152;
+$timeLimit = 23;
 $callBackUrl = 'CallBackUrl';
 $fileformat = string::MP3;
 $responseType = 'json';
@@ -1778,11 +1778,11 @@ function createVoiceEffect(
 ```php
 $callSid = 'CallSid';
 $audioDirection = string::IN;
-$pitchSemiTones = 152.004367544783;
-$pitchOctaves = 152.004367544783;
-$pitch = 152.004367544783;
-$rate = 152.004367544783;
-$tempo = 152.004367544783;
+$pitchSemiTones = 23.0913697244094;
+$pitchOctaves = 23.0913697244094;
+$pitch = 23.0913697244094;
+$rate = 23.0913697244094;
+$tempo = 23.0913697244094;
 $responseType = 'json';
 
 $result = $call->createVoiceEffect($callSid, $audioDirection, $pitchSemiTones, $pitchOctaves, $pitch, $rate, $tempo, $responseType);

@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 10/21/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/04/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -65,7 +65,7 @@ class TranscriptionController extends BaseController {
         $_queryBuilder = $_queryBuilder.'/transcriptions/listtranscription.{ResponseType}';
 
         //process optional query parameters
-        APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType'    => (null != $responseType) ? $responseType : 'json',
             ));
 
@@ -136,7 +136,7 @@ class TranscriptionController extends BaseController {
         $_queryBuilder = $_queryBuilder.'/transcriptions/recordingtranscription.{ResponseType}';
 
         //process optional query parameters
-        APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType' => (null != $responseType) ? $responseType : 'json',
             ));
 
@@ -204,7 +204,7 @@ class TranscriptionController extends BaseController {
         $_queryBuilder = $_queryBuilder.'/transcriptions/viewtranscription.{ResponseType}';
 
         //process optional query parameters
-        APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType'     => (null != $responseType) ? $responseType : 'json',
             ));
 
@@ -272,7 +272,7 @@ class TranscriptionController extends BaseController {
         $_queryBuilder = $_queryBuilder.'/transcriptions/audiourltranscription.{ResponseType}';
 
         //process optional query parameters
-        APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType' => (null != $responseType) ? $responseType : 'json',
             ));
 
