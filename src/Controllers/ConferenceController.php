@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 10/21/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/04/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -66,7 +66,7 @@ class ConferenceController extends BaseController {
         $_queryBuilder = $_queryBuilder.'/conferences/viewparticipant.{ResponseType}';
 
         //process optional query parameters
-        APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType'   => (null != $responseType) ? $responseType : 'json',
             ));
 
@@ -143,7 +143,7 @@ class ConferenceController extends BaseController {
         $_queryBuilder = $_queryBuilder.'/conferences/listparticipant.{ResponseType}';
 
         //process optional query parameters
-        APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType'  => (null != $responseType) ? $responseType : 'json',
             ));
 
@@ -223,7 +223,7 @@ class ConferenceController extends BaseController {
         $_queryBuilder = $_queryBuilder.'/conferences/addParticipant.{ResponseType}';
 
         //process optional query parameters
-        APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType'      => (null != $responseType) ? $responseType : 'json',
             ));
 
@@ -295,7 +295,7 @@ class ConferenceController extends BaseController {
         $_queryBuilder = $_queryBuilder.'/conferences/viewconference.{ResponseType}';
 
         //process optional query parameters
-        APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType'  => (null != $responseType) ? $responseType : 'json',
             ));
 
@@ -368,7 +368,7 @@ class ConferenceController extends BaseController {
         $_queryBuilder = $_queryBuilder.'/conferences/listconference.{ResponseType}';
 
         //process optional query parameters
-        APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType' => (null != $responseType) ? $responseType : 'json',
             ));
 

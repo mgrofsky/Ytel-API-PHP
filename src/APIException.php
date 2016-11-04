@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 10/21/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/04/2016
  */
 
 namespace Message360Lib;
@@ -15,12 +15,13 @@ use Exception;
 class APIException extends Exception {
     /**
      * Error message
-     * @var errorMessage
+     * @var string
      */
     private $errorMessage;
+
     /**
      * HTTP context
-     * @var HttpContext
+     * @var Http\HttpContext
      */
     private $context;
     
@@ -45,7 +46,7 @@ class APIException extends Exception {
 
     /**
      * The HTTP context from the API request
-     * @return HttpContext
+     * @return Http\HttpContext
      */
     public function getContext()
     {
