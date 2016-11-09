@@ -217,10 +217,10 @@ function createListParticipant(
 
 ```php
 $conferenceSid = 'ConferenceSid';
-$page = 186;
-$pagesize = 186;
-$muted = true;
-$deaf = true;
+$page = 52;
+$pagesize = 52;
+$muted = false;
+$deaf = false;
 $responseType = 'json';
 
 $result = $conference->createListParticipant($conferenceSid, $page, $pagesize, $muted, $deaf, $responseType);
@@ -261,9 +261,9 @@ function addParticipant(
 ```php
 $conferencesid = 'conferencesid';
 $participantnumber = 'participantnumber';
-$tocountrycode = 186;
-$muted = true;
-$deaf = true;
+$tocountrycode = 52;
+$muted = false;
+$deaf = false;
 $responseType = 'json';
 
 $result = $conference->addParticipant($conferencesid, $participantnumber, $tocountrycode, $muted, $deaf, $responseType);
@@ -335,8 +335,8 @@ function createListConference(
 #### Example Usage
 
 ```php
-$page = 186;
-$pageSize = 186;
+$page = 52;
+$pageSize = 52;
 $friendlyName = 'FriendlyName';
 $status = string::CANCELED;
 $dateCreated = 'DateCreated';
@@ -389,8 +389,8 @@ function createListTranscription(
 #### Example Usage
 
 ```php
-$page = 186;
-$pageSize = 186;
+$page = 52;
+$pageSize = 52;
 $status = string::INPROGRESS;
 $dateTranscribed = 'DateTranscribed';
 $responseType = 'json';
@@ -534,7 +534,7 @@ function createAvailablePhoneNumber(
 ```php
 $numberType = 'NumberType';
 $areaCode = 'AreaCode';
-$pageSize = 186;
+$pageSize = 144;
 $responseType = 'json';
 
 $result = $phoneNumber->createAvailablePhoneNumber($numberType, $areaCode, $pageSize, $responseType);
@@ -571,8 +571,8 @@ function createListNumber(
 #### Example Usage
 
 ```php
-$page = 186;
-$pageSize = 186;
+$page = 144;
+$pageSize = 144;
 $numberType = 'NumberType';
 $friendlyName = 'FriendlyName';
 $responseType = 'json';
@@ -681,22 +681,7 @@ $result = $phoneNumber->createViewNumberDetails($phoneNumber, $responseType);
 
 
 ```php
-function updatePhoneNumber(
-        $phoneNumber,
-        $friendlyName = NULL,
-        $voiceUrl = NULL,
-        $voiceMethod = NULL,
-        $voiceFallbackUrl = NULL,
-        $voiceFallbackMethod = NULL,
-        $hangupCallback = NULL,
-        $hangupCallbackMethod = NULL,
-        $heartbeatUrl = NULL,
-        $heartbeatMethod = NULL,
-        $smsUrl = NULL,
-        $smsMethod = NULL,
-        $smsFallbackUrl = NULL,
-        $smsFallbackMethod = NULL,
-        $responseType = 'json')
+function updatePhoneNumber($options)
 ```
 
 #### Parameters
@@ -725,22 +710,52 @@ function updatePhoneNumber(
 
 ```php
 $phoneNumber = 'PhoneNumber';
-$friendlyName = 'FriendlyName';
-$voiceUrl = 'VoiceUrl';
-$voiceMethod = string::GET;
-$voiceFallbackUrl = 'VoiceFallbackUrl';
-$voiceFallbackMethod = string::GET;
-$hangupCallback = 'HangupCallback';
-$hangupCallbackMethod = string::GET;
-$heartbeatUrl = 'HeartbeatUrl';
-$heartbeatMethod = string::GET;
-$smsUrl = 'SmsUrl';
-$smsMethod = string::GET;
-$smsFallbackUrl = 'SmsFallbackUrl';
-$smsFallbackMethod = string::GET;
-$responseType = 'json';
+$collect['phoneNumber'] = $phoneNumber;
 
-$result = $phoneNumber->updatePhoneNumber($phoneNumber, $friendlyName, $voiceUrl, $voiceMethod, $voiceFallbackUrl, $voiceFallbackMethod, $hangupCallback, $hangupCallbackMethod, $heartbeatUrl, $heartbeatMethod, $smsUrl, $smsMethod, $smsFallbackUrl, $smsFallbackMethod, $responseType);
+$friendlyName = 'FriendlyName';
+$collect['friendlyName'] = $friendlyName;
+
+$voiceUrl = 'VoiceUrl';
+$collect['voiceUrl'] = $voiceUrl;
+
+$voiceMethod = string::GET;
+$collect['voiceMethod'] = $voiceMethod;
+
+$voiceFallbackUrl = 'VoiceFallbackUrl';
+$collect['voiceFallbackUrl'] = $voiceFallbackUrl;
+
+$voiceFallbackMethod = string::GET;
+$collect['voiceFallbackMethod'] = $voiceFallbackMethod;
+
+$hangupCallback = 'HangupCallback';
+$collect['hangupCallback'] = $hangupCallback;
+
+$hangupCallbackMethod = string::GET;
+$collect['hangupCallbackMethod'] = $hangupCallbackMethod;
+
+$heartbeatUrl = 'HeartbeatUrl';
+$collect['heartbeatUrl'] = $heartbeatUrl;
+
+$heartbeatMethod = string::GET;
+$collect['heartbeatMethod'] = $heartbeatMethod;
+
+$smsUrl = 'SmsUrl';
+$collect['smsUrl'] = $smsUrl;
+
+$smsMethod = string::GET;
+$collect['smsMethod'] = $smsMethod;
+
+$smsFallbackUrl = 'SmsFallbackUrl';
+$collect['smsFallbackUrl'] = $smsFallbackUrl;
+
+$smsFallbackMethod = string::GET;
+$collect['smsFallbackMethod'] = $smsFallbackMethod;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $phoneNumber->updatePhoneNumber($collect);
 
 ```
 
@@ -1306,8 +1321,8 @@ function createListSMS(
 #### Example Usage
 
 ```php
-$page = 23;
-$pagesize = 23;
+$page = 144;
+$pagesize = 144;
 $from = 'from';
 $to = 'to';
 $datesent = 'datesent';
@@ -1347,7 +1362,7 @@ function createListInboundSMS(
 #### Example Usage
 
 ```php
-$page = 23;
+$page = 144;
 $pagesize = 'pagesize';
 $from = 'from';
 $to = 'to';
@@ -1504,8 +1519,8 @@ function createListRecording(
 #### Example Usage
 
 ```php
-$page = 23;
-$pageSize = 23;
+$page = 102;
+$pageSize = 102;
 $dateCreated = 'DateCreated';
 $callSid = 'CallSid';
 $responseType = 'json';
@@ -1633,7 +1648,7 @@ $fallBackUrl = 'FallBackUrl';
 $fallBackMethod = string::GET;
 $heartBeatUrl = 'HeartBeatUrl';
 $heartBeatMethod = false;
-$timeout = 23;
+$timeout = 102;
 $playDtmf = 'PlayDtmf';
 $hideCallerId = false;
 $record = false;
@@ -1682,7 +1697,7 @@ function createPlayAudio(
 #### Example Usage
 
 ```php
-$length = 23;
+$length = 102;
 $direction = string::IN;
 $loop = false;
 $mix = false;
@@ -1731,7 +1746,7 @@ function createRecordCall(
 $callSid = 'CallSid';
 $record = false;
 $direction = string::IN;
-$timeLimit = 23;
+$timeLimit = 102;
 $callBackUrl = 'CallBackUrl';
 $fileformat = string::MP3;
 $responseType = 'json';
@@ -1778,11 +1793,11 @@ function createVoiceEffect(
 ```php
 $callSid = 'CallSid';
 $audioDirection = string::IN;
-$pitchSemiTones = 23.0913697244094;
-$pitchOctaves = 23.0913697244094;
-$pitch = 23.0913697244094;
-$rate = 23.0913697244094;
-$tempo = 23.0913697244094;
+$pitchSemiTones = 102.321147153769;
+$pitchOctaves = 102.321147153769;
+$pitch = 102.321147153769;
+$rate = 102.321147153769;
+$tempo = 102.321147153769;
 $responseType = 'json';
 
 $result = $call->createVoiceEffect($callSid, $audioDirection, $pitchSemiTones, $pitchOctaves, $pitch, $rate, $tempo, $responseType);
