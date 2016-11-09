@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/04/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/09/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -393,43 +393,30 @@ class PhoneNumberController extends BaseController {
         
     /**
      * Update Phone Number Details
-     * @param  string     $phoneNumber              Required parameter: Example: 
-     * @param  string     $friendlyName             Optional parameter: Example: 
-     * @param  string     $voiceUrl                 Optional parameter: URL requested once the call connects
-     * @param  string     $voiceMethod              Optional parameter: Example: 
-     * @param  string     $voiceFallbackUrl         Optional parameter: URL requested if the voice URL is not available
-     * @param  string     $voiceFallbackMethod      Optional parameter: Example: 
-     * @param  string     $hangupCallback           Optional parameter: Example: 
-     * @param  string     $hangupCallbackMethod     Optional parameter: Example: 
-     * @param  string     $heartbeatUrl             Optional parameter: URL requested once the call connects
-     * @param  string     $heartbeatMethod          Optional parameter: URL that can be requested every 60 seconds during the call to notify of elapsed time
-     * @param  string     $smsUrl                   Optional parameter: URL requested when an SMS is received
-     * @param  string     $smsMethod                Optional parameter: Example: 
-     * @param  string     $smsFallbackUrl           Optional parameter: URL requested once the call connects
-     * @param  string     $smsFallbackMethod        Optional parameter: URL requested if the sms URL is not available
-     * @param  string     $responseType             Optional parameter: Response format, xml or json
+     * @param  array  $options    Array with all options for search
+     * @param  string     $options['phoneNumber']              Required parameter: Example: 
+     * @param  string     $options['friendlyName']             Optional parameter: Example: 
+     * @param  string     $options['voiceUrl']                 Optional parameter: URL requested once the call connects
+     * @param  string     $options['voiceMethod']              Optional parameter: Example: 
+     * @param  string     $options['voiceFallbackUrl']         Optional parameter: URL requested if the voice URL is not available
+     * @param  string     $options['voiceFallbackMethod']      Optional parameter: Example: 
+     * @param  string     $options['hangupCallback']           Optional parameter: Example: 
+     * @param  string     $options['hangupCallbackMethod']     Optional parameter: Example: 
+     * @param  string     $options['heartbeatUrl']             Optional parameter: URL requested once the call connects
+     * @param  string     $options['heartbeatMethod']          Optional parameter: URL that can be requested every 60 seconds during the call to notify of elapsed time
+     * @param  string     $options['smsUrl']                   Optional parameter: URL requested when an SMS is received
+     * @param  string     $options['smsMethod']                Optional parameter: Example: 
+     * @param  string     $options['smsFallbackUrl']           Optional parameter: URL requested once the call connects
+     * @param  string     $options['smsFallbackMethod']        Optional parameter: URL requested if the sms URL is not available
+     * @param  string     $options['responseType']             Optional parameter: Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function updatePhoneNumber (
-                $phoneNumber,
-                $friendlyName = NULL,
-                $voiceUrl = NULL,
-                $voiceMethod = NULL,
-                $voiceFallbackUrl = NULL,
-                $voiceFallbackMethod = NULL,
-                $hangupCallback = NULL,
-                $hangupCallbackMethod = NULL,
-                $heartbeatUrl = NULL,
-                $heartbeatMethod = NULL,
-                $smsUrl = NULL,
-                $smsMethod = NULL,
-                $smsFallbackUrl = NULL,
-                $smsFallbackMethod = NULL,
-                $responseType = 'json') 
+                $options) 
     { 
         //check that all required arguments are provided
-        if(!isset($phoneNumber))
+        if(!isset($options['phoneNumber']))
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
 
 
@@ -441,7 +428,7 @@ class PhoneNumberController extends BaseController {
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'         => (null != $responseType) ? $responseType : 'json',
+            'ResponseType'         => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -454,20 +441,20 @@ class PhoneNumberController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'PhoneNumber'          => $phoneNumber,
-            'FriendlyName'         => $friendlyName,
-            'VoiceUrl'             => $voiceUrl,
-            'VoiceMethod'          => $voiceMethod,
-            'VoiceFallbackUrl'     => $voiceFallbackUrl,
-            'VoiceFallbackMethod'  => $voiceFallbackMethod,
-            'HangupCallback'       => $hangupCallback,
-            'HangupCallbackMethod' => $hangupCallbackMethod,
-            'HeartbeatUrl'         => $heartbeatUrl,
-            'HeartbeatMethod'      => $heartbeatMethod,
-            'SmsUrl'               => $smsUrl,
-            'SmsMethod'            => $smsMethod,
-            'SmsFallbackUrl'       => $smsFallbackUrl,
-            'SmsFallbackMethod'    => $smsFallbackMethod
+            'PhoneNumber'          => $this->val($options, 'phoneNumber'),
+            'FriendlyName'         => $this->val($options, 'friendlyName'),
+            'VoiceUrl'             => $this->val($options, 'voiceUrl'),
+            'VoiceMethod'          => $this->val($options, 'voiceMethod'),
+            'VoiceFallbackUrl'     => $this->val($options, 'voiceFallbackUrl'),
+            'VoiceFallbackMethod'  => $this->val($options, 'voiceFallbackMethod'),
+            'HangupCallback'       => $this->val($options, 'hangupCallback'),
+            'HangupCallbackMethod' => $this->val($options, 'hangupCallbackMethod'),
+            'HeartbeatUrl'         => $this->val($options, 'heartbeatUrl'),
+            'HeartbeatMethod'      => $this->val($options, 'heartbeatMethod'),
+            'SmsUrl'               => $this->val($options, 'smsUrl'),
+            'SmsMethod'            => $this->val($options, 'smsMethod'),
+            'SmsFallbackUrl'       => $this->val($options, 'smsFallbackUrl'),
+            'SmsFallbackMethod'    => $this->val($options, 'smsFallbackMethod')
         );
 
         //set HTTP basic auth parameters
@@ -498,5 +485,21 @@ class PhoneNumberController extends BaseController {
         return $response->body;
     }
         
+
+
+    /**
+	 * Array access utility method
+     * @param  array          $arr         Array of values to read from
+     * @param  string         $key         Key to get the value from the array
+     * @param  mixed|null     $default     Default value to use if the key was not found
+     * @return mixed
+     */
+    private function val($arr, $key, $default = NULL)
+    {
+        if(isset($arr[$key])) {
+            return is_bool($arr[$key]) ? var_export($arr[$key], true) : $arr[$key];
+        }
+        return $default;
+    }
 
 }
