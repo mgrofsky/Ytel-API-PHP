@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/09/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/10/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -43,19 +43,18 @@ class ConferenceController extends BaseController {
 
     /**
      * View Participant
-     * @param  string     $conferenceSid      Required parameter: unique conference sid
-     * @param  string     $participantSid     Required parameter: Example: 
-     * @param  string     $responseType       Optional parameter: Response format, xml or json
+     * @param  array  $options    Array with all options for search
+     * @param  string     $options['conferenceSid']      Required parameter: unique conference sid
+     * @param  string     $options['participantSid']     Required parameter: Example: 
+     * @param  string     $options['responseType']       Optional parameter: Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createViewParticipant (
-                $conferenceSid,
-                $participantSid,
-                $responseType = 'json') 
+                $options) 
     { 
         //check that all required arguments are provided
-        if(!isset($conferenceSid, $participantSid))
+        if(!isset($options['conferenceSid'], $options['participantSid']))
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
 
 
@@ -67,7 +66,7 @@ class ConferenceController extends BaseController {
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'   => (null != $responseType) ? $responseType : 'json',
+            'ResponseType'   => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -80,8 +79,8 @@ class ConferenceController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'ConferenceSid'  => $conferenceSid,
-            'ParticipantSid' => $participantSid
+            'ConferenceSid'  => $this->val($options, 'conferenceSid'),
+            'ParticipantSid' => $this->val($options, 'participantSid')
         );
 
         //set HTTP basic auth parameters
@@ -114,25 +113,21 @@ class ConferenceController extends BaseController {
         
     /**
      * List Participant
-     * @param  string      $conferenceSid     Required parameter: unique conference sid
-     * @param  integer     $page              Optional parameter: page number
-     * @param  integer     $pagesize          Optional parameter: Example: 
-     * @param  bool        $muted             Optional parameter: Example: 
-     * @param  bool        $deaf              Optional parameter: Example: 
-     * @param  string      $responseType      Optional parameter: Response format, xml or json
+     * @param  array  $options    Array with all options for search
+     * @param  string      $options['conferenceSid']     Required parameter: unique conference sid
+     * @param  integer     $options['page']              Optional parameter: page number
+     * @param  integer     $options['pagesize']          Optional parameter: Example: 
+     * @param  bool        $options['muted']             Optional parameter: Example: 
+     * @param  bool        $options['deaf']              Optional parameter: Example: 
+     * @param  string      $options['responseType']      Optional parameter: Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createListParticipant (
-                $conferenceSid,
-                $page = NULL,
-                $pagesize = NULL,
-                $muted = NULL,
-                $deaf = NULL,
-                $responseType = 'json') 
+                $options) 
     { 
         //check that all required arguments are provided
-        if(!isset($conferenceSid))
+        if(!isset($options['conferenceSid']))
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
 
 
@@ -144,7 +139,7 @@ class ConferenceController extends BaseController {
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'  => (null != $responseType) ? $responseType : 'json',
+            'ResponseType'  => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -157,11 +152,11 @@ class ConferenceController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'ConferenceSid' => $conferenceSid,
-            'Page'          => $page,
-            'Pagesize'      => $pagesize,
-            'Muted'         => var_export($muted, true),
-            'Deaf'          => var_export($deaf, true)
+            'ConferenceSid' => $this->val($options, 'conferenceSid'),
+            'Page'          => $this->val($options, 'page'),
+            'Pagesize'      => $this->val($options, 'pagesize'),
+            'Muted'         => $this->val($options, 'muted'),
+            'Deaf'          => $this->val($options, 'deaf')
         );
 
         //set HTTP basic auth parameters
@@ -194,25 +189,21 @@ class ConferenceController extends BaseController {
         
     /**
      * Add Participant in conference 
-     * @param  string      $conferencesid         Required parameter: Unique Conference Sid
-     * @param  string      $participantnumber     Required parameter: Particiant Number
-     * @param  integer     $tocountrycode         Required parameter: Example: 
-     * @param  bool        $muted                 Optional parameter: Example: 
-     * @param  bool        $deaf                  Optional parameter: Example: 
-     * @param  string      $responseType          Optional parameter: Response format, xml or json
+     * @param  array  $options    Array with all options for search
+     * @param  string      $options['conferencesid']         Required parameter: Unique Conference Sid
+     * @param  string      $options['participantnumber']     Required parameter: Particiant Number
+     * @param  integer     $options['tocountrycode']         Required parameter: Example: 
+     * @param  bool        $options['muted']                 Optional parameter: Example: 
+     * @param  bool        $options['deaf']                  Optional parameter: Example: 
+     * @param  string      $options['responseType']          Optional parameter: Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function addParticipant (
-                $conferencesid,
-                $participantnumber,
-                $tocountrycode,
-                $muted = NULL,
-                $deaf = NULL,
-                $responseType = 'json') 
+                $options) 
     { 
         //check that all required arguments are provided
-        if(!isset($conferencesid, $participantnumber, $tocountrycode))
+        if(!isset($options['conferencesid'], $options['participantnumber'], $options['tocountrycode']))
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
 
 
@@ -224,7 +215,7 @@ class ConferenceController extends BaseController {
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'      => (null != $responseType) ? $responseType : 'json',
+            'ResponseType'      => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -237,11 +228,11 @@ class ConferenceController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'conferencesid'     => $conferencesid,
-            'participantnumber' => $participantnumber,
-            'tocountrycode'     => $tocountrycode,
-            'muted'             => var_export($muted, true),
-            'deaf'              => var_export($deaf, true)
+            'conferencesid'     => $this->val($options, 'conferencesid'),
+            'participantnumber' => $this->val($options, 'participantnumber'),
+            'tocountrycode'     => $this->val($options, 'tocountrycode'),
+            'muted'             => $this->val($options, 'muted'),
+            'deaf'              => $this->val($options, 'deaf')
         );
 
         //set HTTP basic auth parameters
@@ -274,17 +265,17 @@ class ConferenceController extends BaseController {
         
     /**
      * View Conference
-     * @param  string     $conferencesid     Required parameter: The unique identifier of each conference resource
-     * @param  string     $responseType      Optional parameter: Response format, xml or json
+     * @param  array  $options    Array with all options for search
+     * @param  string     $options['conferencesid']     Required parameter: The unique identifier of each conference resource
+     * @param  string     $options['responseType']      Optional parameter: Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createViewConference (
-                $conferencesid,
-                $responseType = 'json') 
+                $options) 
     { 
         //check that all required arguments are provided
-        if(!isset($conferencesid))
+        if(!isset($options['conferencesid']))
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
 
 
@@ -296,7 +287,7 @@ class ConferenceController extends BaseController {
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'  => (null != $responseType) ? $responseType : 'json',
+            'ResponseType'  => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -309,7 +300,7 @@ class ConferenceController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'conferencesid' => $conferencesid
+            'conferencesid' => $this->val($options, 'conferencesid')
         );
 
         //set HTTP basic auth parameters
@@ -342,24 +333,19 @@ class ConferenceController extends BaseController {
         
     /**
      * List Conference
-     * @param  integer     $page             Optional parameter: Which page of the overall response will be returned. Zero indexed
-     * @param  integer     $pageSize         Optional parameter: Number of individual resources listed in the response per page
-     * @param  string      $friendlyName     Optional parameter: Only return conferences with the specified FriendlyName
-     * @param  string      $status           Optional parameter: Example: 
-     * @param  string      $dateCreated      Optional parameter: Example: 
-     * @param  string      $dateUpdated      Optional parameter: Example: 
-     * @param  string      $responseType     Optional parameter: Response format, xml or json
+     * @param  array  $options    Array with all options for search
+     * @param  integer     $options['page']             Optional parameter: Which page of the overall response will be returned. Zero indexed
+     * @param  integer     $options['pageSize']         Optional parameter: Number of individual resources listed in the response per page
+     * @param  string      $options['friendlyName']     Optional parameter: Only return conferences with the specified FriendlyName
+     * @param  string      $options['status']           Optional parameter: Example: 
+     * @param  string      $options['dateCreated']      Optional parameter: Example: 
+     * @param  string      $options['dateUpdated']      Optional parameter: Example: 
+     * @param  string      $options['responseType']     Optional parameter: Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createListConference (
-                $page = NULL,
-                $pageSize = NULL,
-                $friendlyName = NULL,
-                $status = NULL,
-                $dateCreated = NULL,
-                $dateUpdated = NULL,
-                $responseType = 'json') 
+                $options) 
     {
         //the base uri for api requests
         $_queryBuilder = Configuration::$BASEURI;
@@ -369,7 +355,7 @@ class ConferenceController extends BaseController {
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => (null != $responseType) ? $responseType : 'json',
+            'ResponseType' => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -382,12 +368,12 @@ class ConferenceController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'Page'         => $page,
-            'PageSize'     => $pageSize,
-            'FriendlyName' => $friendlyName,
-            'Status'       => $status,
-            'DateCreated'  => $dateCreated,
-            'DateUpdated'  => $dateUpdated
+            'Page'         => $this->val($options, 'page'),
+            'PageSize'     => $this->val($options, 'pageSize'),
+            'FriendlyName' => $this->val($options, 'friendlyName'),
+            'Status'       => $this->val($options, 'status'),
+            'DateCreated'  => $this->val($options, 'dateCreated'),
+            'DateUpdated'  => $this->val($options, 'dateUpdated')
         );
 
         //set HTTP basic auth parameters
@@ -418,5 +404,21 @@ class ConferenceController extends BaseController {
         return $response->body;
     }
         
+
+
+    /**
+	 * Array access utility method
+     * @param  array          $arr         Array of values to read from
+     * @param  string         $key         Key to get the value from the array
+     * @param  mixed|null     $default     Default value to use if the key was not found
+     * @return mixed
+     */
+    private function val($arr, $key, $default = NULL)
+    {
+        if(isset($arr[$key])) {
+            return is_bool($arr[$key]) ? var_export($arr[$key], true) : $arr[$key];
+        }
+        return $default;
+    }
 
 }

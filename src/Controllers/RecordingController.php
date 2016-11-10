@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/09/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/10/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -42,18 +42,18 @@ class RecordingController extends BaseController {
     }
 
     /**
-     * Delete Recording Record
-     * @param  string     $recordingSid     Required parameter: Unique Recording Sid to be delete
-     * @param  string     $responseType     Optional parameter: Response format, xml or json
+     * View a specific Recording
+     * @param  array  $options    Array with all options for search
+     * @param  string     $options['recordingSid']     Required parameter: Search Recording sid
+     * @param  string     $options['responseType']     Optional parameter: Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createDeleteRecording (
-                $recordingSid,
-                $responseType = 'json') 
+    public function createViewRecording (
+                $options) 
     { 
         //check that all required arguments are provided
-        if(!isset($recordingSid))
+        if(!isset($options['recordingSid']))
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
 
 
@@ -61,11 +61,11 @@ class RecordingController extends BaseController {
         $_queryBuilder = Configuration::$BASEURI;
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/recording/deleterecording.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/recording/viewrecording.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => (null != $responseType) ? $responseType : 'json',
+            'ResponseType' => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -78,7 +78,7 @@ class RecordingController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'RecordingSid' => $recordingSid
+            'RecordingSid' => $this->val($options, 'recordingSid')
         );
 
         //set HTTP basic auth parameters
@@ -110,18 +110,18 @@ class RecordingController extends BaseController {
     }
         
     /**
-     * View a specific Recording
-     * @param  string     $recordingSid     Required parameter: Search Recording sid
-     * @param  string     $responseType     Optional parameter: Response format, xml or json
+     * Delete Recording Record
+     * @param  array  $options    Array with all options for search
+     * @param  string     $options['recordingSid']     Required parameter: Unique Recording Sid to be delete
+     * @param  string     $options['responseType']     Optional parameter: Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createViewRecording (
-                $recordingSid,
-                $responseType = 'json') 
+    public function createDeleteRecording (
+                $options) 
     { 
         //check that all required arguments are provided
-        if(!isset($recordingSid))
+        if(!isset($options['recordingSid']))
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
 
 
@@ -129,11 +129,11 @@ class RecordingController extends BaseController {
         $_queryBuilder = Configuration::$BASEURI;
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/recording/viewrecording.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/recording/deleterecording.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => (null != $responseType) ? $responseType : 'json',
+            'ResponseType' => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -146,7 +146,7 @@ class RecordingController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'RecordingSid' => $recordingSid
+            'RecordingSid' => $this->val($options, 'recordingSid')
         );
 
         //set HTTP basic auth parameters
@@ -179,20 +179,17 @@ class RecordingController extends BaseController {
         
     /**
      * List out Recordings
-     * @param  integer     $page             Optional parameter: Which page of the overall response will be returned. Zero indexed
-     * @param  integer     $pageSize         Optional parameter: Number of individual resources listed in the response per page
-     * @param  string      $dateCreated      Optional parameter: Example: 
-     * @param  string      $callSid          Optional parameter: Example: 
-     * @param  string      $responseType     Optional parameter: Response format, xml or json
+     * @param  array  $options    Array with all options for search
+     * @param  integer     $options['page']             Optional parameter: Which page of the overall response will be returned. Zero indexed
+     * @param  integer     $options['pageSize']         Optional parameter: Number of individual resources listed in the response per page
+     * @param  string      $options['dateCreated']      Optional parameter: Example: 
+     * @param  string      $options['callSid']          Optional parameter: Example: 
+     * @param  string      $options['responseType']     Optional parameter: Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createListRecording (
-                $page = NULL,
-                $pageSize = NULL,
-                $dateCreated = NULL,
-                $callSid = NULL,
-                $responseType = 'json') 
+                $options) 
     {
         //the base uri for api requests
         $_queryBuilder = Configuration::$BASEURI;
@@ -202,7 +199,7 @@ class RecordingController extends BaseController {
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => (null != $responseType) ? $responseType : 'json',
+            'ResponseType' => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -215,10 +212,10 @@ class RecordingController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'Page'         => $page,
-            'PageSize'     => $pageSize,
-            'DateCreated'  => $dateCreated,
-            'CallSid'      => $callSid
+            'Page'         => $this->val($options, 'page'),
+            'PageSize'     => $this->val($options, 'pageSize'),
+            'DateCreated'  => $this->val($options, 'dateCreated'),
+            'CallSid'      => $this->val($options, 'callSid')
         );
 
         //set HTTP basic auth parameters
@@ -249,5 +246,21 @@ class RecordingController extends BaseController {
         return $response->body;
     }
         
+
+
+    /**
+	 * Array access utility method
+     * @param  array          $arr         Array of values to read from
+     * @param  string         $key         Key to get the value from the array
+     * @param  mixed|null     $default     Default value to use if the key was not found
+     * @return mixed
+     */
+    private function val($arr, $key, $default = NULL)
+    {
+        if(isset($arr[$key])) {
+            return is_bool($arr[$key]) ? var_export($arr[$key], true) : $arr[$key];
+        }
+        return $default;
+    }
 
 }
