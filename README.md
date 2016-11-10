@@ -134,10 +134,10 @@ $client = new Message360Client($basicAuthUserName, $basicAuthPassword);
 * [TranscriptionController](#transcription_controller)
 * [PhoneNumberController](#phone_number_controller)
 * [UsageController](#usage_controller)
+* [RecordingController](#recording_controller)
 * [EmailController](#email_controller)
 * [SMSController](#sms_controller)
 * [AccountController](#account_controller)
-* [RecordingController](#recording_controller)
 * [CallController](#call_controller)
 * [CarrierController](#carrier_controller)
 
@@ -157,10 +157,7 @@ $conference = $client->getConference();
 
 
 ```php
-function createViewParticipant(
-        $conferenceSid,
-        $participantSid,
-        $responseType = 'json')
+function createViewParticipant($options)
 ```
 
 #### Parameters
@@ -177,10 +174,16 @@ function createViewParticipant(
 
 ```php
 $conferenceSid = 'ConferenceSid';
-$participantSid = 'ParticipantSid';
-$responseType = 'json';
+$collect['conferenceSid'] = $conferenceSid;
 
-$result = $conference->createViewParticipant($conferenceSid, $participantSid, $responseType);
+$participantSid = 'ParticipantSid';
+$collect['participantSid'] = $participantSid;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $conference->createViewParticipant($collect);
 
 ```
 
@@ -191,13 +194,7 @@ $result = $conference->createViewParticipant($conferenceSid, $participantSid, $r
 
 
 ```php
-function createListParticipant(
-        $conferenceSid,
-        $page = NULL,
-        $pagesize = NULL,
-        $muted = NULL,
-        $deaf = NULL,
-        $responseType = 'json')
+function createListParticipant($options)
 ```
 
 #### Parameters
@@ -217,13 +214,25 @@ function createListParticipant(
 
 ```php
 $conferenceSid = 'ConferenceSid';
-$page = 52;
-$pagesize = 52;
-$muted = false;
-$deaf = false;
-$responseType = 'json';
+$collect['conferenceSid'] = $conferenceSid;
 
-$result = $conference->createListParticipant($conferenceSid, $page, $pagesize, $muted, $deaf, $responseType);
+$page = 29;
+$collect['page'] = $page;
+
+$pagesize = 29;
+$collect['pagesize'] = $pagesize;
+
+$muted = false;
+$collect['muted'] = $muted;
+
+$deaf = false;
+$collect['deaf'] = $deaf;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $conference->createListParticipant($collect);
 
 ```
 
@@ -234,13 +243,7 @@ $result = $conference->createListParticipant($conferenceSid, $page, $pagesize, $
 
 
 ```php
-function addParticipant(
-        $conferencesid,
-        $participantnumber,
-        $tocountrycode,
-        $muted = NULL,
-        $deaf = NULL,
-        $responseType = 'json')
+function addParticipant($options)
 ```
 
 #### Parameters
@@ -260,13 +263,25 @@ function addParticipant(
 
 ```php
 $conferencesid = 'conferencesid';
-$participantnumber = 'participantnumber';
-$tocountrycode = 52;
-$muted = false;
-$deaf = false;
-$responseType = 'json';
+$collect['conferencesid'] = $conferencesid;
 
-$result = $conference->addParticipant($conferencesid, $participantnumber, $tocountrycode, $muted, $deaf, $responseType);
+$participantnumber = 'participantnumber';
+$collect['participantnumber'] = $participantnumber;
+
+$tocountrycode = 29;
+$collect['tocountrycode'] = $tocountrycode;
+
+$muted = false;
+$collect['muted'] = $muted;
+
+$deaf = false;
+$collect['deaf'] = $deaf;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $conference->addParticipant($collect);
 
 ```
 
@@ -277,9 +292,7 @@ $result = $conference->addParticipant($conferencesid, $participantnumber, $tocou
 
 
 ```php
-function createViewConference(
-        $conferencesid,
-        $responseType = 'json')
+function createViewConference($options)
 ```
 
 #### Parameters
@@ -295,9 +308,13 @@ function createViewConference(
 
 ```php
 $conferencesid = 'conferencesid';
-$responseType = 'json';
+$collect['conferencesid'] = $conferencesid;
 
-$result = $conference->createViewConference($conferencesid, $responseType);
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $conference->createViewConference($collect);
 
 ```
 
@@ -308,14 +325,7 @@ $result = $conference->createViewConference($conferencesid, $responseType);
 
 
 ```php
-function createListConference(
-        $page = NULL,
-        $pageSize = NULL,
-        $friendlyName = NULL,
-        $status = NULL,
-        $dateCreated = NULL,
-        $dateUpdated = NULL,
-        $responseType = 'json')
+function createListConference($options)
 ```
 
 #### Parameters
@@ -335,15 +345,29 @@ function createListConference(
 #### Example Usage
 
 ```php
-$page = 52;
-$pageSize = 52;
-$friendlyName = 'FriendlyName';
-$status = string::CANCELED;
-$dateCreated = 'DateCreated';
-$dateUpdated = 'DateUpdated';
-$responseType = 'json';
+$page = 29;
+$collect['page'] = $page;
 
-$result = $conference->createListConference($page, $pageSize, $friendlyName, $status, $dateCreated, $dateUpdated, $responseType);
+$pageSize = 29;
+$collect['pageSize'] = $pageSize;
+
+$friendlyName = 'FriendlyName';
+$collect['friendlyName'] = $friendlyName;
+
+$status = string::CANCELED;
+$collect['status'] = $status;
+
+$dateCreated = 'DateCreated';
+$collect['dateCreated'] = $dateCreated;
+
+$dateUpdated = 'DateUpdated';
+$collect['dateUpdated'] = $dateUpdated;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $conference->createListConference($collect);
 
 ```
 
@@ -366,12 +390,7 @@ $transcription = $client->getTranscription();
 
 
 ```php
-function createListTranscription(
-        $page = NULL,
-        $pageSize = NULL,
-        $status = NULL,
-        $dateTranscribed = NULL,
-        $responseType = 'json')
+function createListTranscription($options)
 ```
 
 #### Parameters
@@ -389,44 +408,23 @@ function createListTranscription(
 #### Example Usage
 
 ```php
-$page = 52;
-$pageSize = 52;
+$page = 29;
+$collect['page'] = $page;
+
+$pageSize = 29;
+$collect['pageSize'] = $pageSize;
+
 $status = string::INPROGRESS;
+$collect['status'] = $status;
+
 $dateTranscribed = 'DateTranscribed';
+$collect['dateTranscribed'] = $dateTranscribed;
+
 $responseType = 'json';
-
-$result = $transcription->createListTranscription($page, $pageSize, $status, $dateTranscribed, $responseType);
-
-```
+$collect['responseType'] = $responseType;
 
 
-#### <a name="create_recording_transcription"></a>![Method: ](http://apidocs.io/img/method.png ".TranscriptionController.createRecordingTranscription") createRecordingTranscription
-
-> Recording Transcriptions
-
-
-```php
-function createRecordingTranscription(
-        $recordingSid,
-        $responseType = 'json')
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recordingSid |  ``` Required ```  | Unique Recording sid |
-| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
-
-
-
-#### Example Usage
-
-```php
-$recordingSid = 'RecordingSid';
-$responseType = 'json';
-
-$result = $transcription->createRecordingTranscription($recordingSid, $responseType);
+$result = $transcription->createListTranscription($collect);
 
 ```
 
@@ -437,9 +435,7 @@ $result = $transcription->createRecordingTranscription($recordingSid, $responseT
 
 
 ```php
-function createViewTranscription(
-        $transcriptionSid,
-        $responseType = 'json')
+function createViewTranscription($options)
 ```
 
 #### Parameters
@@ -455,9 +451,46 @@ function createViewTranscription(
 
 ```php
 $transcriptionSid = 'TranscriptionSid';
-$responseType = 'json';
+$collect['transcriptionSid'] = $transcriptionSid;
 
-$result = $transcription->createViewTranscription($transcriptionSid, $responseType);
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $transcription->createViewTranscription($collect);
+
+```
+
+
+#### <a name="create_recording_transcription"></a>![Method: ](http://apidocs.io/img/method.png ".TranscriptionController.createRecordingTranscription") createRecordingTranscription
+
+> Recording Transcriptions
+
+
+```php
+function createRecordingTranscription($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recordingSid |  ``` Required ```  | Unique Recording sid |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+
+
+
+#### Example Usage
+
+```php
+$recordingSid = 'RecordingSid';
+$collect['recordingSid'] = $recordingSid;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $transcription->createRecordingTranscription($collect);
 
 ```
 
@@ -468,9 +501,7 @@ $result = $transcription->createViewTranscription($transcriptionSid, $responseTy
 
 
 ```php
-function createAudioURLTranscription(
-        $audioUrl,
-        $responseType = 'json')
+function createAudioURLTranscription($options)
 ```
 
 #### Parameters
@@ -486,9 +517,13 @@ function createAudioURLTranscription(
 
 ```php
 $audioUrl = 'AudioUrl';
-$responseType = 'json';
+$collect['audioUrl'] = $audioUrl;
 
-$result = $transcription->createAudioURLTranscription($audioUrl, $responseType);
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $transcription->createAudioURLTranscription($collect);
 
 ```
 
@@ -511,11 +546,7 @@ $phoneNumber = $client->getPhoneNumber();
 
 
 ```php
-function createAvailablePhoneNumber(
-        $numberType,
-        $areaCode,
-        $pageSize = NULL,
-        $responseType = 'json')
+function createAvailablePhoneNumber($options)
 ```
 
 #### Parameters
@@ -533,11 +564,19 @@ function createAvailablePhoneNumber(
 
 ```php
 $numberType = 'NumberType';
-$areaCode = 'AreaCode';
-$pageSize = 144;
-$responseType = 'json';
+$collect['numberType'] = $numberType;
 
-$result = $phoneNumber->createAvailablePhoneNumber($numberType, $areaCode, $pageSize, $responseType);
+$areaCode = 'AreaCode';
+$collect['areaCode'] = $areaCode;
+
+$pageSize = 29;
+$collect['pageSize'] = $pageSize;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $phoneNumber->createAvailablePhoneNumber($collect);
 
 ```
 
@@ -548,12 +587,7 @@ $result = $phoneNumber->createAvailablePhoneNumber($numberType, $areaCode, $page
 
 
 ```php
-function createListNumber(
-        $page = NULL,
-        $pageSize = NULL,
-        $numberType = NULL,
-        $friendlyName = NULL,
-        $responseType = 'json')
+function createListNumber($options)
 ```
 
 #### Parameters
@@ -571,75 +605,23 @@ function createListNumber(
 #### Example Usage
 
 ```php
-$page = 144;
-$pageSize = 144;
+$page = 29;
+$collect['page'] = $page;
+
+$pageSize = 29;
+$collect['pageSize'] = $pageSize;
+
 $numberType = 'NumberType';
+$collect['numberType'] = $numberType;
+
 $friendlyName = 'FriendlyName';
+$collect['friendlyName'] = $friendlyName;
+
 $responseType = 'json';
-
-$result = $phoneNumber->createListNumber($page, $pageSize, $numberType, $friendlyName, $responseType);
-
-```
+$collect['responseType'] = $responseType;
 
 
-#### <a name="create_release_number"></a>![Method: ](http://apidocs.io/img/method.png ".PhoneNumberController.createReleaseNumber") createReleaseNumber
-
-> Release number from account
-
-
-```php
-function createReleaseNumber(
-        $phoneNumber,
-        $responseType = 'json')
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| phoneNumber |  ``` Required ```  | Phone number to be relase |
-| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
-
-
-
-#### Example Usage
-
-```php
-$phoneNumber = 'PhoneNumber';
-$responseType = 'json';
-
-$result = $phoneNumber->createReleaseNumber($phoneNumber, $responseType);
-
-```
-
-
-#### <a name="create_buy_number"></a>![Method: ](http://apidocs.io/img/method.png ".PhoneNumberController.createBuyNumber") createBuyNumber
-
-> Buy Phone Number 
-
-
-```php
-function createBuyNumber(
-        $phoneNumber,
-        $responseType = 'json')
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| phoneNumber |  ``` Required ```  | Phone number to be purchase |
-| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
-
-
-
-#### Example Usage
-
-```php
-$phoneNumber = 'PhoneNumber';
-$responseType = 'json';
-
-$result = $phoneNumber->createBuyNumber($phoneNumber, $responseType);
+$result = $phoneNumber->createListNumber($collect);
 
 ```
 
@@ -650,9 +632,7 @@ $result = $phoneNumber->createBuyNumber($phoneNumber, $responseType);
 
 
 ```php
-function createViewNumberDetails(
-        $phoneNumber,
-        $responseType = 'json')
+function createViewNumberDetails($options)
 ```
 
 #### Parameters
@@ -668,9 +648,79 @@ function createViewNumberDetails(
 
 ```php
 $phoneNumber = 'PhoneNumber';
-$responseType = 'json';
+$collect['phoneNumber'] = $phoneNumber;
 
-$result = $phoneNumber->createViewNumberDetails($phoneNumber, $responseType);
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $phoneNumber->createViewNumberDetails($collect);
+
+```
+
+
+#### <a name="create_release_number"></a>![Method: ](http://apidocs.io/img/method.png ".PhoneNumberController.createReleaseNumber") createReleaseNumber
+
+> Release number from account
+
+
+```php
+function createReleaseNumber($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| phoneNumber |  ``` Required ```  | Phone number to be relase |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+
+
+
+#### Example Usage
+
+```php
+$phoneNumber = 'PhoneNumber';
+$collect['phoneNumber'] = $phoneNumber;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $phoneNumber->createReleaseNumber($collect);
+
+```
+
+
+#### <a name="create_buy_number"></a>![Method: ](http://apidocs.io/img/method.png ".PhoneNumberController.createBuyNumber") createBuyNumber
+
+> Buy Phone Number 
+
+
+```php
+function createBuyNumber($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| phoneNumber |  ``` Required ```  | Phone number to be purchase |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+
+
+
+#### Example Usage
+
+```php
+$phoneNumber = 'PhoneNumber';
+$collect['phoneNumber'] = $phoneNumber;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $phoneNumber->createBuyNumber($collect);
 
 ```
 
@@ -778,11 +828,7 @@ $usage = $client->getUsage();
 
 
 ```php
-function createListUsage(
-        $productCode,
-        $startDate,
-        $endDate,
-        $responseType = 'json')
+function createListUsage($options)
 ```
 
 #### Parameters
@@ -800,11 +846,142 @@ function createListUsage(
 
 ```php
 $productCode = '0';
-$startDate = '2016-09-06';
-$endDate = '2016-09-06';
-$responseType = 'json';
+$collect['productCode'] = $productCode;
 
-$result = $usage->createListUsage($productCode, $startDate, $endDate, $responseType);
+$startDate = '2016-09-06';
+$collect['startDate'] = $startDate;
+
+$endDate = '2016-09-06';
+$collect['endDate'] = $endDate;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $usage->createListUsage($collect);
+
+```
+
+
+[Back to List of Controllers](#list_of_controllers)
+
+### <a name="recording_controller"></a>![Class: ](http://apidocs.io/img/class.png ".RecordingController") RecordingController
+
+#### Get singleton instance
+
+The singleton instance of the ``` RecordingController ``` class can be accessed from the API Client.
+
+```php
+$recording = $client->getRecording();
+```
+
+#### <a name="create_view_recording"></a>![Method: ](http://apidocs.io/img/method.png ".RecordingController.createViewRecording") createViewRecording
+
+> View a specific Recording
+
+
+```php
+function createViewRecording($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recordingSid |  ``` Required ```  | Search Recording sid |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+
+
+
+#### Example Usage
+
+```php
+$recordingSid = 'RecordingSid';
+$collect['recordingSid'] = $recordingSid;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $recording->createViewRecording($collect);
+
+```
+
+
+#### <a name="create_delete_recording"></a>![Method: ](http://apidocs.io/img/method.png ".RecordingController.createDeleteRecording") createDeleteRecording
+
+> Delete Recording Record
+
+
+```php
+function createDeleteRecording($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| recordingSid |  ``` Required ```  | Unique Recording Sid to be delete |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+
+
+
+#### Example Usage
+
+```php
+$recordingSid = 'RecordingSid';
+$collect['recordingSid'] = $recordingSid;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $recording->createDeleteRecording($collect);
+
+```
+
+
+#### <a name="create_list_recording"></a>![Method: ](http://apidocs.io/img/method.png ".RecordingController.createListRecording") createListRecording
+
+> List out Recordings
+
+
+```php
+function createListRecording($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| page |  ``` Optional ```  | Which page of the overall response will be returned. Zero indexed |
+| pageSize |  ``` Optional ```  | Number of individual resources listed in the response per page |
+| dateCreated |  ``` Optional ```  | TODO: Add a parameter description |
+| callSid |  ``` Optional ```  | TODO: Add a parameter description |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+
+
+
+#### Example Usage
+
+```php
+$page = 29;
+$collect['page'] = $page;
+
+$pageSize = 29;
+$collect['pageSize'] = $pageSize;
+
+$dateCreated = 'DateCreated';
+$collect['dateCreated'] = $dateCreated;
+
+$callSid = 'CallSid';
+$collect['callSid'] = $callSid;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $recording->createListRecording($collect);
 
 ```
 
@@ -821,22 +998,112 @@ The singleton instance of the ``` EmailController ``` class can be accessed from
 $email = $client->getEmail();
 ```
 
+#### <a name="create_delete_spam"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createDeleteSpam") createDeleteSpam
+
+> Deletes a email address marked as spam from the spam list
+
+
+```php
+function createDeleteSpam($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| email |  ``` Required ```  | Email address |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+
+
+
+#### Example Usage
+
+```php
+$email = 'email';
+$collect['email'] = $email;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $email->createDeleteSpam($collect);
+
+```
+
+
+#### <a name="create_delete_block"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createDeleteBlock") createDeleteBlock
+
+> Deletes a blocked email
+
+
+```php
+function createDeleteBlock($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| email |  ``` Required ```  | Email address to remove from block list |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+
+
+
+#### Example Usage
+
+```php
+$email = 'email';
+$collect['email'] = $email;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $email->createDeleteBlock($collect);
+
+```
+
+
+#### <a name="add_unsubscribes"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.addUnsubscribes") addUnsubscribes
+
+> Add an email to the unsubscribe list
+
+
+```php
+function addUnsubscribes($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| email |  ``` Required ```  | The email to add to the unsubscribe list |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
+
+
+
+#### Example Usage
+
+```php
+$email = 'email';
+$collect['email'] = $email;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $email->addUnsubscribes($collect);
+
+```
+
+
 #### <a name="create_send_email"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createSendEmail") createSendEmail
 
 > Send out an email
 
 
 ```php
-function createSendEmail(
-        $to,
-        $from,
-        $type,
-        $subject,
-        $message,
-        $cc = NULL,
-        $bcc = NULL,
-        $attachment = NULL,
-        $responseType = 'json')
+function createSendEmail($options)
 ```
 
 #### Parameters
@@ -859,16 +1126,34 @@ function createSendEmail(
 
 ```php
 $to = 'to';
-$from = 'from';
-$type = string::HTML;
-$subject = 'subject';
-$message = 'message';
-$cc = 'cc';
-$bcc = 'bcc';
-$attachment = 'attachment';
-$responseType = 'json';
+$collect['to'] = $to;
 
-$result = $email->createSendEmail($to, $from, $type, $subject, $message, $cc, $bcc, $attachment, $responseType);
+$from = 'from';
+$collect['from'] = $from;
+
+$type = string::HTML;
+$collect['type'] = $type;
+
+$subject = 'subject';
+$collect['subject'] = $subject;
+
+$message = 'message';
+$collect['message'] = $message;
+
+$cc = 'cc';
+$collect['cc'] = $cc;
+
+$bcc = 'bcc';
+$collect['bcc'] = $bcc;
+
+$attachment = 'attachment';
+$collect['attachment'] = $attachment;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $email->createSendEmail($collect);
 
 ```
 
@@ -879,9 +1164,7 @@ $result = $email->createSendEmail($to, $from, $type, $subject, $message, $cc, $b
 
 
 ```php
-function createDeleteUnsubscribes(
-        $email,
-        $responseType = 'json')
+function createDeleteUnsubscribes($options)
 ```
 
 #### Parameters
@@ -897,9 +1180,13 @@ function createDeleteUnsubscribes(
 
 ```php
 $email = 'email';
-$responseType = 'json';
+$collect['email'] = $email;
 
-$result = $email->createDeleteUnsubscribes($email, $responseType);
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $email->createDeleteUnsubscribes($collect);
 
 ```
 
@@ -910,10 +1197,7 @@ $result = $email->createDeleteUnsubscribes($email, $responseType);
 
 
 ```php
-function createListUnsubscribes(
-        $responseType = 'json',
-        $offset = NULL,
-        $limit = NULL)
+function createListUnsubscribes($options)
 ```
 
 #### Parameters
@@ -930,103 +1214,16 @@ function createListUnsubscribes(
 
 ```php
 $responseType = 'json';
+$collect['responseType'] = $responseType;
+
 $offset = 'offset';
+$collect['offset'] = $offset;
+
 $limit = 'limit';
-
-$result = $email->createListUnsubscribes($responseType, $offset, $limit);
-
-```
+$collect['limit'] = $limit;
 
 
-#### <a name="add_unsubscribes"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.addUnsubscribes") addUnsubscribes
-
-> Add an email to the unsubscribe list
-
-
-```php
-function addUnsubscribes(
-        $email,
-        $responseType = 'json')
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| email |  ``` Required ```  | The email to add to the unsubscribe list |
-| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
-
-
-
-#### Example Usage
-
-```php
-$email = 'email';
-$responseType = 'json';
-
-$result = $email->addUnsubscribes($email, $responseType);
-
-```
-
-
-#### <a name="create_delete_spam"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createDeleteSpam") createDeleteSpam
-
-> Deletes a email address marked as spam from the spam list
-
-
-```php
-function createDeleteSpam(
-        $email,
-        $responseType = 'json')
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| email |  ``` Required ```  | Email address |
-| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
-
-
-
-#### Example Usage
-
-```php
-$email = 'email';
-$responseType = 'json';
-
-$result = $email->createDeleteSpam($email, $responseType);
-
-```
-
-
-#### <a name="create_delete_block"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createDeleteBlock") createDeleteBlock
-
-> Deletes a blocked email
-
-
-```php
-function createDeleteBlock(
-        $email,
-        $responseType = 'json')
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| email |  ``` Required ```  | Email address to remove from block list |
-| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
-
-
-
-#### Example Usage
-
-```php
-$email = 'email';
-$responseType = 'json';
-
-$result = $email->createDeleteBlock($email, $responseType);
+$result = $email->createListUnsubscribes($collect);
 
 ```
 
@@ -1037,10 +1234,7 @@ $result = $email->createDeleteBlock($email, $responseType);
 
 
 ```php
-function createListInvalid(
-        $responseType = 'json',
-        $offet = NULL,
-        $limit = NULL)
+function createListInvalid($options)
 ```
 
 #### Parameters
@@ -1057,10 +1251,16 @@ function createListInvalid(
 
 ```php
 $responseType = 'json';
-$offet = 'offet';
-$limit = 'limit';
+$collect['responseType'] = $responseType;
 
-$result = $email->createListInvalid($responseType, $offet, $limit);
+$offet = 'offet';
+$collect['offet'] = $offet;
+
+$limit = 'limit';
+$collect['limit'] = $limit;
+
+
+$result = $email->createListInvalid($collect);
 
 ```
 
@@ -1071,9 +1271,7 @@ $result = $email->createListInvalid($responseType, $offet, $limit);
 
 
 ```php
-function createDeleteBounces(
-        $email,
-        $responseType = 'json')
+function createDeleteBounces($options)
 ```
 
 #### Parameters
@@ -1089,9 +1287,13 @@ function createDeleteBounces(
 
 ```php
 $email = 'email';
-$responseType = 'json';
+$collect['email'] = $email;
 
-$result = $email->createDeleteBounces($email, $responseType);
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $email->createDeleteBounces($collect);
 
 ```
 
@@ -1102,10 +1304,7 @@ $result = $email->createDeleteBounces($email, $responseType);
 
 
 ```php
-function createListBounces(
-        $responseType = 'json',
-        $offset = NULL,
-        $limit = NULL)
+function createListBounces($options)
 ```
 
 #### Parameters
@@ -1122,10 +1321,16 @@ function createListBounces(
 
 ```php
 $responseType = 'json';
-$offset = 'offset';
-$limit = 'limit';
+$collect['responseType'] = $responseType;
 
-$result = $email->createListBounces($responseType, $offset, $limit);
+$offset = 'offset';
+$collect['offset'] = $offset;
+
+$limit = 'limit';
+$collect['limit'] = $limit;
+
+
+$result = $email->createListBounces($collect);
 
 ```
 
@@ -1136,10 +1341,7 @@ $result = $email->createListBounces($responseType, $offset, $limit);
 
 
 ```php
-function createListSpam(
-        $responseType,
-        $offset = NULL,
-        $limit = NULL)
+function createListSpam($options)
 ```
 
 #### Parameters
@@ -1156,10 +1358,16 @@ function createListSpam(
 
 ```php
 $responseType = 'json';
-$offset = 'offset';
-$limit = 'limit';
+$collect['responseType'] = $responseType;
 
-$result = $email->createListSpam($responseType, $offset, $limit);
+$offset = 'offset';
+$collect['offset'] = $offset;
+
+$limit = 'limit';
+$collect['limit'] = $limit;
+
+
+$result = $email->createListSpam($collect);
 
 ```
 
@@ -1170,10 +1378,7 @@ $result = $email->createListSpam($responseType, $offset, $limit);
 
 
 ```php
-function createListBlocks(
-        $offset = NULL,
-        $limit = NULL,
-        $responseType = 'json')
+function createListBlocks($options)
 ```
 
 #### Parameters
@@ -1190,10 +1395,16 @@ function createListBlocks(
 
 ```php
 $offset = 'offset';
-$limit = 'limit';
-$responseType = 'json';
+$collect['offset'] = $offset;
 
-$result = $email->createListBlocks($offset, $limit, $responseType);
+$limit = 'limit';
+$collect['limit'] = $limit;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $email->createListBlocks($collect);
 
 ```
 
@@ -1216,15 +1427,7 @@ $sMS = $client->getSMS();
 
 
 ```php
-function createSendSMS(
-        $fromcountrycode,
-        $from,
-        $tocountrycode,
-        $to,
-        $body,
-        $method = NULL,
-        $messagestatuscallback = NULL,
-        $responseType = 'json')
+function createSendSMS($options)
 ```
 
 #### Parameters
@@ -1246,15 +1449,31 @@ function createSendSMS(
 
 ```php
 $fromcountrycode = 1;
-$from = 'from';
-$tocountrycode = 1;
-$to = 'to';
-$body = 'body';
-$method = string::GET;
-$messagestatuscallback = 'messagestatuscallback';
-$responseType = 'json';
+$collect['fromcountrycode'] = $fromcountrycode;
 
-$result = $sMS->createSendSMS($fromcountrycode, $from, $tocountrycode, $to, $body, $method, $messagestatuscallback, $responseType);
+$from = 'from';
+$collect['from'] = $from;
+
+$tocountrycode = 1;
+$collect['tocountrycode'] = $tocountrycode;
+
+$to = 'to';
+$collect['to'] = $to;
+
+$body = 'body';
+$collect['body'] = $body;
+
+$method = string::GET;
+$collect['method'] = $method;
+
+$messagestatuscallback = 'messagestatuscallback';
+$collect['messagestatuscallback'] = $messagestatuscallback;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $sMS->createSendSMS($collect);
 
 ```
 
@@ -1265,9 +1484,7 @@ $result = $sMS->createSendSMS($fromcountrycode, $from, $tocountrycode, $to, $bod
 
 
 ```php
-function createViewSMS(
-        $messagesid,
-        $responseType = 'json')
+function createViewSMS($options)
 ```
 
 #### Parameters
@@ -1283,9 +1500,13 @@ function createViewSMS(
 
 ```php
 $messagesid = 'messagesid';
-$responseType = 'json';
+$collect['messagesid'] = $messagesid;
 
-$result = $sMS->createViewSMS($messagesid, $responseType);
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $sMS->createViewSMS($collect);
 
 ```
 
@@ -1296,13 +1517,7 @@ $result = $sMS->createViewSMS($messagesid, $responseType);
 
 
 ```php
-function createListSMS(
-        $page = NULL,
-        $pagesize = NULL,
-        $from = NULL,
-        $to = NULL,
-        $datesent = NULL,
-        $responseType = 'json')
+function createListSMS($options)
 ```
 
 #### Parameters
@@ -1321,14 +1536,26 @@ function createListSMS(
 #### Example Usage
 
 ```php
-$page = 144;
-$pagesize = 144;
-$from = 'from';
-$to = 'to';
-$datesent = 'datesent';
-$responseType = 'json';
+$page = 243;
+$collect['page'] = $page;
 
-$result = $sMS->createListSMS($page, $pagesize, $from, $to, $datesent, $responseType);
+$pagesize = 243;
+$collect['pagesize'] = $pagesize;
+
+$from = 'from';
+$collect['from'] = $from;
+
+$to = 'to';
+$collect['to'] = $to;
+
+$datesent = 'datesent';
+$collect['datesent'] = $datesent;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $sMS->createListSMS($collect);
 
 ```
 
@@ -1339,12 +1566,7 @@ $result = $sMS->createListSMS($page, $pagesize, $from, $to, $datesent, $response
 
 
 ```php
-function createListInboundSMS(
-        $page = NULL,
-        $pagesize = NULL,
-        $from = NULL,
-        $to = NULL,
-        $responseType = 'json')
+function createListInboundSMS($options)
 ```
 
 #### Parameters
@@ -1362,13 +1584,23 @@ function createListInboundSMS(
 #### Example Usage
 
 ```php
-$page = 144;
-$pagesize = 'pagesize';
-$from = 'from';
-$to = 'to';
-$responseType = 'json';
+$page = 243;
+$collect['page'] = $page;
 
-$result = $sMS->createListInboundSMS($page, $pagesize, $from, $to, $responseType);
+$pagesize = 'pagesize';
+$collect['pagesize'] = $pagesize;
+
+$from = 'from';
+$collect['from'] = $from;
+
+$to = 'to';
+$collect['to'] = $to;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $sMS->createListInboundSMS($collect);
 
 ```
 
@@ -1391,9 +1623,7 @@ $account = $client->getAccount();
 
 
 ```php
-function createViewAccount(
-        $date,
-        $responseType = 'json')
+function createViewAccount($options)
 ```
 
 #### Parameters
@@ -1409,123 +1639,13 @@ function createViewAccount(
 
 ```php
 $date = 'date';
+$collect['date'] = $date;
+
 $responseType = 'json';
-
-$result = $account->createViewAccount($date, $responseType);
-
-```
+$collect['responseType'] = $responseType;
 
 
-[Back to List of Controllers](#list_of_controllers)
-
-### <a name="recording_controller"></a>![Class: ](http://apidocs.io/img/class.png ".RecordingController") RecordingController
-
-#### Get singleton instance
-
-The singleton instance of the ``` RecordingController ``` class can be accessed from the API Client.
-
-```php
-$recording = $client->getRecording();
-```
-
-#### <a name="create_delete_recording"></a>![Method: ](http://apidocs.io/img/method.png ".RecordingController.createDeleteRecording") createDeleteRecording
-
-> Delete Recording Record
-
-
-```php
-function createDeleteRecording(
-        $recordingSid,
-        $responseType = 'json')
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recordingSid |  ``` Required ```  | Unique Recording Sid to be delete |
-| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
-
-
-
-#### Example Usage
-
-```php
-$recordingSid = 'RecordingSid';
-$responseType = 'json';
-
-$result = $recording->createDeleteRecording($recordingSid, $responseType);
-
-```
-
-
-#### <a name="create_view_recording"></a>![Method: ](http://apidocs.io/img/method.png ".RecordingController.createViewRecording") createViewRecording
-
-> View a specific Recording
-
-
-```php
-function createViewRecording(
-        $recordingSid,
-        $responseType = 'json')
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| recordingSid |  ``` Required ```  | Search Recording sid |
-| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
-
-
-
-#### Example Usage
-
-```php
-$recordingSid = 'RecordingSid';
-$responseType = 'json';
-
-$result = $recording->createViewRecording($recordingSid, $responseType);
-
-```
-
-
-#### <a name="create_list_recording"></a>![Method: ](http://apidocs.io/img/method.png ".RecordingController.createListRecording") createListRecording
-
-> List out Recordings
-
-
-```php
-function createListRecording(
-        $page = NULL,
-        $pageSize = NULL,
-        $dateCreated = NULL,
-        $callSid = NULL,
-        $responseType = 'json')
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| page |  ``` Optional ```  | Which page of the overall response will be returned. Zero indexed |
-| pageSize |  ``` Optional ```  | Number of individual resources listed in the response per page |
-| dateCreated |  ``` Optional ```  | TODO: Add a parameter description |
-| callSid |  ``` Optional ```  | TODO: Add a parameter description |
-| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response format, xml or json |
-
-
-
-#### Example Usage
-
-```php
-$page = 102;
-$pageSize = 102;
-$dateCreated = 'DateCreated';
-$callSid = 'CallSid';
-$responseType = 'json';
-
-$result = $recording->createListRecording($page, $pageSize, $dateCreated, $callSid, $responseType);
+$result = $account->createViewAccount($collect);
 
 ```
 
@@ -1548,9 +1668,7 @@ $call = $client->getCall();
 
 
 ```php
-function createViewCall(
-        $callsid,
-        $responseType = 'json')
+function createViewCall($options)
 ```
 
 #### Parameters
@@ -1566,9 +1684,13 @@ function createViewCall(
 
 ```php
 $callsid = 'callsid';
-$responseType = 'json';
+$collect['callsid'] = $callsid;
 
-$result = $call->createViewCall($callsid, $responseType);
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $call->createViewCall($collect);
 
 ```
 
@@ -1579,29 +1701,7 @@ $result = $call->createViewCall($callsid, $responseType);
 
 
 ```php
-function createMakeCall(
-        $fromCountryCode,
-        $from,
-        $toCountryCode,
-        $to,
-        $url,
-        $method = NULL,
-        $statusCallBackUrl = NULL,
-        $statusCallBackMethod = NULL,
-        $fallBackUrl = NULL,
-        $fallBackMethod = NULL,
-        $heartBeatUrl = NULL,
-        $heartBeatMethod = NULL,
-        $timeout = NULL,
-        $playDtmf = NULL,
-        $hideCallerId = NULL,
-        $record = NULL,
-        $recordCallBackUrl = NULL,
-        $recordCallBackMethod = NULL,
-        $transcribe = NULL,
-        $transcribeCallBackUrl = NULL,
-        $ifMachine = NULL,
-        $responseType = 'json')
+function createMakeCall($options)
 ```
 
 #### Parameters
@@ -1637,29 +1737,73 @@ function createMakeCall(
 
 ```php
 $fromCountryCode = 'FromCountryCode';
-$from = 'From';
-$toCountryCode = 'ToCountryCode';
-$to = 'To';
-$url = 'Url';
-$method = string::GET;
-$statusCallBackUrl = 'StatusCallBackUrl';
-$statusCallBackMethod = string::GET;
-$fallBackUrl = 'FallBackUrl';
-$fallBackMethod = string::GET;
-$heartBeatUrl = 'HeartBeatUrl';
-$heartBeatMethod = false;
-$timeout = 102;
-$playDtmf = 'PlayDtmf';
-$hideCallerId = false;
-$record = false;
-$recordCallBackUrl = 'RecordCallBackUrl';
-$recordCallBackMethod = string::GET;
-$transcribe = false;
-$transcribeCallBackUrl = 'TranscribeCallBackUrl';
-$ifMachine = string::CONTINUE;
-$responseType = 'json';
+$collect['fromCountryCode'] = $fromCountryCode;
 
-$result = $call->createMakeCall($fromCountryCode, $from, $toCountryCode, $to, $url, $method, $statusCallBackUrl, $statusCallBackMethod, $fallBackUrl, $fallBackMethod, $heartBeatUrl, $heartBeatMethod, $timeout, $playDtmf, $hideCallerId, $record, $recordCallBackUrl, $recordCallBackMethod, $transcribe, $transcribeCallBackUrl, $ifMachine, $responseType);
+$from = 'From';
+$collect['from'] = $from;
+
+$toCountryCode = 'ToCountryCode';
+$collect['toCountryCode'] = $toCountryCode;
+
+$to = 'To';
+$collect['to'] = $to;
+
+$url = 'Url';
+$collect['url'] = $url;
+
+$method = string::GET;
+$collect['method'] = $method;
+
+$statusCallBackUrl = 'StatusCallBackUrl';
+$collect['statusCallBackUrl'] = $statusCallBackUrl;
+
+$statusCallBackMethod = string::GET;
+$collect['statusCallBackMethod'] = $statusCallBackMethod;
+
+$fallBackUrl = 'FallBackUrl';
+$collect['fallBackUrl'] = $fallBackUrl;
+
+$fallBackMethod = string::GET;
+$collect['fallBackMethod'] = $fallBackMethod;
+
+$heartBeatUrl = 'HeartBeatUrl';
+$collect['heartBeatUrl'] = $heartBeatUrl;
+
+$heartBeatMethod = true;
+$collect['heartBeatMethod'] = $heartBeatMethod;
+
+$timeout = 243;
+$collect['timeout'] = $timeout;
+
+$playDtmf = 'PlayDtmf';
+$collect['playDtmf'] = $playDtmf;
+
+$hideCallerId = true;
+$collect['hideCallerId'] = $hideCallerId;
+
+$record = true;
+$collect['record'] = $record;
+
+$recordCallBackUrl = 'RecordCallBackUrl';
+$collect['recordCallBackUrl'] = $recordCallBackUrl;
+
+$recordCallBackMethod = string::GET;
+$collect['recordCallBackMethod'] = $recordCallBackMethod;
+
+$transcribe = true;
+$collect['transcribe'] = $transcribe;
+
+$transcribeCallBackUrl = 'TranscribeCallBackUrl';
+$collect['transcribeCallBackUrl'] = $transcribeCallBackUrl;
+
+$ifMachine = string::CONTINUE;
+$collect['ifMachine'] = $ifMachine;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $call->createMakeCall($collect);
 
 ```
 
@@ -1670,14 +1814,7 @@ $result = $call->createMakeCall($fromCountryCode, $from, $toCountryCode, $to, $u
 
 
 ```php
-function createPlayAudio(
-        $length,
-        $direction,
-        $loop,
-        $mix,
-        $callSid = NULL,
-        $audioUrl = NULL,
-        $responseType = 'json')
+function createPlayAudio($options)
 ```
 
 #### Parameters
@@ -1697,15 +1834,29 @@ function createPlayAudio(
 #### Example Usage
 
 ```php
-$length = 102;
-$direction = string::IN;
-$loop = false;
-$mix = false;
-$callSid = 'CallSid';
-$audioUrl = 'AudioUrl';
-$responseType = 'json';
+$length = 243;
+$collect['length'] = $length;
 
-$result = $call->createPlayAudio($length, $direction, $loop, $mix, $callSid, $audioUrl, $responseType);
+$direction = string::IN;
+$collect['direction'] = $direction;
+
+$loop = true;
+$collect['loop'] = $loop;
+
+$mix = true;
+$collect['mix'] = $mix;
+
+$callSid = 'CallSid';
+$collect['callSid'] = $callSid;
+
+$audioUrl = 'AudioUrl';
+$collect['audioUrl'] = $audioUrl;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $call->createPlayAudio($collect);
 
 ```
 
@@ -1716,14 +1867,7 @@ $result = $call->createPlayAudio($length, $direction, $loop, $mix, $callSid, $au
 
 
 ```php
-function createRecordCall(
-        $callSid,
-        $record,
-        $direction = NULL,
-        $timeLimit = NULL,
-        $callBackUrl = NULL,
-        $fileformat = NULL,
-        $responseType = 'json')
+function createRecordCall($options)
 ```
 
 #### Parameters
@@ -1744,14 +1888,28 @@ function createRecordCall(
 
 ```php
 $callSid = 'CallSid';
-$record = false;
-$direction = string::IN;
-$timeLimit = 102;
-$callBackUrl = 'CallBackUrl';
-$fileformat = string::MP3;
-$responseType = 'json';
+$collect['callSid'] = $callSid;
 
-$result = $call->createRecordCall($callSid, $record, $direction, $timeLimit, $callBackUrl, $fileformat, $responseType);
+$record = true;
+$collect['record'] = $record;
+
+$direction = string::IN;
+$collect['direction'] = $direction;
+
+$timeLimit = 243;
+$collect['timeLimit'] = $timeLimit;
+
+$callBackUrl = 'CallBackUrl';
+$collect['callBackUrl'] = $callBackUrl;
+
+$fileformat = string::MP3;
+$collect['fileformat'] = $fileformat;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $call->createRecordCall($collect);
 
 ```
 
@@ -1762,15 +1920,7 @@ $result = $call->createRecordCall($callSid, $record, $direction, $timeLimit, $ca
 
 
 ```php
-function createVoiceEffect(
-        $callSid,
-        $audioDirection = NULL,
-        $pitchSemiTones = NULL,
-        $pitchOctaves = NULL,
-        $pitch = NULL,
-        $rate = NULL,
-        $tempo = NULL,
-        $responseType = 'json')
+function createVoiceEffect($options)
 ```
 
 #### Parameters
@@ -1792,15 +1942,31 @@ function createVoiceEffect(
 
 ```php
 $callSid = 'CallSid';
-$audioDirection = string::IN;
-$pitchSemiTones = 102.321147153769;
-$pitchOctaves = 102.321147153769;
-$pitch = 102.321147153769;
-$rate = 102.321147153769;
-$tempo = 102.321147153769;
-$responseType = 'json';
+$collect['callSid'] = $callSid;
 
-$result = $call->createVoiceEffect($callSid, $audioDirection, $pitchSemiTones, $pitchOctaves, $pitch, $rate, $tempo, $responseType);
+$audioDirection = string::IN;
+$collect['audioDirection'] = $audioDirection;
+
+$pitchSemiTones = 243.127198171861;
+$collect['pitchSemiTones'] = $pitchSemiTones;
+
+$pitchOctaves = 243.127198171861;
+$collect['pitchOctaves'] = $pitchOctaves;
+
+$pitch = 243.127198171861;
+$collect['pitch'] = $pitch;
+
+$rate = 243.127198171861;
+$collect['rate'] = $rate;
+
+$tempo = 243.127198171861;
+$collect['tempo'] = $tempo;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $call->createVoiceEffect($collect);
 
 ```
 
@@ -1811,11 +1977,7 @@ $result = $call->createVoiceEffect($callSid, $audioDirection, $pitchSemiTones, $
 
 
 ```php
-function createSendDigit(
-        $callSid,
-        $playDtmf,
-        $playDtmfDirection = NULL,
-        $responseType = 'json')
+function createSendDigit($options)
 ```
 
 #### Parameters
@@ -1833,11 +1995,19 @@ function createSendDigit(
 
 ```php
 $callSid = 'CallSid';
-$playDtmf = 'PlayDtmf';
-$playDtmfDirection = string::IN;
-$responseType = 'json';
+$collect['callSid'] = $callSid;
 
-$result = $call->createSendDigit($callSid, $playDtmf, $playDtmfDirection, $responseType);
+$playDtmf = 'PlayDtmf';
+$collect['playDtmf'] = $playDtmf;
+
+$playDtmfDirection = string::IN;
+$collect['playDtmfDirection'] = $playDtmfDirection;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $call->createSendDigit($collect);
 
 ```
 
@@ -1848,12 +2018,7 @@ $result = $call->createSendDigit($callSid, $playDtmf, $playDtmfDirection, $respo
 
 
 ```php
-function createInterruptedCall(
-        $callSid,
-        $url = NULL,
-        $method = NULL,
-        $status = NULL,
-        $responseType = 'json')
+function createInterruptedCall($options)
 ```
 
 #### Parameters
@@ -1872,12 +2037,22 @@ function createInterruptedCall(
 
 ```php
 $callSid = 'CallSid';
-$url = 'Url';
-$method = string::GET;
-$status = string::CANCELED;
-$responseType = 'json';
+$collect['callSid'] = $callSid;
 
-$result = $call->createInterruptedCall($callSid, $url, $method, $status, $responseType);
+$url = 'Url';
+$collect['url'] = $url;
+
+$method = string::GET;
+$collect['method'] = $method;
+
+$status = string::CANCELED;
+$collect['status'] = $status;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $call->createInterruptedCall($collect);
 
 ```
 
@@ -1888,13 +2063,7 @@ $result = $call->createInterruptedCall($callSid, $url, $method, $status, $respon
 
 
 ```php
-function createListCalls(
-        $page = NULL,
-        $pageSize = NULL,
-        $to = NULL,
-        $from = NULL,
-        $dateCreated = NULL,
-        $responseType = 'json')
+function createListCalls($options)
 ```
 
 #### Parameters
@@ -1914,13 +2083,25 @@ function createListCalls(
 
 ```php
 $page = 'Page';
-$pageSize = 'PageSize';
-$to = 'To';
-$from = 'From';
-$dateCreated = 'DateCreated';
-$responseType = 'json';
+$collect['page'] = $page;
 
-$call->createListCalls($page, $pageSize, $to, $from, $dateCreated, $responseType);
+$pageSize = 'PageSize';
+$collect['pageSize'] = $pageSize;
+
+$to = 'To';
+$collect['to'] = $to;
+
+$from = 'From';
+$collect['from'] = $from;
+
+$dateCreated = 'DateCreated';
+$collect['dateCreated'] = $dateCreated;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$call->createListCalls($collect);
 
 ```
 
@@ -1943,9 +2124,7 @@ $carrier = $client->getCarrier();
 
 
 ```php
-function createCarrierLookup(
-        $phonenumber,
-        $responseType = 'json')
+function createCarrierLookup($options)
 ```
 
 #### Parameters
@@ -1961,9 +2140,13 @@ function createCarrierLookup(
 
 ```php
 $phonenumber = 'phonenumber';
-$responseType = 'json';
+$collect['phonenumber'] = $phonenumber;
 
-$result = $carrier->createCarrierLookup($phonenumber, $responseType);
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $carrier->createCarrierLookup($collect);
 
 ```
 
@@ -1974,10 +2157,7 @@ $result = $carrier->createCarrierLookup($phonenumber, $responseType);
 
 
 ```php
-function createCarrierLookupList(
-        $page = NULL,
-        $pagesize = NULL,
-        $responseType = 'json')
+function createCarrierLookupList($options)
 ```
 
 #### Parameters
@@ -1994,10 +2174,16 @@ function createCarrierLookupList(
 
 ```php
 $page = 'page';
-$pagesize = 'pagesize';
-$responseType = 'json';
+$collect['page'] = $page;
 
-$result = $carrier->createCarrierLookupList($page, $pagesize, $responseType);
+$pagesize = 'pagesize';
+$collect['pagesize'] = $pagesize;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $carrier->createCarrierLookupList($collect);
 
 ```
 

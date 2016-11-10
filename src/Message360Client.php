@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/09/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/10/2016
  */
 
 namespace Message360Lib;
@@ -60,6 +60,15 @@ class Message360Client
     }
  
     /**
+     * Singleton access to Recording controller
+     * @return Controllers\RecordingController The *Singleton* instance
+     */
+    public function getRecording()
+    {
+        return Controllers\RecordingController::getInstance();
+    }
+ 
+    /**
      * Singleton access to Email controller
      * @return Controllers\EmailController The *Singleton* instance
      */
@@ -84,15 +93,6 @@ class Message360Client
     public function getAccount()
     {
         return Controllers\AccountController::getInstance();
-    }
- 
-    /**
-     * Singleton access to Recording controller
-     * @return Controllers\RecordingController The *Singleton* instance
-     */
-    public function getRecording()
-    {
-        return Controllers\RecordingController::getInstance();
     }
  
     /**

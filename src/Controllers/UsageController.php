@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/09/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/10/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -43,21 +43,19 @@ class UsageController extends BaseController {
 
     /**
      * Get all usage 
-     * @param  string     $productCode      Required parameter: Product Code
-     * @param  string     $startDate        Required parameter: Start Usage Date
-     * @param  string     $endDate          Required parameter: End Usage Date
-     * @param  string     $responseType     Optional parameter: Response format, xml or json
+     * @param  array  $options    Array with all options for search
+     * @param  string     $options['productCode']      Required parameter: Product Code
+     * @param  string     $options['startDate']        Required parameter: Start Usage Date
+     * @param  string     $options['endDate']          Required parameter: End Usage Date
+     * @param  string     $options['responseType']     Optional parameter: Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createListUsage (
-                $productCode,
-                $startDate,
-                $endDate,
-                $responseType = 'json') 
+                $options) 
     { 
         //check that all required arguments are provided
-        if(!isset($productCode, $startDate, $endDate))
+        if(!isset($options['productCode'], $options['startDate'], $options['endDate']))
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
 
 
@@ -69,7 +67,7 @@ class UsageController extends BaseController {
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => (null != $responseType) ? $responseType : 'json',
+            'ResponseType' => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -82,9 +80,9 @@ class UsageController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'ProductCode'  => $productCode,
-            'startDate'    => $startDate,
-            'endDate'      => $endDate
+            'ProductCode'  => $this->val($options, 'productCode'),
+            'startDate'    => $this->val($options, 'startDate'),
+            'endDate'      => $this->val($options, 'endDate')
         );
 
         //set HTTP basic auth parameters
@@ -115,5 +113,21 @@ class UsageController extends BaseController {
         return $response->body;
     }
         
+
+
+    /**
+	 * Array access utility method
+     * @param  array          $arr         Array of values to read from
+     * @param  string         $key         Key to get the value from the array
+     * @param  mixed|null     $default     Default value to use if the key was not found
+     * @return mixed
+     */
+    private function val($arr, $key, $default = NULL)
+    {
+        if(isset($arr[$key])) {
+            return is_bool($arr[$key]) ? var_export($arr[$key], true) : $arr[$key];
+        }
+        return $default;
+    }
 
 }

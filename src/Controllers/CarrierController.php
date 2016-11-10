@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/09/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/10/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -43,17 +43,17 @@ class CarrierController extends BaseController {
 
     /**
      * Get the Carrier Lookup
-     * @param  string     $phonenumber      Required parameter: The number to lookup
-     * @param  string     $responseType     Optional parameter: Response format, xml or json
+     * @param  array  $options    Array with all options for search
+     * @param  string     $options['phonenumber']      Required parameter: The number to lookup
+     * @param  string     $options['responseType']     Optional parameter: Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createCarrierLookup (
-                $phonenumber,
-                $responseType = 'json') 
+                $options) 
     { 
         //check that all required arguments are provided
-        if(!isset($phonenumber))
+        if(!isset($options['phonenumber']))
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
 
 
@@ -65,7 +65,7 @@ class CarrierController extends BaseController {
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => (null != $responseType) ? $responseType : 'json',
+            'ResponseType' => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -78,7 +78,7 @@ class CarrierController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'phonenumber'  => $phonenumber
+            'phonenumber'  => $this->val($options, 'phonenumber')
         );
 
         //set HTTP basic auth parameters
@@ -111,16 +111,15 @@ class CarrierController extends BaseController {
         
     /**
      * Get the All Purchase Number's Carrier lookup
-     * @param  string     $page             Optional parameter: Page Number
-     * @param  string     $pagesize         Optional parameter: Page Size
-     * @param  string     $responseType     Optional parameter: Response format, xml or json
+     * @param  array  $options    Array with all options for search
+     * @param  string     $options['page']             Optional parameter: Page Number
+     * @param  string     $options['pagesize']         Optional parameter: Page Size
+     * @param  string     $options['responseType']     Optional parameter: Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createCarrierLookupList (
-                $page = NULL,
-                $pagesize = NULL,
-                $responseType = 'json') 
+                $options) 
     {
         //the base uri for api requests
         $_queryBuilder = Configuration::$BASEURI;
@@ -130,7 +129,7 @@ class CarrierController extends BaseController {
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => (null != $responseType) ? $responseType : 'json',
+            'ResponseType' => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -143,8 +142,8 @@ class CarrierController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'page'         => $page,
-            'pagesize'     => $pagesize
+            'page'         => $this->val($options, 'page'),
+            'pagesize'     => $this->val($options, 'pagesize')
         );
 
         //set HTTP basic auth parameters
@@ -175,5 +174,21 @@ class CarrierController extends BaseController {
         return $response->body;
     }
         
+
+
+    /**
+	 * Array access utility method
+     * @param  array          $arr         Array of values to read from
+     * @param  string         $key         Key to get the value from the array
+     * @param  mixed|null     $default     Default value to use if the key was not found
+     * @return mixed
+     */
+    private function val($arr, $key, $default = NULL)
+    {
+        if(isset($arr[$key])) {
+            return is_bool($arr[$key]) ? var_export($arr[$key], true) : $arr[$key];
+        }
+        return $default;
+    }
 
 }

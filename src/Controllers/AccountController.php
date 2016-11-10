@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/09/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/10/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -43,17 +43,17 @@ class AccountController extends BaseController {
 
     /**
      * Display Account Description
-     * @param  string     $date             Required parameter: Example: 
-     * @param  string     $responseType     Optional parameter: Response type format xml or json
+     * @param  array  $options    Array with all options for search
+     * @param  string     $options['date']             Required parameter: Example: 
+     * @param  string     $options['responseType']     Optional parameter: Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createViewAccount (
-                $date,
-                $responseType = 'json') 
+                $options) 
     { 
         //check that all required arguments are provided
-        if(!isset($date))
+        if(!isset($options['date']))
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
 
 
@@ -65,7 +65,7 @@ class AccountController extends BaseController {
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => (null != $responseType) ? $responseType : 'json',
+            'ResponseType' => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -78,7 +78,7 @@ class AccountController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'date'         => $date
+            'date'         => $this->val($options, 'date')
         );
 
         //set HTTP basic auth parameters
@@ -109,5 +109,21 @@ class AccountController extends BaseController {
         return $response->body;
     }
         
+
+
+    /**
+	 * Array access utility method
+     * @param  array          $arr         Array of values to read from
+     * @param  string         $key         Key to get the value from the array
+     * @param  mixed|null     $default     Default value to use if the key was not found
+     * @return mixed
+     */
+    private function val($arr, $key, $default = NULL)
+    {
+        if(isset($arr[$key])) {
+            return is_bool($arr[$key]) ? var_export($arr[$key], true) : $arr[$key];
+        }
+        return $default;
+    }
 
 }

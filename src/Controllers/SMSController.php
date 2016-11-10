@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/09/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/10/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -43,29 +43,23 @@ class SMSController extends BaseController {
 
     /**
      * Send an SMS from a message360 number
-     * @param  integer     $fromcountrycode           Required parameter: From Country Code
-     * @param  string      $from                      Required parameter: SMS enabled Message360 number to send this message from
-     * @param  integer     $tocountrycode             Required parameter: To country code
-     * @param  string      $to                        Required parameter: Number to send the SMS to
-     * @param  string      $body                      Required parameter: Text Message To Send
-     * @param  string      $method                    Optional parameter: Specifies the HTTP method used to request the required URL once SMS sent.
-     * @param  string      $messagestatuscallback     Optional parameter: URL that can be requested to receive notification when SMS has Sent. A set of default parameters will be sent here once the SMS is finished.
-     * @param  string      $responseType              Optional parameter: Response format, xml or json
+     * @param  array  $options    Array with all options for search
+     * @param  integer     $options['fromcountrycode']           Required parameter: From Country Code
+     * @param  string      $options['from']                      Required parameter: SMS enabled Message360 number to send this message from
+     * @param  integer     $options['tocountrycode']             Required parameter: To country code
+     * @param  string      $options['to']                        Required parameter: Number to send the SMS to
+     * @param  string      $options['body']                      Required parameter: Text Message To Send
+     * @param  string      $options['method']                    Optional parameter: Specifies the HTTP method used to request the required URL once SMS sent.
+     * @param  string      $options['messagestatuscallback']     Optional parameter: URL that can be requested to receive notification when SMS has Sent. A set of default parameters will be sent here once the SMS is finished.
+     * @param  string      $options['responseType']              Optional parameter: Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createSendSMS (
-                $fromcountrycode,
-                $from,
-                $tocountrycode,
-                $to,
-                $body,
-                $method = NULL,
-                $messagestatuscallback = NULL,
-                $responseType = 'json') 
+                $options) 
     { 
         //check that all required arguments are provided
-        if(!isset($fromcountrycode, $from, $tocountrycode, $to, $body))
+        if(!isset($options['fromcountrycode'], $options['from'], $options['tocountrycode'], $options['to'], $options['body']))
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
 
 
@@ -77,7 +71,7 @@ class SMSController extends BaseController {
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'          => (null != $responseType) ? $responseType : 'json',
+            'ResponseType'          => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -90,13 +84,13 @@ class SMSController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'fromcountrycode'       => $fromcountrycode,
-            'from'                  => $from,
-            'tocountrycode'         => $tocountrycode,
-            'to'                    => $to,
-            'body'                  => $body,
-            'method'                => $method,
-            'messagestatuscallback' => $messagestatuscallback
+            'fromcountrycode'       => $this->val($options, 'fromcountrycode'),
+            'from'                  => $this->val($options, 'from'),
+            'tocountrycode'         => $this->val($options, 'tocountrycode'),
+            'to'                    => $this->val($options, 'to'),
+            'body'                  => $this->val($options, 'body'),
+            'method'                => $this->val($options, 'method'),
+            'messagestatuscallback' => $this->val($options, 'messagestatuscallback')
         );
 
         //set HTTP basic auth parameters
@@ -129,17 +123,17 @@ class SMSController extends BaseController {
         
     /**
      * View Particular SMS
-     * @param  string     $messagesid       Required parameter: Message sid
-     * @param  string     $responseType     Optional parameter: Response format, xml or json
+     * @param  array  $options    Array with all options for search
+     * @param  string     $options['messagesid']       Required parameter: Message sid
+     * @param  string     $options['responseType']     Optional parameter: Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createViewSMS (
-                $messagesid,
-                $responseType = 'json') 
+                $options) 
     { 
         //check that all required arguments are provided
-        if(!isset($messagesid))
+        if(!isset($options['messagesid']))
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
 
 
@@ -151,7 +145,7 @@ class SMSController extends BaseController {
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => (null != $responseType) ? $responseType : 'json',
+            'ResponseType' => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -164,7 +158,7 @@ class SMSController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'messagesid'   => $messagesid
+            'messagesid'   => $this->val($options, 'messagesid')
         );
 
         //set HTTP basic auth parameters
@@ -197,22 +191,18 @@ class SMSController extends BaseController {
         
     /**
      * List All SMS
-     * @param  integer     $page             Optional parameter: Which page of the overall response will be returned. Zero indexed
-     * @param  integer     $pagesize         Optional parameter: Number of individual resources listed in the response per page
-     * @param  string      $from             Optional parameter: Messages sent from this number
-     * @param  string      $to               Optional parameter: Messages sent to this number
-     * @param  string      $datesent         Optional parameter: Only list SMS messages sent in the specified date range
-     * @param  string      $responseType     Optional parameter: Response format, xml or json
+     * @param  array  $options    Array with all options for search
+     * @param  integer     $options['page']             Optional parameter: Which page of the overall response will be returned. Zero indexed
+     * @param  integer     $options['pagesize']         Optional parameter: Number of individual resources listed in the response per page
+     * @param  string      $options['from']             Optional parameter: Messages sent from this number
+     * @param  string      $options['to']               Optional parameter: Messages sent to this number
+     * @param  string      $options['datesent']         Optional parameter: Only list SMS messages sent in the specified date range
+     * @param  string      $options['responseType']     Optional parameter: Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createListSMS (
-                $page = NULL,
-                $pagesize = NULL,
-                $from = NULL,
-                $to = NULL,
-                $datesent = NULL,
-                $responseType = 'json') 
+                $options) 
     {
         //the base uri for api requests
         $_queryBuilder = Configuration::$BASEURI;
@@ -222,7 +212,7 @@ class SMSController extends BaseController {
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => (null != $responseType) ? $responseType : 'json',
+            'ResponseType' => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -235,11 +225,11 @@ class SMSController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'page'         => $page,
-            'pagesize'     => $pagesize,
-            'from'         => $from,
-            'to'           => $to,
-            'datesent'     => $datesent
+            'page'         => $this->val($options, 'page'),
+            'pagesize'     => $this->val($options, 'pagesize'),
+            'from'         => $this->val($options, 'from'),
+            'to'           => $this->val($options, 'to'),
+            'datesent'     => $this->val($options, 'datesent')
         );
 
         //set HTTP basic auth parameters
@@ -272,20 +262,17 @@ class SMSController extends BaseController {
         
     /**
      * List All Inbound SMS
-     * @param  integer     $page             Optional parameter: Which page of the overall response will be returned. Zero indexed
-     * @param  string      $pagesize         Optional parameter: Number of individual resources listed in the response per page
-     * @param  string      $from             Optional parameter: From Number to Inbound SMS
-     * @param  string      $to               Optional parameter: To Number to get Inbound SMS
-     * @param  string      $responseType     Optional parameter: Response format, xml or json
+     * @param  array  $options    Array with all options for search
+     * @param  integer     $options['page']             Optional parameter: Which page of the overall response will be returned. Zero indexed
+     * @param  string      $options['pagesize']         Optional parameter: Number of individual resources listed in the response per page
+     * @param  string      $options['from']             Optional parameter: From Number to Inbound SMS
+     * @param  string      $options['to']               Optional parameter: To Number to get Inbound SMS
+     * @param  string      $options['responseType']     Optional parameter: Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createListInboundSMS (
-                $page = NULL,
-                $pagesize = NULL,
-                $from = NULL,
-                $to = NULL,
-                $responseType = 'json') 
+                $options) 
     {
         //the base uri for api requests
         $_queryBuilder = Configuration::$BASEURI;
@@ -295,7 +282,7 @@ class SMSController extends BaseController {
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => (null != $responseType) ? $responseType : 'json',
+            'ResponseType' => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -308,10 +295,10 @@ class SMSController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'page'         => $page,
-            'pagesize'     => $pagesize,
-            'from'         => $from,
-            'to'           => $to
+            'page'         => $this->val($options, 'page'),
+            'pagesize'     => $this->val($options, 'pagesize'),
+            'from'         => $this->val($options, 'from'),
+            'to'           => $this->val($options, 'to')
         );
 
         //set HTTP basic auth parameters
@@ -342,5 +329,21 @@ class SMSController extends BaseController {
         return $response->body;
     }
         
+
+
+    /**
+	 * Array access utility method
+     * @param  array          $arr         Array of values to read from
+     * @param  string         $key         Key to get the value from the array
+     * @param  mixed|null     $default     Default value to use if the key was not found
+     * @return mixed
+     */
+    private function val($arr, $key, $default = NULL)
+    {
+        if(isset($arr[$key])) {
+            return is_bool($arr[$key]) ? var_export($arr[$key], true) : $arr[$key];
+        }
+        return $default;
+    }
 
 }
