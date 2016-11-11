@@ -21,16 +21,16 @@ use Unirest\Request;
 /**
  * @todo Add a general description for this controller.
  */
-class RecordingController extends BaseController {
+class WebRTCController extends BaseController {
 
     /**
-     * @var RecordingController The reference to *Singleton* instance of this class
+     * @var WebRTCController The reference to *Singleton* instance of this class
      */
     private static $instance;
     
     /**
      * Returns the *Singleton* instance of this class.
-     * @return RecordingController The *Singleton* instance.
+     * @return WebRTCController The *Singleton* instance.
      */
     public static function getInstance()
     {
@@ -42,18 +42,18 @@ class RecordingController extends BaseController {
     }
 
     /**
-     * View a specific Recording
+     * @todo Add general description for this endpoint
      * @param  array  $options    Array with all options for search
-     * @param  string     $options['recordingSid']     Required parameter: Search Recording sid
-     * @param  string     $options['responseType']     Optional parameter: Response format, xml or json
-     * @return string response from the API call
+     * @param  string     $options['accountSid']      Required parameter: Your message360 Account SID
+     * @param  string     $options['authToken']       Required parameter: Your message360 Token
+     * @return void response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createViewRecording (
+    public function createCheckFunds (
                 $options) 
     { 
         //check that all required arguments are provided
-        if(!isset($options['recordingSid']))
+        if(!isset($options['accountSid'], $options['authToken']))
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
 
 
@@ -61,12 +61,7 @@ class RecordingController extends BaseController {
         $_queryBuilder = Configuration::$BASEURI;
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/recording/viewrecording.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
-            ));
+        $_queryBuilder = $_queryBuilder.'/webrtc/checkFunds.json';
 
         //validate and preprocess url
         $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
@@ -78,7 +73,8 @@ class RecordingController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'RecordingSid' => $this->val($options, 'recordingSid')
+            'account_sid' => $this->val($options, 'accountSid'),
+            'auth_token'  => $this->val($options, 'authToken')
         );
 
         //set HTTP basic auth parameters
@@ -105,23 +101,22 @@ class RecordingController extends BaseController {
         if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
             throw new APIException("HTTP Response Not OK", $_httpContext);
         }
-
-        return $response->body;
     }
         
     /**
-     * Delete Recording Record
+     * Authenticate a message360 number for use
      * @param  array  $options    Array with all options for search
-     * @param  string     $options['recordingSid']     Required parameter: Unique Recording Sid to be delete
-     * @param  string     $options['responseType']     Optional parameter: Response format, xml or json
-     * @return string response from the API call
+     * @param  string     $options['phoneNumber']      Required parameter: Phone number to authenticate for use
+     * @param  string     $options['accountSid']       Required parameter: Your message360 Account SID
+     * @param  string     $options['authToken']        Required parameter: Your message360 token
+     * @return void response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createDeleteRecording (
+    public function createAuthenticateNumber (
                 $options) 
     { 
         //check that all required arguments are provided
-        if(!isset($options['recordingSid']))
+        if(!isset($options['phoneNumber'], $options['accountSid'], $options['authToken']))
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
 
 
@@ -129,12 +124,7 @@ class RecordingController extends BaseController {
         $_queryBuilder = Configuration::$BASEURI;
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/recording/deleterecording.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
-            ));
+        $_queryBuilder = $_queryBuilder.'/webrtc/authenticateNumber.json';
 
         //validate and preprocess url
         $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
@@ -146,7 +136,9 @@ class RecordingController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'RecordingSid' => $this->val($options, 'recordingSid')
+            'phone_number' => $this->val($options, 'phoneNumber'),
+            'account_sid'  => $this->val($options, 'accountSid'),
+            'auth_token'   => $this->val($options, 'authToken')
         );
 
         //set HTTP basic auth parameters
@@ -173,34 +165,29 @@ class RecordingController extends BaseController {
         if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
             throw new APIException("HTTP Response Not OK", $_httpContext);
         }
-
-        return $response->body;
     }
         
     /**
-     * List out Recordings
+     * message360 webrtc
      * @param  array  $options    Array with all options for search
-     * @param  integer     $options['page']             Optional parameter: Which page of the overall response will be returned. Zero indexed
-     * @param  integer     $options['pageSize']         Optional parameter: Number of individual resources listed in the response per page
-     * @param  string      $options['dateCreated']      Optional parameter: Example: 
-     * @param  string      $options['callSid']          Optional parameter: Example: 
-     * @param  string      $options['responseType']     Optional parameter: Response format, xml or json
-     * @return string response from the API call
+     * @param  string     $options['accountSid']      Required parameter: Your message360 Account SID
+     * @param  string     $options['authToken']       Required parameter: Your message360 Token
+     * @return void response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createListRecording (
+    public function createToken (
                 $options) 
-    {
+    { 
+        //check that all required arguments are provided
+        if(!isset($options['accountSid'], $options['authToken']))
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+
+
         //the base uri for api requests
         $_queryBuilder = Configuration::$BASEURI;
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/recording/listrecording.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
-            ));
+        $_queryBuilder = $_queryBuilder.'/webrtc/createToken.json';
 
         //validate and preprocess url
         $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
@@ -212,10 +199,8 @@ class RecordingController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'Page'         => $this->val($options, 'page'),
-            'PageSize'     => $this->val($options, 'pageSize'),
-            'DateCreated'  => $this->val($options, 'dateCreated'),
-            'CallSid'      => $this->val($options, 'callSid')
+            'account_sid' => $this->val($options, 'accountSid'),
+            'auth_token'  => $this->val($options, 'authToken')
         );
 
         //set HTTP basic auth parameters
@@ -242,8 +227,6 @@ class RecordingController extends BaseController {
         if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
             throw new APIException("HTTP Response Not OK", $_httpContext);
         }
-
-        return $response->body;
     }
         
 
