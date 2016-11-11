@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/10/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/11/2016
  */
 
 namespace Message360Lib;
@@ -57,6 +57,15 @@ class Message360Client
     public function getUsage()
     {
         return Controllers\UsageController::getInstance();
+    }
+ 
+    /**
+     * Singleton access to WebRTC controller
+     * @return Controllers\WebRTCController The *Singleton* instance
+     */
+    public function getWebRTC()
+    {
+        return Controllers\WebRTCController::getInstance();
     }
  
     /**
