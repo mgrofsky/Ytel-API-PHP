@@ -21,16 +21,16 @@ use Unirest\Request;
 /**
  * @todo Add a general description for this controller.
  */
-class SMSController extends BaseController {
+class AddressController extends BaseController {
 
     /**
-     * @var SMSController The reference to *Singleton* instance of this class
+     * @var AddressController The reference to *Singleton* instance of this class
      */
     private static $instance;
     
     /**
      * Returns the *Singleton* instance of this class.
-     * @return SMSController The *Singleton* instance.
+     * @return AddressController The *Singleton* instance.
      */
     public static function getInstance()
     {
@@ -42,18 +42,26 @@ class SMSController extends BaseController {
     }
 
     /**
-     * View Particular SMS
+     * To add an address to your address book, you create a new address object. You can retrieve and delete individual addresses as well as get a list of addresses. Addresses are identified by a unique random ID.
      * @param  array  $options    Array with all options for search
-     * @param  string     $options['messagesid']       Required parameter: Message sid
-     * @param  string     $options['responseType']     Optional parameter: Response type format xml or json
+     * @param  string     $options['name']             Required parameter: Name of user
+     * @param  string     $options['address']          Required parameter: Address of user.
+     * @param  string     $options['country']          Required parameter: Must be a 2 letter country short-name code (ISO 3166)
+     * @param  string     $options['state']            Required parameter: Must be a 2 letter State eg. CA for US. For Some Countries it can be greater than 2 letters.
+     * @param  string     $options['city']             Required parameter: City Name.
+     * @param  string     $options['zip']              Required parameter: Zip code of city.
+     * @param  string     $options['description']      Optional parameter: Description of addresses.
+     * @param  string     $options['email']            Optional parameter: Email Id of user.
+     * @param  string     $options['phone']            Optional parameter: Phone number of user.
+     * @param  string     $options['responseType']     Optional parameter: Response Type Either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createViewSMS (
+    public function createAddress (
                 $options) 
     { 
         //check that all required arguments are provided
-        if(!isset($options['messagesid']))
+        if(!isset($options['name'], $options['address'], $options['country'], $options['state'], $options['city'], $options['zip']))
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
 
 
@@ -61,7 +69,7 @@ class SMSController extends BaseController {
         $_queryBuilder = Configuration::$BASEURI;
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/sms/viewsms.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/address/createaddress.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -78,7 +86,15 @@ class SMSController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'messagesid'   => $this->val($options, 'messagesid')
+            'name'         => $this->val($options, 'name'),
+            'address'      => $this->val($options, 'address'),
+            'country'      => $this->val($options, 'country'),
+            'state'        => $this->val($options, 'state'),
+            'city'         => $this->val($options, 'city'),
+            'zip'          => $this->val($options, 'zip'),
+            'description'  => $this->val($options, 'description'),
+            'email'        => $this->val($options, 'email'),
+            'phone'        => $this->val($options, 'phone')
         );
 
         //set HTTP basic auth parameters
@@ -110,164 +126,18 @@ class SMSController extends BaseController {
     }
         
     /**
-     * List All Inbound SMS
+     * To delete Address to your address book
      * @param  array  $options    Array with all options for search
-     * @param  integer     $options['page']             Optional parameter: Which page of the overall response will be returned. Zero indexed
-     * @param  string      $options['pagesize']         Optional parameter: Number of individual resources listed in the response per page
-     * @param  string      $options['from']             Optional parameter: From Number to Inbound SMS
-     * @param  string      $options['to']               Optional parameter: To Number to get Inbound SMS
-     * @param  string      $options['responseType']     Optional parameter: Response type format xml or json
+     * @param  string     $options['addressid']        Required parameter: The identifier of the address to be deleted.
+     * @param  string     $options['responseType']     Optional parameter: Response type either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createListInboundSMS (
-                $options) 
-    {
-        //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/sms/getInboundsms.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'page'         => $this->val($options, 'page'),
-            'pagesize'     => $this->val($options, 'pagesize'),
-            'from'         => $this->val($options, 'from'),
-            'to'           => $this->val($options, 'to')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        //call on-after Http callback
-        if($this->getHttpCallBack() != null) {
-            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-            
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
-        }
-
-        //Error handling using HTTP status codes
-        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
-            throw new APIException("HTTP Response Not OK", $_httpContext);
-        }
-
-        return $response->body;
-    }
-        
-    /**
-     * List All SMS
-     * @param  array  $options    Array with all options for search
-     * @param  integer     $options['page']             Optional parameter: Which page of the overall response will be returned. Zero indexed
-     * @param  integer     $options['pagesize']         Optional parameter: Number of individual resources listed in the response per page
-     * @param  string      $options['from']             Optional parameter: Messages sent from this number
-     * @param  string      $options['to']               Optional parameter: Messages sent to this number
-     * @param  string      $options['datesent']         Optional parameter: Only list SMS messages sent in the specified date range
-     * @param  string      $options['responseType']     Optional parameter: Response type format xml or json
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function createListSMS (
-                $options) 
-    {
-        //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/sms/listsms.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'page'         => $this->val($options, 'page'),
-            'pagesize'     => $this->val($options, 'pagesize'),
-            'from'         => $this->val($options, 'from'),
-            'to'           => $this->val($options, 'to'),
-            'datesent'     => $this->val($options, 'datesent')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        //call on-after Http callback
-        if($this->getHttpCallBack() != null) {
-            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-            
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
-        }
-
-        //Error handling using HTTP status codes
-        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
-            throw new APIException("HTTP Response Not OK", $_httpContext);
-        }
-
-        return $response->body;
-    }
-        
-    /**
-     * Send an SMS from a message360 number
-     * @param  array  $options    Array with all options for search
-     * @param  integer     $options['fromcountrycode']           Required parameter: From Country Code
-     * @param  string      $options['from']                      Required parameter: SMS enabled Message360 number to send this message from
-     * @param  integer     $options['tocountrycode']             Required parameter: To country code
-     * @param  string      $options['to']                        Required parameter: Number to send the SMS to
-     * @param  string      $options['body']                      Required parameter: Text Message To Send
-     * @param  string      $options['method']                    Optional parameter: Specifies the HTTP method used to request the required URL once SMS sent.
-     * @param  string      $options['messagestatuscallback']     Optional parameter: URL that can be requested to receive notification when SMS has Sent. A set of default parameters will be sent here once the SMS is finished.
-     * @param  string      $options['responseType']              Optional parameter: Response type format xml or json
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function createSendSMS (
+    public function createDeleteAddress (
                 $options) 
     { 
         //check that all required arguments are provided
-        if(!isset($options['fromcountrycode'], $options['from'], $options['tocountrycode'], $options['to'], $options['body']))
+        if(!isset($options['addressid']))
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
 
 
@@ -275,11 +145,11 @@ class SMSController extends BaseController {
         $_queryBuilder = Configuration::$BASEURI;
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/sms/sendsms.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/address/deleteaddress.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'          => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -287,18 +157,217 @@ class SMSController extends BaseController {
 
         //prepare headers
         $_headers = array (
-            'user-agent'          => 'message360-api'
+            'user-agent'    => 'message360-api'
         );
 
         //prepare parameters
         $_parameters = array (
-            'fromcountrycode'       => $this->val($options, 'fromcountrycode'),
-            'from'                  => $this->val($options, 'from'),
-            'tocountrycode'         => $this->val($options, 'tocountrycode'),
-            'to'                    => $this->val($options, 'to'),
-            'body'                  => $this->val($options, 'body'),
-            'method'                => $this->val($options, 'method'),
-            'messagestatuscallback' => $this->val($options, 'messagestatuscallback')
+            'addressid'    => $this->val($options, 'addressid')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        //call on-after Http callback
+        if($this->getHttpCallBack() != null) {
+            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+            
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
+        }
+
+        //Error handling using HTTP status codes
+        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
+            throw new APIException("HTTP Response Not OK", $_httpContext);
+        }
+
+        return $response->body;
+    }
+        
+    /**
+     * Validates an address given.
+     * @param  array  $options    Array with all options for search
+     * @param  string     $options['addressid']        Required parameter: The identifier of the address to be verified.
+     * @param  string     $options['responseType']     Optional parameter: Response type either JSON or xml
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function createVerifyAddress (
+                $options) 
+    { 
+        //check that all required arguments are provided
+        if(!isset($options['addressid']))
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::$BASEURI;
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/address/verifyaddress.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'addressid'    => $this->val($options, 'addressid')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        //call on-after Http callback
+        if($this->getHttpCallBack() != null) {
+            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+            
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
+        }
+
+        //Error handling using HTTP status codes
+        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
+            throw new APIException("HTTP Response Not OK", $_httpContext);
+        }
+
+        return $response->body;
+    }
+        
+    /**
+     * List All Address 
+     * @param  array  $options    Array with all options for search
+     * @param  integer     $options['page']             Optional parameter: Return requested # of items starting the value, default=0, must be an integer
+     * @param  integer     $options['pageSize']         Optional parameter: How many results to return, default=10, max 100, must be an integer
+     * @param  string      $options['addressId']        Optional parameter: addresses Sid
+     * @param  string      $options['dateCreated']      Optional parameter: date created address.
+     * @param  string      $options['responseType']     Optional parameter: Response Type either json or xml
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function createListAddress (
+                $options) 
+    {
+        //the base uri for api requests
+        $_queryBuilder = Configuration::$BASEURI;
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/address/listaddress.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'page'         => $this->val($options, 'page', 1),
+            'pageSize'     => $this->val($options, 'pageSize', 10),
+            'addressId'    => $this->val($options, 'addressId'),
+            'dateCreated'  => $this->val($options, 'dateCreated')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        //call on-after Http callback
+        if($this->getHttpCallBack() != null) {
+            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+            
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
+        }
+
+        //Error handling using HTTP status codes
+        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
+            throw new APIException("HTTP Response Not OK", $_httpContext);
+        }
+
+        return $response->body;
+    }
+        
+    /**
+     * View Address Specific address Book by providing the address id
+     * @param  array  $options    Array with all options for search
+     * @param  string     $options['addressId']        Required parameter: The identifier of the address to be retrieved.
+     * @param  string     $options['responseType']     Optional parameter: Response Type either json or xml
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function createViewAddress (
+                $options) 
+    { 
+        //check that all required arguments are provided
+        if(!isset($options['addressId']))
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::$BASEURI;
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/address/viewaddress.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'addressId'    => $this->val($options, 'addressId')
         );
 
         //set HTTP basic auth parameters

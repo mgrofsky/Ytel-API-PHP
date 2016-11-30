@@ -8,17 +8,17 @@
 namespace Message360Lib\Models;
 
 /**
- * How Message360 should handle the receiving numbers voicemail machine
+ * Choose account status either 0 or 1
  */
-class IfMachine {
+class ActivateStatus {
     /**
      * TODO: Write general description for this element
      */
-    const CONTINUE_ = "continue";
+    const ACTIVATE = "1";
 
     /**
      * TODO: Write general description for this element
      */
-    const HANGUP = "hangup";
+    const DEACTIVATE = "0";
 
 }

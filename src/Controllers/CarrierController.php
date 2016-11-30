@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/11/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/30/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -45,7 +45,7 @@ class CarrierController extends BaseController {
      * Get the Carrier Lookup
      * @param  array  $options    Array with all options for search
      * @param  string     $options['phonenumber']      Required parameter: The number to lookup
-     * @param  string     $options['responseType']     Optional parameter: Response format, xml or json
+     * @param  string     $options['responseType']     Optional parameter: Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -112,9 +112,9 @@ class CarrierController extends BaseController {
     /**
      * Get the All Purchase Number's Carrier lookup
      * @param  array  $options    Array with all options for search
-     * @param  string     $options['page']             Optional parameter: Page Number
-     * @param  string     $options['pagesize']         Optional parameter: Page Size
-     * @param  string     $options['responseType']     Optional parameter: Response format, xml or json
+     * @param  integer     $options['page']             Optional parameter: Page Number
+     * @param  integer     $options['pagesize']         Optional parameter: Page Size
+     * @param  string      $options['responseType']     Optional parameter: Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
