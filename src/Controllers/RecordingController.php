@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/11/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/30/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -42,26 +42,24 @@ class RecordingController extends BaseController {
     }
 
     /**
-     * View a specific Recording
+     * List out Recordings
      * @param  array  $options    Array with all options for search
-     * @param  string     $options['recordingSid']     Required parameter: Search Recording sid
-     * @param  string     $options['responseType']     Optional parameter: Response format, xml or json
+     * @param  integer     $options['page']             Optional parameter: Which page of the overall response will be returned. Zero indexed
+     * @param  integer     $options['pageSize']         Optional parameter: Number of individual resources listed in the response per page
+     * @param  string      $options['dateCreated']      Optional parameter: Example: 
+     * @param  string      $options['callSid']          Optional parameter: Example: 
+     * @param  string      $options['responseType']     Optional parameter: Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createViewRecording (
+    public function createListRecording (
                 $options) 
-    { 
-        //check that all required arguments are provided
-        if(!isset($options['recordingSid']))
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-
-
+    {
         //the base uri for api requests
         $_queryBuilder = Configuration::$BASEURI;
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/recording/viewrecording.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/recording/listrecording.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -78,7 +76,10 @@ class RecordingController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'RecordingSid' => $this->val($options, 'recordingSid')
+            'Page'         => $this->val($options, 'page'),
+            'PageSize'     => $this->val($options, 'pageSize'),
+            'DateCreated'  => $this->val($options, 'dateCreated'),
+            'CallSid'      => $this->val($options, 'callSid')
         );
 
         //set HTTP basic auth parameters
@@ -113,7 +114,7 @@ class RecordingController extends BaseController {
      * Delete Recording Record
      * @param  array  $options    Array with all options for search
      * @param  string     $options['recordingSid']     Required parameter: Unique Recording Sid to be delete
-     * @param  string     $options['responseType']     Optional parameter: Response format, xml or json
+     * @param  string     $options['responseType']     Optional parameter: Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -178,24 +179,26 @@ class RecordingController extends BaseController {
     }
         
     /**
-     * List out Recordings
+     * View a specific Recording
      * @param  array  $options    Array with all options for search
-     * @param  integer     $options['page']             Optional parameter: Which page of the overall response will be returned. Zero indexed
-     * @param  integer     $options['pageSize']         Optional parameter: Number of individual resources listed in the response per page
-     * @param  string      $options['dateCreated']      Optional parameter: Example: 
-     * @param  string      $options['callSid']          Optional parameter: Example: 
-     * @param  string      $options['responseType']     Optional parameter: Response format, xml or json
+     * @param  string     $options['recordingSid']     Required parameter: Search Recording sid
+     * @param  string     $options['responseType']     Optional parameter: Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createListRecording (
+    public function createViewRecording (
                 $options) 
-    {
+    { 
+        //check that all required arguments are provided
+        if(!isset($options['recordingSid']))
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+
+
         //the base uri for api requests
         $_queryBuilder = Configuration::$BASEURI;
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/recording/listrecording.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/recording/viewrecording.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -212,10 +215,7 @@ class RecordingController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'Page'         => $this->val($options, 'page'),
-            'PageSize'     => $this->val($options, 'pageSize'),
-            'DateCreated'  => $this->val($options, 'dateCreated'),
-            'CallSid'      => $this->val($options, 'callSid')
+            'RecordingSid' => $this->val($options, 'recordingSid')
         );
 
         //set HTTP basic auth parameters

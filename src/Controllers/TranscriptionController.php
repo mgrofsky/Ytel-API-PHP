@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/11/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/30/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -42,28 +42,30 @@ class TranscriptionController extends BaseController {
     }
 
     /**
-     * Get All transcriptions
+     * Audio URL Transcriptions
      * @param  array  $options    Array with all options for search
-     * @param  integer     $options['page']                Optional parameter: Example: 
-     * @param  integer     $options['pageSize']            Optional parameter: Example: 
-     * @param  string      $options['status']              Optional parameter: Example: 
-     * @param  string      $options['dateTranscribed']     Optional parameter: Example: 
-     * @param  string      $options['responseType']        Optional parameter: Response format, xml or json
+     * @param  string     $options['audioUrl']         Required parameter: Audio url
+     * @param  string     $options['responseType']     Optional parameter: Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createListTranscription (
+    public function createAudioURLTranscription (
                 $options) 
-    {
+    { 
+        //check that all required arguments are provided
+        if(!isset($options['audioUrl']))
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+
+
         //the base uri for api requests
         $_queryBuilder = Configuration::$BASEURI;
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/transcriptions/listtranscription.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/transcriptions/audiourltranscription.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'    => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -76,78 +78,7 @@ class TranscriptionController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'Page'            => $this->val($options, 'page'),
-            'PageSize'        => $this->val($options, 'pageSize'),
-            'Status'          => $this->val($options, 'status'),
-            'DateTranscribed' => $this->val($options, 'dateTranscribed')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        //call on-after Http callback
-        if($this->getHttpCallBack() != null) {
-            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-            
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
-        }
-
-        //Error handling using HTTP status codes
-        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
-            throw new APIException("HTTP Response Not OK", $_httpContext);
-        }
-
-        return $response->body;
-    }
-        
-    /**
-     * View Specific Transcriptions
-     * @param  array  $options    Array with all options for search
-     * @param  string     $options['transcriptionSid']     Required parameter: Unique Transcription ID
-     * @param  string     $options['responseType']         Optional parameter: Response format, xml or json
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function createViewTranscription (
-                $options) 
-    { 
-        //check that all required arguments are provided
-        if(!isset($options['transcriptionSid']))
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/transcriptions/viewtranscription.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'     => $this->val($options, 'responseType', 'json'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'     => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'TranscriptionSid' => $this->val($options, 'transcriptionSid')
+            'AudioUrl'     => $this->val($options, 'audioUrl')
         );
 
         //set HTTP basic auth parameters
@@ -182,7 +113,7 @@ class TranscriptionController extends BaseController {
      * Recording Transcriptions
      * @param  array  $options    Array with all options for search
      * @param  string     $options['recordingSid']     Required parameter: Unique Recording sid
-     * @param  string     $options['responseType']     Optional parameter: Response format, xml or json
+     * @param  string     $options['responseType']     Optional parameter: Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -247,18 +178,18 @@ class TranscriptionController extends BaseController {
     }
         
     /**
-     * Audio URL Transcriptions
+     * View Specific Transcriptions
      * @param  array  $options    Array with all options for search
-     * @param  string     $options['audioUrl']         Required parameter: Audio url
-     * @param  string     $options['responseType']     Optional parameter: Response format, xml or json
+     * @param  string     $options['transcriptionSid']     Required parameter: Unique Transcription ID
+     * @param  string     $options['responseType']         Optional parameter: Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createAudioURLTranscription (
+    public function createViewTranscription (
                 $options) 
     { 
         //check that all required arguments are provided
-        if(!isset($options['audioUrl']))
+        if(!isset($options['transcriptionSid']))
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
 
 
@@ -266,11 +197,77 @@ class TranscriptionController extends BaseController {
         $_queryBuilder = Configuration::$BASEURI;
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/transcriptions/audiourltranscription.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/transcriptions/viewtranscription.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType'     => $this->val($options, 'responseType', 'json'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'     => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'TranscriptionSid' => $this->val($options, 'transcriptionSid')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        //call on-after Http callback
+        if($this->getHttpCallBack() != null) {
+            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+            
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
+        }
+
+        //Error handling using HTTP status codes
+        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
+            throw new APIException("HTTP Response Not OK", $_httpContext);
+        }
+
+        return $response->body;
+    }
+        
+    /**
+     * Get All transcriptions
+     * @param  array  $options    Array with all options for search
+     * @param  integer     $options['page']                Optional parameter: Example: 
+     * @param  integer     $options['pageSize']            Optional parameter: Example: 
+     * @param  string      $options['status']              Optional parameter: Example: 
+     * @param  string      $options['dateTranscribed']     Optional parameter: Example: 
+     * @param  string      $options['responseType']        Optional parameter: Response type format xml or json
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function createListTranscription (
+                $options) 
+    {
+        //the base uri for api requests
+        $_queryBuilder = Configuration::$BASEURI;
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/transcriptions/listtranscription.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType'    => $this->val($options, 'responseType', 'json'),
             ));
 
         //validate and preprocess url
@@ -283,7 +280,10 @@ class TranscriptionController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'AudioUrl'     => $this->val($options, 'audioUrl')
+            'Page'            => $this->val($options, 'page'),
+            'PageSize'        => $this->val($options, 'pageSize'),
+            'Status'          => $this->val($options, 'status'),
+            'DateTranscribed' => $this->val($options, 'dateTranscribed')
         );
 
         //set HTTP basic auth parameters

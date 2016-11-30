@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/11/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/30/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -47,7 +47,7 @@ class UsageController extends BaseController {
      * @param  string     $options['productCode']      Required parameter: Product Code
      * @param  string     $options['startDate']        Required parameter: Start Usage Date
      * @param  string     $options['endDate']          Required parameter: End Usage Date
-     * @param  string     $options['responseType']     Optional parameter: Response format, xml or json
+     * @param  string     $options['responseType']     Optional parameter: Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */

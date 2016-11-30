@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/11/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/30/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -41,6 +41,68 @@ class WebRTCController extends BaseController {
         return static::$instance;
     }
 
+    /**
+     * message360 webrtc
+     * @param  array  $options    Array with all options for search
+     * @param  string     $options['accountSid']      Required parameter: Your message360 Account SID
+     * @param  string     $options['authToken']       Required parameter: Your message360 Token
+     * @return void response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function createToken (
+                $options) 
+    { 
+        //check that all required arguments are provided
+        if(!isset($options['accountSid'], $options['authToken']))
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::$BASEURI;
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/webrtc/createToken.json';
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'account_sid' => $this->val($options, 'accountSid'),
+            'auth_token'  => $this->val($options, 'authToken')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        //call on-after Http callback
+        if($this->getHttpCallBack() != null) {
+            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+            
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
+        }
+
+        //Error handling using HTTP status codes
+        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
+            throw new APIException("HTTP Response Not OK", $_httpContext);
+        }
+    }
+        
     /**
      * @todo Add general description for this endpoint
      * @param  array  $options    Array with all options for search
@@ -139,68 +201,6 @@ class WebRTCController extends BaseController {
             'phone_number' => $this->val($options, 'phoneNumber'),
             'account_sid'  => $this->val($options, 'accountSid'),
             'auth_token'   => $this->val($options, 'authToken')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        //call on-after Http callback
-        if($this->getHttpCallBack() != null) {
-            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-            
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
-        }
-
-        //Error handling using HTTP status codes
-        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
-            throw new APIException("HTTP Response Not OK", $_httpContext);
-        }
-    }
-        
-    /**
-     * message360 webrtc
-     * @param  array  $options    Array with all options for search
-     * @param  string     $options['accountSid']      Required parameter: Your message360 Account SID
-     * @param  string     $options['authToken']       Required parameter: Your message360 Token
-     * @return void response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function createToken (
-                $options) 
-    { 
-        //check that all required arguments are provided
-        if(!isset($options['accountSid'], $options['authToken']))
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/webrtc/createToken.json';
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'account_sid' => $this->val($options, 'accountSid'),
-            'auth_token'  => $this->val($options, 'authToken')
         );
 
         //set HTTP basic auth parameters

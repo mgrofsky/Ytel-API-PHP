@@ -21,16 +21,16 @@ use Unirest\Request;
 /**
  * @todo Add a general description for this controller.
  */
-class AccountController extends BaseController {
+class NumberVerificationController extends BaseController {
 
     /**
-     * @var AccountController The reference to *Singleton* instance of this class
+     * @var NumberVerificationController The reference to *Singleton* instance of this class
      */
     private static $instance;
     
     /**
      * Returns the *Singleton* instance of this class.
-     * @return AccountController The *Singleton* instance.
+     * @return NumberVerificationController The *Singleton* instance.
      */
     public static function getInstance()
     {
@@ -42,18 +42,19 @@ class AccountController extends BaseController {
     }
 
     /**
-     * Display Account Description
+     * Number Verification
      * @param  array  $options    Array with all options for search
-     * @param  string     $options['date']             Required parameter: Example: 
-     * @param  string     $options['responseType']     Optional parameter: Response type format xml or json
+     * @param  string     $options['phonenumber']      Required parameter: Example: 
+     * @param  string     $options['type']             Required parameter: Example: 
+     * @param  string     $options['responseType']     Optional parameter: Response Type either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createViewAccount (
+    public function createVerifyNumber (
                 $options) 
     { 
         //check that all required arguments are provided
-        if(!isset($options['date']))
+        if(!isset($options['phonenumber'], $options['type']))
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
 
 
@@ -61,7 +62,7 @@ class AccountController extends BaseController {
         $_queryBuilder = Configuration::$BASEURI;
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/accounts/viewaccount.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/verifycallerid/verifynumber.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -78,7 +79,8 @@ class AccountController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'date'         => $this->val($options, 'date')
+            'phonenumber'  => $this->val($options, 'phonenumber'),
+            'type'         => $this->val($options, 'type')
         );
 
         //set HTTP basic auth parameters

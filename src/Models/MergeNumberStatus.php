@@ -8,17 +8,17 @@
 namespace Message360Lib\Models;
 
 /**
- * How Message360 should handle the receiving numbers voicemail machine
+ * Choose sub account either merge or delete
  */
-class IfMachine {
+class MergeNumberStatus {
     /**
      * TODO: Write general description for this element
      */
-    const CONTINUE_ = "continue";
+    const DELETE = 0;
 
     /**
      * TODO: Write general description for this element
      */
-    const HANGUP = "hangup";
+    const MERGE = 1;
 
 }

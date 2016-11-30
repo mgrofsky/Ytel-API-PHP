@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/11/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/30/2016
  */
 
 namespace Message360Lib;
@@ -33,57 +33,39 @@ class Message360Client
     }
  
     /**
-     * Singleton access to Transcription controller
-     * @return Controllers\TranscriptionController The *Singleton* instance
-     */
-    public function getTranscription()
-    {
-        return Controllers\TranscriptionController::getInstance();
-    }
- 
-    /**
-     * Singleton access to PhoneNumber controller
-     * @return Controllers\PhoneNumberController The *Singleton* instance
-     */
-    public function getPhoneNumber()
-    {
-        return Controllers\PhoneNumberController::getInstance();
-    }
- 
-    /**
-     * Singleton access to Usage controller
-     * @return Controllers\UsageController The *Singleton* instance
-     */
-    public function getUsage()
-    {
-        return Controllers\UsageController::getInstance();
-    }
- 
-    /**
-     * Singleton access to WebRTC controller
-     * @return Controllers\WebRTCController The *Singleton* instance
-     */
-    public function getWebRTC()
-    {
-        return Controllers\WebRTCController::getInstance();
-    }
- 
-    /**
-     * Singleton access to Recording controller
-     * @return Controllers\RecordingController The *Singleton* instance
-     */
-    public function getRecording()
-    {
-        return Controllers\RecordingController::getInstance();
-    }
- 
-    /**
      * Singleton access to Email controller
      * @return Controllers\EmailController The *Singleton* instance
      */
     public function getEmail()
     {
         return Controllers\EmailController::getInstance();
+    }
+ 
+    /**
+     * Singleton access to NumberVerification controller
+     * @return Controllers\NumberVerificationController The *Singleton* instance
+     */
+    public function getNumberVerification()
+    {
+        return Controllers\NumberVerificationController::getInstance();
+    }
+ 
+    /**
+     * Singleton access to Carrier controller
+     * @return Controllers\CarrierController The *Singleton* instance
+     */
+    public function getCarrier()
+    {
+        return Controllers\CarrierController::getInstance();
+    }
+ 
+    /**
+     * Singleton access to Call controller
+     * @return Controllers\CallController The *Singleton* instance
+     */
+    public function getCall()
+    {
+        return Controllers\CallController::getInstance();
     }
  
     /**
@@ -105,20 +87,65 @@ class Message360Client
     }
  
     /**
-     * Singleton access to Call controller
-     * @return Controllers\CallController The *Singleton* instance
+     * Singleton access to WebRTC controller
+     * @return Controllers\WebRTCController The *Singleton* instance
      */
-    public function getCall()
+    public function getWebRTC()
     {
-        return Controllers\CallController::getInstance();
+        return Controllers\WebRTCController::getInstance();
     }
  
     /**
-     * Singleton access to Carrier controller
-     * @return Controllers\CarrierController The *Singleton* instance
+     * Singleton access to SubAccount controller
+     * @return Controllers\SubAccountController The *Singleton* instance
      */
-    public function getCarrier()
+    public function getSubAccount()
     {
-        return Controllers\CarrierController::getInstance();
+        return Controllers\SubAccountController::getInstance();
+    }
+ 
+    /**
+     * Singleton access to Address controller
+     * @return Controllers\AddressController The *Singleton* instance
+     */
+    public function getAddress()
+    {
+        return Controllers\AddressController::getInstance();
+    }
+ 
+    /**
+     * Singleton access to PhoneNumber controller
+     * @return Controllers\PhoneNumberController The *Singleton* instance
+     */
+    public function getPhoneNumber()
+    {
+        return Controllers\PhoneNumberController::getInstance();
+    }
+ 
+    /**
+     * Singleton access to Recording controller
+     * @return Controllers\RecordingController The *Singleton* instance
+     */
+    public function getRecording()
+    {
+        return Controllers\RecordingController::getInstance();
+    }
+ 
+    /**
+     * Singleton access to Transcription controller
+     * @return Controllers\TranscriptionController The *Singleton* instance
+     */
+    public function getTranscription()
+    {
+        return Controllers\TranscriptionController::getInstance();
+    }
+ 
+    /**
+     * Singleton access to Usage controller
+     * @return Controllers\UsageController The *Singleton* instance
+     */
+    public function getUsage()
+    {
+        return Controllers\UsageController::getInstance();
     }
 }
