@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/30/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/01/2016
  */
 
 namespace Message360Lib\Models;
@@ -14,11 +14,11 @@ class ActivateStatus {
     /**
      * TODO: Write general description for this element
      */
-    const ACTIVATE = "1";
+    const ACTIVATE = 1;
 
     /**
      * TODO: Write general description for this element
      */
-    const DEACTIVATE = "0";
+    const DEACTIVATE = 0;
 
 }

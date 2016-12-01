@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 11/30/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/01/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -117,7 +117,7 @@ class SubAccountController extends BaseController {
      * Suspend or unsuspend
      * @param  array  $options    Array with all options for search
      * @param  string     $options['subaccountsid']     Required parameter: Example: 
-     * @param  string     $options['activate']          Required parameter: Example: 
+     * @param  int        $options['activate']          Required parameter: Example: 
      * @param  string     $options['responseType']      Optional parameter: Example: 
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
