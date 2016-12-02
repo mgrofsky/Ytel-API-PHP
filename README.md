@@ -226,10 +226,10 @@ function createListConference($options)
 #### Example Usage
 
 ```php
-$page = 10;
+$page = 16;
 $collect['page'] = $page;
 
-$pageSize = 10;
+$pageSize = 16;
 $collect['pageSize'] = $pageSize;
 
 $friendlyName = 'FriendlyName';
@@ -317,7 +317,7 @@ $collect['conferencesid'] = $conferencesid;
 $participantnumber = 'participantnumber';
 $collect['participantnumber'] = $participantnumber;
 
-$tocountrycode = 10;
+$tocountrycode = 16;
 $collect['tocountrycode'] = $tocountrycode;
 
 $muted = false;
@@ -363,10 +363,10 @@ function createListParticipant($options)
 $conferenceSid = 'ConferenceSid';
 $collect['conferenceSid'] = $conferenceSid;
 
-$page = 102;
+$page = 16;
 $collect['page'] = $page;
 
-$pagesize = 102;
+$pagesize = 16;
 $collect['pagesize'] = $pagesize;
 
 $muted = false;
@@ -993,10 +993,10 @@ function createCarrierLookupList($options)
 #### Example Usage
 
 ```php
-$page = 102;
+$page = 108;
 $collect['page'] = $page;
 
-$pagesize = 102;
+$pagesize = 108;
 $collect['pagesize'] = $pagesize;
 
 $responseType = 'json';
@@ -1129,7 +1129,7 @@ $collect['heartBeatUrl'] = $heartBeatUrl;
 $heartBeatMethod = string::GET;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 102;
+$timeout = 108;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
@@ -1195,19 +1195,19 @@ $collect['callSid'] = $callSid;
 $audioDirection = string::IN;
 $collect['audioDirection'] = $audioDirection;
 
-$pitchSemiTones = 102.311869357858;
+$pitchSemiTones = 108.307744086863;
 $collect['pitchSemiTones'] = $pitchSemiTones;
 
-$pitchOctaves = 102.311869357858;
+$pitchOctaves = 108.307744086863;
 $collect['pitchOctaves'] = $pitchOctaves;
 
-$pitch = 102.311869357858;
+$pitch = 108.307744086863;
 $collect['pitch'] = $pitch;
 
-$rate = 102.311869357858;
+$rate = 108.307744086863;
 $collect['rate'] = $rate;
 
-$tempo = 102.311869357858;
+$tempo = 108.307744086863;
 $collect['tempo'] = $tempo;
 
 $responseType = 'json';
@@ -1254,7 +1254,7 @@ $collect['record'] = $record;
 $direction = string::IN;
 $collect['direction'] = $direction;
 
-$timeLimit = 102;
+$timeLimit = 108;
 $collect['timeLimit'] = $timeLimit;
 
 $callBackUrl = 'CallBackUrl';
@@ -1304,7 +1304,7 @@ $collect['callSid'] = $callSid;
 $audioUrl = 'AudioUrl';
 $collect['audioUrl'] = $audioUrl;
 
-$length = 102;
+$length = 108;
 $collect['length'] = $length;
 
 $direction = string::IN;
@@ -1350,10 +1350,10 @@ function createListCalls($options)
 #### Example Usage
 
 ```php
-$page = 102;
+$page = 108;
 $collect['page'] = $page;
 
-$pageSize = 102;
+$pageSize = 108;
 $collect['pageSize'] = $pageSize;
 
 $to = 'To';
@@ -1537,7 +1537,7 @@ $collect['heartBeatUrl'] = $heartBeatUrl;
 $heartBeatMethod = false;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 102;
+$timeout = 108;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
@@ -1642,7 +1642,7 @@ function createListInboundSMS($options)
 #### Example Usage
 
 ```php
-$page = 193;
+$page = 108;
 $collect['page'] = $page;
 
 $pagesize = 'pagesize';
@@ -1688,10 +1688,10 @@ function createListSMS($options)
 #### Example Usage
 
 ```php
-$page = 193;
+$page = 108;
 $collect['page'] = $page;
 
-$pagesize = 193;
+$pagesize = 108;
 $collect['pagesize'] = $pagesize;
 
 $from = 'from';
@@ -2497,10 +2497,10 @@ function createListNumber($options)
 #### Example Usage
 
 ```php
-$page = 193;
+$page = 199;
 $collect['page'] = $page;
 
-$pageSize = 193;
+$pageSize = 199;
 $collect['pageSize'] = $pageSize;
 
 $numberType = string::ALL;
@@ -2547,7 +2547,7 @@ $collect['numberType'] = $numberType;
 $areaCode = 'AreaCode';
 $collect['areaCode'] = $areaCode;
 
-$pageSize = 193;
+$pageSize = 199;
 $collect['pageSize'] = $pageSize;
 
 $responseType = 'json';
@@ -2595,10 +2595,10 @@ function createListRecording($options)
 #### Example Usage
 
 ```php
-$page = 193;
+$page = 199;
 $collect['page'] = $page;
 
-$pageSize = 193;
+$pageSize = 199;
 $collect['pageSize'] = $pageSize;
 
 $dateCreated = 'DateCreated';
@@ -2817,10 +2817,10 @@ function createListTranscription($options)
 #### Example Usage
 
 ```php
-$page = 193;
+$page = 199;
 $collect['page'] = $page;
 
-$pageSize = 193;
+$pageSize = 199;
 $collect['pageSize'] = $pageSize;
 
 $status = string::INPROGRESS;
