@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/02/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/08/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -16,6 +16,7 @@ use Message360Lib\Http\HttpRequest;
 use Message360Lib\Http\HttpResponse;
 use Message360Lib\Http\HttpMethod;
 use Message360Lib\Http\HttpContext;
+use Message360Lib\Servers;
 use Unirest\Request;
 
 /**
@@ -61,7 +62,7 @@ class ConferenceController extends BaseController {
 
 
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/conferences/deafMuteParticipant.{ResponseType}';
@@ -132,7 +133,7 @@ class ConferenceController extends BaseController {
                 $options) 
     {
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/conferences/listconference.{ResponseType}';
@@ -205,7 +206,7 @@ class ConferenceController extends BaseController {
 
 
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/conferences/viewconference.{ResponseType}';
@@ -277,7 +278,7 @@ class ConferenceController extends BaseController {
 
 
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/conferences/addParticipant.{ResponseType}';
@@ -353,7 +354,7 @@ class ConferenceController extends BaseController {
 
 
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/conferences/listparticipant.{ResponseType}';
@@ -426,7 +427,7 @@ class ConferenceController extends BaseController {
 
 
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/conferences/viewparticipant.{ResponseType}';
