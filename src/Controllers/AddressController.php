@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/02/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/08/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -16,6 +16,7 @@ use Message360Lib\Http\HttpRequest;
 use Message360Lib\Http\HttpResponse;
 use Message360Lib\Http\HttpMethod;
 use Message360Lib\Http\HttpContext;
+use Message360Lib\Servers;
 use Unirest\Request;
 
 /**
@@ -66,7 +67,7 @@ class AddressController extends BaseController {
 
 
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/address/createaddress.{ResponseType}';
@@ -142,7 +143,7 @@ class AddressController extends BaseController {
 
 
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/address/deleteaddress.{ResponseType}';
@@ -210,7 +211,7 @@ class AddressController extends BaseController {
 
 
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/address/verifyaddress.{ResponseType}';
@@ -276,7 +277,7 @@ class AddressController extends BaseController {
                 $options) 
     {
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/address/listaddress.{ResponseType}';
@@ -347,7 +348,7 @@ class AddressController extends BaseController {
 
 
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/address/viewaddress.{ResponseType}';

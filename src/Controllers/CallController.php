@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/02/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/08/2016
  */
 
 namespace Message360Lib\Controllers;
@@ -16,6 +16,7 @@ use Message360Lib\Http\HttpRequest;
 use Message360Lib\Http\HttpResponse;
 use Message360Lib\Http\HttpMethod;
 use Message360Lib\Http\HttpContext;
+use Message360Lib\Servers;
 use Unirest\Request;
 
 /**
@@ -58,7 +59,7 @@ class CallController extends BaseController {
 
 
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/calls/viewcalls.{ResponseType}';
@@ -145,7 +146,7 @@ class CallController extends BaseController {
 
 
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/calls/groupcall.{ResponseType}';
@@ -238,7 +239,7 @@ class CallController extends BaseController {
 
 
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/calls/voiceeffect.{ResponseType}';
@@ -317,7 +318,7 @@ class CallController extends BaseController {
 
 
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/calls/recordcalls.{ResponseType}';
@@ -395,7 +396,7 @@ class CallController extends BaseController {
 
 
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/calls/playaudios.{ResponseType}';
@@ -467,7 +468,7 @@ class CallController extends BaseController {
                 $options) 
     {
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/calls/listcalls.{ResponseType}';
@@ -542,7 +543,7 @@ class CallController extends BaseController {
 
 
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/calls/interruptcalls.{ResponseType}';
@@ -615,7 +616,7 @@ class CallController extends BaseController {
 
 
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/calls/senddigits.{ResponseType}';
@@ -705,7 +706,7 @@ class CallController extends BaseController {
 
 
         //the base uri for api requests
-        $_queryBuilder = Configuration::$BASEURI;
+        $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
         $_queryBuilder = $_queryBuilder.'/calls/makecall.{ResponseType}';

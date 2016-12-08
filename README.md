@@ -226,10 +226,10 @@ function createListConference($options)
 #### Example Usage
 
 ```php
-$page = 16;
+$page = 106;
 $collect['page'] = $page;
 
-$pageSize = 16;
+$pageSize = 106;
 $collect['pageSize'] = $pageSize;
 
 $friendlyName = 'FriendlyName';
@@ -317,13 +317,13 @@ $collect['conferencesid'] = $conferencesid;
 $participantnumber = 'participantnumber';
 $collect['participantnumber'] = $participantnumber;
 
-$tocountrycode = 16;
+$tocountrycode = 197;
 $collect['tocountrycode'] = $tocountrycode;
 
-$muted = false;
+$muted = true;
 $collect['muted'] = $muted;
 
-$deaf = false;
+$deaf = true;
 $collect['deaf'] = $deaf;
 
 $responseType = 'json';
@@ -363,16 +363,16 @@ function createListParticipant($options)
 $conferenceSid = 'ConferenceSid';
 $collect['conferenceSid'] = $conferenceSid;
 
-$page = 16;
+$page = 197;
 $collect['page'] = $page;
 
-$pagesize = 16;
+$pagesize = 197;
 $collect['pagesize'] = $pagesize;
 
-$muted = false;
+$muted = true;
 $collect['muted'] = $muted;
 
-$deaf = false;
+$deaf = true;
 $collect['deaf'] = $deaf;
 
 $responseType = 'json';
@@ -993,10 +993,10 @@ function createCarrierLookupList($options)
 #### Example Usage
 
 ```php
-$page = 108;
+$page = 155;
 $collect['page'] = $page;
 
-$pagesize = 108;
+$pagesize = 155;
 $collect['pagesize'] = $pagesize;
 
 $responseType = 'json';
@@ -1129,7 +1129,7 @@ $collect['heartBeatUrl'] = $heartBeatUrl;
 $heartBeatMethod = string::GET;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 108;
+$timeout = 155;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
@@ -1138,7 +1138,7 @@ $collect['playDtmf'] = $playDtmf;
 $hideCallerId = 'HideCallerId';
 $collect['hideCallerId'] = $hideCallerId;
 
-$record = false;
+$record = true;
 $collect['record'] = $record;
 
 $recordCallBackUrl = 'RecordCallBackUrl';
@@ -1147,7 +1147,7 @@ $collect['recordCallBackUrl'] = $recordCallBackUrl;
 $recordCallBackMethod = string::GET;
 $collect['recordCallBackMethod'] = $recordCallBackMethod;
 
-$transcribe = false;
+$transcribe = true;
 $collect['transcribe'] = $transcribe;
 
 $transcribeCallBackUrl = 'TranscribeCallBackUrl';
@@ -1195,19 +1195,19 @@ $collect['callSid'] = $callSid;
 $audioDirection = string::IN;
 $collect['audioDirection'] = $audioDirection;
 
-$pitchSemiTones = 108.307744086863;
+$pitchSemiTones = 155.796483788079;
 $collect['pitchSemiTones'] = $pitchSemiTones;
 
-$pitchOctaves = 108.307744086863;
+$pitchOctaves = 155.796483788079;
 $collect['pitchOctaves'] = $pitchOctaves;
 
-$pitch = 108.307744086863;
+$pitch = 155.796483788079;
 $collect['pitch'] = $pitch;
 
-$rate = 108.307744086863;
+$rate = 155.796483788079;
 $collect['rate'] = $rate;
 
-$tempo = 108.307744086863;
+$tempo = 155.796483788079;
 $collect['tempo'] = $tempo;
 
 $responseType = 'json';
@@ -1248,13 +1248,13 @@ function createRecordCall($options)
 $callSid = 'CallSid';
 $collect['callSid'] = $callSid;
 
-$record = false;
+$record = true;
 $collect['record'] = $record;
 
 $direction = string::IN;
 $collect['direction'] = $direction;
 
-$timeLimit = 108;
+$timeLimit = 155;
 $collect['timeLimit'] = $timeLimit;
 
 $callBackUrl = 'CallBackUrl';
@@ -1304,16 +1304,16 @@ $collect['callSid'] = $callSid;
 $audioUrl = 'AudioUrl';
 $collect['audioUrl'] = $audioUrl;
 
-$length = 108;
+$length = 155;
 $collect['length'] = $length;
 
 $direction = string::IN;
 $collect['direction'] = $direction;
 
-$loop = false;
+$loop = true;
 $collect['loop'] = $loop;
 
-$mix = false;
+$mix = true;
 $collect['mix'] = $mix;
 
 $responseType = 'json';
@@ -1350,10 +1350,10 @@ function createListCalls($options)
 #### Example Usage
 
 ```php
-$page = 108;
+$page = 155;
 $collect['page'] = $page;
 
-$pageSize = 108;
+$pageSize = 155;
 $collect['pageSize'] = $pageSize;
 
 $to = 'To';
@@ -1534,19 +1534,19 @@ $collect['fallBackMethod'] = $fallBackMethod;
 $heartBeatUrl = 'HeartBeatUrl';
 $collect['heartBeatUrl'] = $heartBeatUrl;
 
-$heartBeatMethod = false;
+$heartBeatMethod = true;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 108;
+$timeout = 155;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
 $collect['playDtmf'] = $playDtmf;
 
-$hideCallerId = false;
+$hideCallerId = true;
 $collect['hideCallerId'] = $hideCallerId;
 
-$record = false;
+$record = true;
 $collect['record'] = $record;
 
 $recordCallBackUrl = 'RecordCallBackUrl';
@@ -1555,7 +1555,7 @@ $collect['recordCallBackUrl'] = $recordCallBackUrl;
 $recordCallBackMethod = string::GET;
 $collect['recordCallBackMethod'] = $recordCallBackMethod;
 
-$transcribe = false;
+$transcribe = true;
 $collect['transcribe'] = $transcribe;
 
 $transcribeCallBackUrl = 'TranscribeCallBackUrl';
@@ -1642,7 +1642,7 @@ function createListInboundSMS($options)
 #### Example Usage
 
 ```php
-$page = 108;
+$page = 155;
 $collect['page'] = $page;
 
 $pagesize = 'pagesize';
@@ -1688,10 +1688,10 @@ function createListSMS($options)
 #### Example Usage
 
 ```php
-$page = 108;
+$page = 155;
 $collect['page'] = $page;
 
-$pagesize = 108;
+$pagesize = 155;
 $collect['pagesize'] = $pagesize;
 
 $from = 'from';
@@ -2497,10 +2497,10 @@ function createListNumber($options)
 #### Example Usage
 
 ```php
-$page = 199;
+$page = 247;
 $collect['page'] = $page;
 
-$pageSize = 199;
+$pageSize = 247;
 $collect['pageSize'] = $pageSize;
 
 $numberType = string::ALL;
@@ -2547,7 +2547,7 @@ $collect['numberType'] = $numberType;
 $areaCode = 'AreaCode';
 $collect['areaCode'] = $areaCode;
 
-$pageSize = 199;
+$pageSize = 247;
 $collect['pageSize'] = $pageSize;
 
 $responseType = 'json';
@@ -2595,10 +2595,10 @@ function createListRecording($options)
 #### Example Usage
 
 ```php
-$page = 199;
+$page = 247;
 $collect['page'] = $page;
 
-$pageSize = 199;
+$pageSize = 247;
 $collect['pageSize'] = $pageSize;
 
 $dateCreated = 'DateCreated';
@@ -2817,10 +2817,10 @@ function createListTranscription($options)
 #### Example Usage
 
 ```php
-$page = 199;
+$page = 247;
 $collect['page'] = $page;
 
-$pageSize = 199;
+$pageSize = 247;
 $collect['pageSize'] = $pageSize;
 
 $status = string::INPROGRESS;

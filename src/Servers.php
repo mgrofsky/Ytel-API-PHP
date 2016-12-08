@@ -5,20 +5,15 @@
  * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/08/2016
  */
 
-namespace Message360Lib\Models;
+namespace Message360Lib;
 
 /**
- * Choose account status either 0 or 1
+ * Baseurl aliases
  */
-class ActivateStatus {
+class Servers {
     /**
      * TODO: Write general description for this element
      */
-    const ACTIVATE = 1;
-
-    /**
-     * TODO: Write general description for this element
-     */
-    const DEACTIVATE = 0;
+    const DEFAULT_ = "default";
 
 }
