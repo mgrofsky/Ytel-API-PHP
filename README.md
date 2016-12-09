@@ -226,10 +226,10 @@ function createListConference($options)
 #### Example Usage
 
 ```php
-$page = 106;
+$page = 21;
 $collect['page'] = $page;
 
-$pageSize = 106;
+$pageSize = 21;
 $collect['pageSize'] = $pageSize;
 
 $friendlyName = 'FriendlyName';
@@ -317,13 +317,13 @@ $collect['conferencesid'] = $conferencesid;
 $participantnumber = 'participantnumber';
 $collect['participantnumber'] = $participantnumber;
 
-$tocountrycode = 197;
+$tocountrycode = 21;
 $collect['tocountrycode'] = $tocountrycode;
 
-$muted = true;
+$muted = false;
 $collect['muted'] = $muted;
 
-$deaf = true;
+$deaf = false;
 $collect['deaf'] = $deaf;
 
 $responseType = 'json';
@@ -363,16 +363,16 @@ function createListParticipant($options)
 $conferenceSid = 'ConferenceSid';
 $collect['conferenceSid'] = $conferenceSid;
 
-$page = 197;
+$page = 21;
 $collect['page'] = $page;
 
-$pagesize = 197;
+$pagesize = 21;
 $collect['pagesize'] = $pagesize;
 
-$muted = true;
+$muted = false;
 $collect['muted'] = $muted;
 
-$deaf = true;
+$deaf = false;
 $collect['deaf'] = $deaf;
 
 $responseType = 'json';
@@ -993,10 +993,10 @@ function createCarrierLookupList($options)
 #### Example Usage
 
 ```php
-$page = 155;
+$page = 112;
 $collect['page'] = $page;
 
-$pagesize = 155;
+$pagesize = 112;
 $collect['pagesize'] = $pagesize;
 
 $responseType = 'json';
@@ -1129,7 +1129,7 @@ $collect['heartBeatUrl'] = $heartBeatUrl;
 $heartBeatMethod = string::GET;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 155;
+$timeout = 112;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
@@ -1138,7 +1138,7 @@ $collect['playDtmf'] = $playDtmf;
 $hideCallerId = 'HideCallerId';
 $collect['hideCallerId'] = $hideCallerId;
 
-$record = true;
+$record = false;
 $collect['record'] = $record;
 
 $recordCallBackUrl = 'RecordCallBackUrl';
@@ -1147,7 +1147,7 @@ $collect['recordCallBackUrl'] = $recordCallBackUrl;
 $recordCallBackMethod = string::GET;
 $collect['recordCallBackMethod'] = $recordCallBackMethod;
 
-$transcribe = true;
+$transcribe = false;
 $collect['transcribe'] = $transcribe;
 
 $transcribeCallBackUrl = 'TranscribeCallBackUrl';
@@ -1195,19 +1195,19 @@ $collect['callSid'] = $callSid;
 $audioDirection = string::IN;
 $collect['audioDirection'] = $audioDirection;
 
-$pitchSemiTones = 155.796483788079;
+$pitchSemiTones = 112.666351388985;
 $collect['pitchSemiTones'] = $pitchSemiTones;
 
-$pitchOctaves = 155.796483788079;
+$pitchOctaves = 112.666351388985;
 $collect['pitchOctaves'] = $pitchOctaves;
 
-$pitch = 155.796483788079;
+$pitch = 112.666351388985;
 $collect['pitch'] = $pitch;
 
-$rate = 155.796483788079;
+$rate = 112.666351388985;
 $collect['rate'] = $rate;
 
-$tempo = 155.796483788079;
+$tempo = 112.666351388985;
 $collect['tempo'] = $tempo;
 
 $responseType = 'json';
@@ -1248,13 +1248,13 @@ function createRecordCall($options)
 $callSid = 'CallSid';
 $collect['callSid'] = $callSid;
 
-$record = true;
+$record = false;
 $collect['record'] = $record;
 
 $direction = string::IN;
 $collect['direction'] = $direction;
 
-$timeLimit = 155;
+$timeLimit = 112;
 $collect['timeLimit'] = $timeLimit;
 
 $callBackUrl = 'CallBackUrl';
@@ -1304,16 +1304,16 @@ $collect['callSid'] = $callSid;
 $audioUrl = 'AudioUrl';
 $collect['audioUrl'] = $audioUrl;
 
-$length = 155;
+$length = 112;
 $collect['length'] = $length;
 
 $direction = string::IN;
 $collect['direction'] = $direction;
 
-$loop = true;
+$loop = false;
 $collect['loop'] = $loop;
 
-$mix = true;
+$mix = false;
 $collect['mix'] = $mix;
 
 $responseType = 'json';
@@ -1350,10 +1350,10 @@ function createListCalls($options)
 #### Example Usage
 
 ```php
-$page = 155;
+$page = 112;
 $collect['page'] = $page;
 
-$pageSize = 155;
+$pageSize = 70;
 $collect['pageSize'] = $pageSize;
 
 $to = 'To';
@@ -1534,19 +1534,19 @@ $collect['fallBackMethod'] = $fallBackMethod;
 $heartBeatUrl = 'HeartBeatUrl';
 $collect['heartBeatUrl'] = $heartBeatUrl;
 
-$heartBeatMethod = true;
+$heartBeatMethod = false;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 155;
+$timeout = 70;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
 $collect['playDtmf'] = $playDtmf;
 
-$hideCallerId = true;
+$hideCallerId = false;
 $collect['hideCallerId'] = $hideCallerId;
 
-$record = true;
+$record = false;
 $collect['record'] = $record;
 
 $recordCallBackUrl = 'RecordCallBackUrl';
@@ -1555,7 +1555,7 @@ $collect['recordCallBackUrl'] = $recordCallBackUrl;
 $recordCallBackMethod = string::GET;
 $collect['recordCallBackMethod'] = $recordCallBackMethod;
 
-$transcribe = true;
+$transcribe = false;
 $collect['transcribe'] = $transcribe;
 
 $transcribeCallBackUrl = 'TranscribeCallBackUrl';
@@ -1642,7 +1642,7 @@ function createListInboundSMS($options)
 #### Example Usage
 
 ```php
-$page = 155;
+$page = 70;
 $collect['page'] = $page;
 
 $pagesize = 'pagesize';
@@ -1688,10 +1688,10 @@ function createListSMS($options)
 #### Example Usage
 
 ```php
-$page = 155;
+$page = 70;
 $collect['page'] = $page;
 
-$pagesize = 155;
+$pagesize = 70;
 $collect['pagesize'] = $pagesize;
 
 $from = 'from';
@@ -1826,39 +1826,6 @@ The singleton instance of the ``` WebRTCController ``` class can be accessed fro
 $webRTC = $client->getWebRTC();
 ```
 
-#### <a name="create_token"></a>![Method: ](http://apidocs.io/img/method.png ".WebRTCController.createToken") createToken
-
-> message360 webrtc
-
-
-```php
-function createToken($options)
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| accountSid |  ``` Required ```  | Your message360 Account SID |
-| authToken |  ``` Required ```  | Your message360 Token |
-
-
-
-#### Example Usage
-
-```php
-$accountSid = 'account_sid';
-$collect['accountSid'] = $accountSid;
-
-$authToken = 'auth_token';
-$collect['authToken'] = $authToken;
-
-
-$webRTC->createToken($collect);
-
-```
-
-
 #### <a name="create_check_funds"></a>![Method: ](http://apidocs.io/img/method.png ".WebRTCController.createCheckFunds") createCheckFunds
 
 > TODO: Add a method description
@@ -1887,7 +1854,7 @@ $authToken = 'auth_token';
 $collect['authToken'] = $authToken;
 
 
-$webRTC->createCheckFunds($collect);
+$result = $webRTC->createCheckFunds($collect);
 
 ```
 
@@ -1924,7 +1891,40 @@ $authToken = 'auth_token';
 $collect['authToken'] = $authToken;
 
 
-$webRTC->createAuthenticateNumber($collect);
+$result = $webRTC->createAuthenticateNumber($collect);
+
+```
+
+
+#### <a name="create_token"></a>![Method: ](http://apidocs.io/img/method.png ".WebRTCController.createToken") createToken
+
+> message360 webrtc
+
+
+```php
+function createToken($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| accountSid |  ``` Required ```  | Your message360 Account SID |
+| authToken |  ``` Required ```  | Your message360 Token |
+
+
+
+#### Example Usage
+
+```php
+$accountSid = 'account_sid';
+$collect['accountSid'] = $accountSid;
+
+$authToken = 'auth_token';
+$collect['authToken'] = $authToken;
+
+
+$result = $webRTC->createToken($collect);
 
 ```
 
@@ -2497,10 +2497,10 @@ function createListNumber($options)
 #### Example Usage
 
 ```php
-$page = 247;
+$page = 70;
 $collect['page'] = $page;
 
-$pageSize = 247;
+$pageSize = 70;
 $collect['pageSize'] = $pageSize;
 
 $numberType = string::ALL;
@@ -2547,7 +2547,7 @@ $collect['numberType'] = $numberType;
 $areaCode = 'AreaCode';
 $collect['areaCode'] = $areaCode;
 
-$pageSize = 247;
+$pageSize = 70;
 $collect['pageSize'] = $pageSize;
 
 $responseType = 'json';
@@ -2595,10 +2595,10 @@ function createListRecording($options)
 #### Example Usage
 
 ```php
-$page = 247;
+$page = 70;
 $collect['page'] = $page;
 
-$pageSize = 247;
+$pageSize = 70;
 $collect['pageSize'] = $pageSize;
 
 $dateCreated = 'DateCreated';
@@ -2817,10 +2817,10 @@ function createListTranscription($options)
 #### Example Usage
 
 ```php
-$page = 247;
+$page = 162;
 $collect['page'] = $page;
 
-$pageSize = 247;
+$pageSize = 162;
 $collect['pageSize'] = $pageSize;
 
 $status = string::INPROGRESS;
