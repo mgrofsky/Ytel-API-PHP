@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/09/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/14/2016
  */
 
 namespace Message360Lib;
@@ -61,7 +61,7 @@ class Configuration {
             Servers::DEFAULT_ => 'https://api-preprod.message360.com/api/v2',
         ),
         Environments::DEVELOPMENT => array(
-            Servers::DEFAULT_ => 'https://api-dev.message360.com/api/v2',
+            Servers::DEFAULT_ => 'https://lara-dev.message360.com/api/v2',
         ),
     );
 }
