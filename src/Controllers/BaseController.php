@@ -2,12 +2,16 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/14/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
 namespace Message360Lib\Controllers;
 
 use Message360Lib\Http\HttpCallBack;
+use Message360Lib\Http\HttpContext;
+use Message360Lib\Http\HttpResponse;
+use Message360Lib\APIException;
+use Message360Lib\Exceptions;
 use \apimatic\jsonmapper\JsonMapper;
 use Unirest\Request;
 
@@ -55,5 +59,12 @@ class BaseController
     {
         $mapper = new JsonMapper();
         return $mapper;
+    }
+
+    protected function validateResponse(HttpResponse $response, HttpContext $_httpContext)
+    {
+        if (($response->getStatusCode() < 200) || ($response->getStatusCode() > 208)) { //[200,208] = HTTP OK
+            throw new APIException('HTTP Response Not OK', $_httpContext);
+        }
     }
 }

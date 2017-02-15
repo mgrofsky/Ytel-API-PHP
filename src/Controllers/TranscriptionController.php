@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/14/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
 namespace Message360Lib\Controllers;
@@ -22,13 +22,13 @@ use Unirest\Request;
 /**
  * @todo Add a general description for this controller.
  */
-class TranscriptionController extends BaseController {
-
+class TranscriptionController extends BaseController
+{
     /**
      * @var TranscriptionController The reference to *Singleton* instance of this class
      */
     private static $instance;
-    
+
     /**
      * Returns the *Singleton* instance of this class.
      * @return TranscriptionController The *Singleton* instance.
@@ -44,18 +44,20 @@ class TranscriptionController extends BaseController {
 
     /**
      * Audio URL Transcriptions
+     *
      * @param  array  $options    Array with all options for search
-     * @param  string     $options['audioUrl']         Required parameter: Audio url
-     * @param  string     $options['responseType']     Optional parameter: Response type format xml or json
+     * @param string $options['audioUrl']     Audio url
+     * @param string $options['responseType'] (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createAudioURLTranscription (
-                $options) 
-    { 
+    public function createAudioURLTranscription(
+        $options
+    ) {
         //check that all required arguments are provided
-        if(!isset($options['audioUrl']))
+        if (!isset($options['audioUrl'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
 
 
         //the base uri for api requests
@@ -87,43 +89,43 @@ class TranscriptionController extends BaseController {
 
         //call on-before Http callback
         $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
         }
 
         //and invoke the API call request to fetch the response
         $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
 
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
         //call on-after Http callback
-        if($this->getHttpCallBack() != null) {
-            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-            
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
         }
 
-        //Error handling using HTTP status codes
-        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
-            throw new APIException("HTTP Response Not OK", $_httpContext);
-        }
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
 
         return $response->body;
     }
-        
+
     /**
      * Recording Transcriptions
+     *
      * @param  array  $options    Array with all options for search
-     * @param  string     $options['recordingSid']     Required parameter: Unique Recording sid
-     * @param  string     $options['responseType']     Optional parameter: Response type format xml or json
+     * @param string $options['recordingSid'] Unique Recording sid
+     * @param string $options['responseType'] (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createRecordingTranscription (
-                $options) 
-    { 
+    public function createRecordingTranscription(
+        $options
+    ) {
         //check that all required arguments are provided
-        if(!isset($options['recordingSid']))
+        if (!isset($options['recordingSid'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
 
 
         //the base uri for api requests
@@ -155,43 +157,43 @@ class TranscriptionController extends BaseController {
 
         //call on-before Http callback
         $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
         }
 
         //and invoke the API call request to fetch the response
         $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
 
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
         //call on-after Http callback
-        if($this->getHttpCallBack() != null) {
-            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-            
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
         }
 
-        //Error handling using HTTP status codes
-        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
-            throw new APIException("HTTP Response Not OK", $_httpContext);
-        }
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
 
         return $response->body;
     }
-        
+
     /**
      * View Specific Transcriptions
+     *
      * @param  array  $options    Array with all options for search
-     * @param  string     $options['transcriptionSid']     Required parameter: Unique Transcription ID
-     * @param  string     $options['responseType']         Optional parameter: Response type format xml or json
+     * @param string $options['transcriptionSid'] Unique Transcription ID
+     * @param string $options['responseType']     (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createViewTranscription (
-                $options) 
-    { 
+    public function createViewTranscription(
+        $options
+    ) {
         //check that all required arguments are provided
-        if(!isset($options['transcriptionSid']))
+        if (!isset($options['transcriptionSid'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
 
 
         //the base uri for api requests
@@ -223,43 +225,43 @@ class TranscriptionController extends BaseController {
 
         //call on-before Http callback
         $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
         }
 
         //and invoke the API call request to fetch the response
         $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
 
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
         //call on-after Http callback
-        if($this->getHttpCallBack() != null) {
-            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-            
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
         }
 
-        //Error handling using HTTP status codes
-        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
-            throw new APIException("HTTP Response Not OK", $_httpContext);
-        }
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
 
         return $response->body;
     }
-        
+
     /**
      * Get All transcriptions
+     *
      * @param  array  $options    Array with all options for search
-     * @param  integer     $options['page']                Optional parameter: Example: 
-     * @param  integer     $options['pageSize']            Optional parameter: Example: 
-     * @param  string      $options['status']              Optional parameter: Example: 
-     * @param  string      $options['dateTranscribed']     Optional parameter: Example: 
-     * @param  string      $options['responseType']        Optional parameter: Response type format xml or json
+     * @param integer $options['page']            (optional) TODO: type description here
+     * @param integer $options['pageSize']        (optional) TODO: type description here
+     * @param string  $options['status']          (optional) TODO: type description here
+     * @param string  $options['dateTranscribed'] (optional) TODO: type description here
+     * @param string  $options['responseType']    (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createListTranscription (
-                $options) 
-    {
+    public function createListTranscription(
+        $options
+    ) {
+
         //the base uri for api requests
         $_queryBuilder = Configuration::getBaseUri();
         
@@ -292,44 +294,40 @@ class TranscriptionController extends BaseController {
 
         //call on-before Http callback
         $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
         }
 
         //and invoke the API call request to fetch the response
         $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
 
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
         //call on-after Http callback
-        if($this->getHttpCallBack() != null) {
-            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-            
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
         }
 
-        //Error handling using HTTP status codes
-        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
-            throw new APIException("HTTP Response Not OK", $_httpContext);
-        }
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
 
         return $response->body;
     }
-        
 
 
     /**
-	 * Array access utility method
+    * Array access utility method
      * @param  array          $arr         Array of values to read from
      * @param  string         $key         Key to get the value from the array
      * @param  mixed|null     $default     Default value to use if the key was not found
      * @return mixed
      */
-    private function val($arr, $key, $default = NULL)
+    private function val($arr, $key, $default = null)
     {
-        if(isset($arr[$key])) {
+        if (isset($arr[$key])) {
             return is_bool($arr[$key]) ? var_export($arr[$key], true) : $arr[$key];
         }
         return $default;
     }
-
 }

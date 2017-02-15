@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/14/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
 namespace Message360Lib\Http;
@@ -77,8 +77,9 @@ class HttpCallBack
      */
     public function callOnBeforeRequest(HttpRequest $httpRequest)
     {
-        if($this->onBeforeRequest != null)
+        if ($this->onBeforeRequest != null) {
             call_user_func($this->onBeforeRequest, $httpRequest);
+        }
     }
 
     /**
@@ -87,7 +88,8 @@ class HttpCallBack
      */
     public function callOnAfterRequest(HttpContext $httpContext)
     {
-        if($this->onAfterRequest != null)
+        if ($this->onAfterRequest != null) {
             call_user_func($this->onAfterRequest, $httpContext);
+        }
     }
 }

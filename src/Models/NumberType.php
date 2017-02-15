@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/14/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
 namespace Message360Lib\Models;
@@ -10,7 +10,8 @@ namespace Message360Lib\Models;
 /**
  * Phone Number Type All,SMS or Voice
  */
-class NumberType {
+class NumberType
+{
     /**
      * Get all phone Number type
      */
@@ -25,5 +26,4 @@ class NumberType {
      * Get Only SMs number type
      */
     const SMS = "sms";
-
 }

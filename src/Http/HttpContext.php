@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/14/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
 namespace Message360Lib\Http;
@@ -29,7 +29,8 @@ class HttpContext
      * @param HttpRequest  $request  Request first sent on http call
      * @param HttpResponse $response Response received from http call
      */
-    public function __construct(HttpRequest $request, HttpResponse $response) {
+    public function __construct(HttpRequest $request, HttpResponse $response)
+    {
         $this->request = $request;
         $this->response = $response;
     }
@@ -38,7 +39,8 @@ class HttpContext
      * Getter for the Http Request
      * @return HttpRequest request
      */
-    public function getRequest() {
+    public function getRequest()
+    {
         return $this->request;
     }
 
@@ -46,7 +48,8 @@ class HttpContext
      * Getter for the Http Response
      * @return HttpResponse response
      */
-    public function getResponse() {
+    public function getResponse()
+    {
         return $this->response;
     }
 }

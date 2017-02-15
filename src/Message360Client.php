@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/14/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
 namespace Message360Lib;
@@ -17,8 +17,10 @@ class Message360Client
     /**
      * Constructor with authentication and configuration parameters
      */
-    public function __construct($basicAuthUserName = NULL, $basicAuthPassword = NULL)
-    {
+    public function __construct(
+        $basicAuthUserName = null,
+        $basicAuthPassword = null
+    ) {
         Configuration::$basicAuthUserName = $basicAuthUserName ? $basicAuthUserName : Configuration::$basicAuthUserName;
         Configuration::$basicAuthPassword = $basicAuthPassword ? $basicAuthPassword : Configuration::$basicAuthPassword;
     }
@@ -75,15 +77,6 @@ class Message360Client
     public function getSMS()
     {
         return Controllers\SMSController::getInstance();
-    }
- 
-    /**
-     * Singleton access to Account controller
-     * @return Controllers\AccountController The *Singleton* instance
-     */
-    public function getAccount()
-    {
-        return Controllers\AccountController::getInstance();
     }
  
     /**
@@ -147,5 +140,14 @@ class Message360Client
     public function getUsage()
     {
         return Controllers\UsageController::getInstance();
+    }
+ 
+    /**
+     * Singleton access to Account controller
+     * @return Controllers\AccountController The *Singleton* instance
+     */
+    public function getAccount()
+    {
+        return Controllers\AccountController::getInstance();
     }
 }
