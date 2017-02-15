@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/14/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
 namespace Message360Lib;
@@ -12,7 +12,8 @@ use Exception;
 /**
  * Class for exceptions when there is a network error, status code error, etc.
  */
-class APIException extends Exception {
+class APIException extends Exception
+{
     /**
      * Error message
      * @var string
@@ -33,13 +34,18 @@ class APIException extends Exception {
      */
     public function __construct($reason, $context)
     {
-        parent::__construct($reason, $context->getResponse()->getStatusCode(), NULL);
+        parent::__construct($reason, $context->getResponse()->getStatusCode());
         $this->context = $context;
         $this->errorMessage = $reason;
-        if(!(get_class()=='APIException'))
+
+        if (get_class() != 'APIException') {
             $this->unbox();
+        }
     }
 
+    /**
+     * Unbox response into this exception class
+     */
     public function unbox()
     {
     }

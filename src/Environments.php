@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/14/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
 namespace Message360Lib;
@@ -10,7 +10,8 @@ namespace Message360Lib;
 /**
  * Environments available for API
  */
-class Environments {
+class Environments
+{
     /**
      * Our message360 production environment.  This is our latest stable release.
      */
@@ -25,5 +26,4 @@ class Environments {
      * Internal development testing.  This configuration of the API is not available to the public.
      */
     const DEVELOPMENT = "development";
-
 }

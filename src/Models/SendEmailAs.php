@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/14/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
 namespace Message360Lib\Models;
@@ -10,7 +10,8 @@ namespace Message360Lib\Models;
 /**
  * send email TEXT or HTML format
  */
-class SendEmailAs {
+class SendEmailAs
+{
     /**
      * Email send as text format
      */
@@ -20,5 +21,4 @@ class SendEmailAs {
      * Email send as HTML format
      */
     const HTML = "html";
-
 }

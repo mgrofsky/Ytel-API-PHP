@@ -1,4 +1,4 @@
-#Getting started
+# Getting started
 
 ## How to Build
 
@@ -10,7 +10,7 @@ Open command prompt and type ```composer --version```. This should display the c
 * Using command line, navigate to the directory containing the generated files (including ```composer.json```) for the SDK. 
 * Run the command ```composer install```. This should install all the required dependencies and create the ```vendor``` directory in your project directory.
 
-![Building SDK - Step 1](http://apidocs.io/illustration/php?step=installDependencies&workspaceFolder=Message360-PHP)
+![Building SDK - Step 1](https://apidocs.io/illustration/php?step=installDependencies&workspaceFolder=Message360-PHP)
 
 ### [For Windows Users Only] Configuring CURL Certificate Path in php.ini
 
@@ -34,29 +34,29 @@ The following section explains how to use the Message360 library in a new projec
 
 Open an IDE for PHP like PhpStorm. The basic workflow presented here is also applicable if you prefer using a different editor or IDE.
 
-![Open project in PHPStorm - Step 1](http://apidocs.io/illustration/php?step=openIDE&workspaceFolder=Message360-PHP)
+![Open project in PHPStorm - Step 1](https://apidocs.io/illustration/php?step=openIDE&workspaceFolder=Message360-PHP)
 
 Click on ```Open``` in PhpStorm to browse to your generated SDK directory and then click ```OK```.
 
-![Open project in PHPStorm - Step 2](http://apidocs.io/illustration/php?step=openProject0&workspaceFolder=Message360-PHP)     
+![Open project in PHPStorm - Step 2](https://apidocs.io/illustration/php?step=openProject0&workspaceFolder=Message360-PHP)     
 
 ### 2. Add a new Test Project
 
 Create a new directory by right clicking on the solution name as shown below:
 
-![Add a new project in PHPStorm - Step 1](http://apidocs.io/illustration/php?step=createDirectory&workspaceFolder=Message360-PHP)
+![Add a new project in PHPStorm - Step 1](https://apidocs.io/illustration/php?step=createDirectory&workspaceFolder=Message360-PHP)
 
 Name the directory as "test"
 
-![Add a new project in PHPStorm - Step 2](http://apidocs.io/illustration/php?step=nameDirectory&workspaceFolder=Message360-PHP)
+![Add a new project in PHPStorm - Step 2](https://apidocs.io/illustration/php?step=nameDirectory&workspaceFolder=Message360-PHP)
    
 Add a PHP file to this project
 
-![Add a new project in PHPStorm - Step 3](http://apidocs.io/illustration/php?step=createFile&workspaceFolder=Message360-PHP)
+![Add a new project in PHPStorm - Step 3](https://apidocs.io/illustration/php?step=createFile&workspaceFolder=Message360-PHP)
 
 Name it "testSDK"
 
-![Add a new project in PHPStorm - Step 4](http://apidocs.io/illustration/php?step=nameFile&workspaceFolder=Message360-PHP)
+![Add a new project in PHPStorm - Step 4](https://apidocs.io/illustration/php?step=nameFile&workspaceFolder=Message360-PHP)
 
 Depending on your project setup, you might need to include composer's autoloader in your PHP code to enable auto loading of classes.
 
@@ -66,7 +66,7 @@ require_once "../vendor/autoload.php";
 
 It is important that the path inside require_once correctly points to the file ```autoload.php``` inside the vendor directory created during dependency installations.
 
-![Add a new project in PHPStorm - Step 4](http://apidocs.io/illustration/php?step=projectFiles&workspaceFolder=Message360-PHP)
+![Add a new project in PHPStorm - Step 4](https://apidocs.io/illustration/php?step=projectFiles&workspaceFolder=Message360-PHP)
 
 After this you can add code to initialize the client library and acquire the instance of a Controller class. Sample code to initialize the client library and using controller methods is given in the subsequent sections.
 
@@ -76,23 +76,23 @@ To run your project you must set the Interpreter for your project. Interpreter i
 
 Open ```Settings``` from ```File``` menu.
 
-![Run Test Project - Step 1](http://apidocs.io/illustration/php?step=openSettings&workspaceFolder=Message360-PHP)
+![Run Test Project - Step 1](https://apidocs.io/illustration/php?step=openSettings&workspaceFolder=Message360-PHP)
 
 Select ```PHP``` from within ```Languages & Frameworks```
 
-![Run Test Project - Step 2](http://apidocs.io/illustration/php?step=setInterpreter0&workspaceFolder=Message360-PHP)
+![Run Test Project - Step 2](https://apidocs.io/illustration/php?step=setInterpreter0&workspaceFolder=Message360-PHP)
 
 Browse for Interpreters near the ```Interpreter``` option and choose your interpreter.
 
-![Run Test Project - Step 3](http://apidocs.io/illustration/php?step=setInterpreter1&workspaceFolder=Message360-PHP)
+![Run Test Project - Step 3](https://apidocs.io/illustration/php?step=setInterpreter1&workspaceFolder=Message360-PHP)
 
 Once the interpreter is selected, click ```OK```
 
-![Run Test Project - Step 4](http://apidocs.io/illustration/php?step=setInterpreter2&workspaceFolder=Message360-PHP)
+![Run Test Project - Step 4](https://apidocs.io/illustration/php?step=setInterpreter2&workspaceFolder=Message360-PHP)
 
 To run your project, right click on your PHP file inside your Test project and click on ```Run```
 
-![Run Test Project - Step 5](http://apidocs.io/illustration/php?step=runProject&workspaceFolder=Message360-PHP)
+![Run Test Project - Step 5](https://apidocs.io/illustration/php?step=runProject&workspaceFolder=Message360-PHP)
 
 ## How to Test
 
@@ -106,7 +106,7 @@ You can change the PHPUnit test configuration in the `phpunit.xml` file.
 
 ## Initialization
 
-### Authentication and 
+### Authentication
 In order to setup authentication and initialization of the API client, you need the following information.
 
 | Parameter | Description |
@@ -123,7 +123,7 @@ API client can be initialized as following.
 $basicAuthUserName = "basicAuthUserName"; // The username to use with basic authentication
 $basicAuthPassword = "basicAuthPassword"; // The password to use with basic authentication
 
-$client = new Message360Client($basicAuthUserName, $basicAuthPassword);
+$client = new Message360Lib\Message360Client($basicAuthUserName, $basicAuthPassword);
 ```
 
 ## Class Reference
@@ -136,7 +136,6 @@ $client = new Message360Client($basicAuthUserName, $basicAuthPassword);
 * [CarrierController](#carrier_controller)
 * [CallController](#call_controller)
 * [SMSController](#sms_controller)
-* [AccountController](#account_controller)
 * [WebRTCController](#web_rtc_controller)
 * [SubAccountController](#sub_account_controller)
 * [AddressController](#address_controller)
@@ -144,8 +143,9 @@ $client = new Message360Client($basicAuthUserName, $basicAuthPassword);
 * [RecordingController](#recording_controller)
 * [TranscriptionController](#transcription_controller)
 * [UsageController](#usage_controller)
+* [AccountController](#account_controller)
 
-### <a name="conference_controller"></a>![Class: ](http://apidocs.io/img/class.png ".ConferenceController") ConferenceController
+### <a name="conference_controller"></a>![Class: ](https://apidocs.io/img/class.png ".ConferenceController") ConferenceController
 
 #### Get singleton instance
 
@@ -155,7 +155,7 @@ The singleton instance of the ``` ConferenceController ``` class can be accessed
 $conference = $client->getConference();
 ```
 
-#### <a name="create_deaf_mute_participant"></a>![Method: ](http://apidocs.io/img/method.png ".ConferenceController.createDeafMuteParticipant") createDeafMuteParticipant
+#### <a name="create_deaf_mute_participant"></a>![Method: ](https://apidocs.io/img/method.png ".ConferenceController.createDeafMuteParticipant") createDeafMuteParticipant
 
 > Deaf Mute Participant
 
@@ -200,7 +200,7 @@ $result = $conference->createDeafMuteParticipant($collect);
 ```
 
 
-#### <a name="create_list_conference"></a>![Method: ](http://apidocs.io/img/method.png ".ConferenceController.createListConference") createListConference
+#### <a name="create_list_conference"></a>![Method: ](https://apidocs.io/img/method.png ".ConferenceController.createListConference") createListConference
 
 > List Conference
 
@@ -226,10 +226,10 @@ function createListConference($options)
 #### Example Usage
 
 ```php
-$page = 61;
+$page = 38;
 $collect['page'] = $page;
 
-$pageSize = 61;
+$pageSize = 38;
 $collect['pageSize'] = $pageSize;
 
 $friendlyName = 'FriendlyName';
@@ -253,7 +253,7 @@ $result = $conference->createListConference($collect);
 ```
 
 
-#### <a name="create_view_conference"></a>![Method: ](http://apidocs.io/img/method.png ".ConferenceController.createViewConference") createViewConference
+#### <a name="create_view_conference"></a>![Method: ](https://apidocs.io/img/method.png ".ConferenceController.createViewConference") createViewConference
 
 > View Conference
 
@@ -286,7 +286,7 @@ $result = $conference->createViewConference($collect);
 ```
 
 
-#### <a name="add_participant"></a>![Method: ](http://apidocs.io/img/method.png ".ConferenceController.addParticipant") addParticipant
+#### <a name="add_participant"></a>![Method: ](https://apidocs.io/img/method.png ".ConferenceController.addParticipant") addParticipant
 
 > Add Participant in conference 
 
@@ -317,7 +317,7 @@ $collect['conferencesid'] = $conferencesid;
 $participantnumber = 'participantnumber';
 $collect['participantnumber'] = $participantnumber;
 
-$tocountrycode = 61;
+$tocountrycode = 38;
 $collect['tocountrycode'] = $tocountrycode;
 
 $muted = false;
@@ -335,7 +335,7 @@ $result = $conference->addParticipant($collect);
 ```
 
 
-#### <a name="create_list_participant"></a>![Method: ](http://apidocs.io/img/method.png ".ConferenceController.createListParticipant") createListParticipant
+#### <a name="create_list_participant"></a>![Method: ](https://apidocs.io/img/method.png ".ConferenceController.createListParticipant") createListParticipant
 
 > List Participant
 
@@ -363,10 +363,10 @@ function createListParticipant($options)
 $conferenceSid = 'ConferenceSid';
 $collect['conferenceSid'] = $conferenceSid;
 
-$page = 61;
+$page = 38;
 $collect['page'] = $page;
 
-$pagesize = 61;
+$pagesize = 38;
 $collect['pagesize'] = $pagesize;
 
 $muted = false;
@@ -384,7 +384,7 @@ $result = $conference->createListParticipant($collect);
 ```
 
 
-#### <a name="create_view_participant"></a>![Method: ](http://apidocs.io/img/method.png ".ConferenceController.createViewParticipant") createViewParticipant
+#### <a name="create_view_participant"></a>![Method: ](https://apidocs.io/img/method.png ".ConferenceController.createViewParticipant") createViewParticipant
 
 > View Participant
 
@@ -423,7 +423,7 @@ $result = $conference->createViewParticipant($collect);
 
 [Back to List of Controllers](#list_of_controllers)
 
-### <a name="email_controller"></a>![Class: ](http://apidocs.io/img/class.png ".EmailController") EmailController
+### <a name="email_controller"></a>![Class: ](https://apidocs.io/img/class.png ".EmailController") EmailController
 
 #### Get singleton instance
 
@@ -433,7 +433,7 @@ The singleton instance of the ``` EmailController ``` class can be accessed from
 $email = $client->getEmail();
 ```
 
-#### <a name="create_delete_invalid"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createDeleteInvalid") createDeleteInvalid
+#### <a name="create_delete_invalid"></a>![Method: ](https://apidocs.io/img/method.png ".EmailController.createDeleteInvalid") createDeleteInvalid
 
 > This endpoint allows you to delete entries in the Invalid Emails list.
 
@@ -466,7 +466,7 @@ $result = $email->createDeleteInvalid($collect);
 ```
 
 
-#### <a name="create_list_blocks"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createListBlocks") createListBlocks
+#### <a name="create_list_blocks"></a>![Method: ](https://apidocs.io/img/method.png ".EmailController.createListBlocks") createListBlocks
 
 > Outputs email addresses on your blocklist
 
@@ -503,7 +503,7 @@ $result = $email->createListBlocks($collect);
 ```
 
 
-#### <a name="create_list_spam"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createListSpam") createListSpam
+#### <a name="create_list_spam"></a>![Method: ](https://apidocs.io/img/method.png ".EmailController.createListSpam") createListSpam
 
 > List out all email addresses marked as spam
 
@@ -540,7 +540,7 @@ $result = $email->createListSpam($collect);
 ```
 
 
-#### <a name="create_list_bounces"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createListBounces") createListBounces
+#### <a name="create_list_bounces"></a>![Method: ](https://apidocs.io/img/method.png ".EmailController.createListBounces") createListBounces
 
 > List out all email addresses that have bounced
 
@@ -577,7 +577,7 @@ $result = $email->createListBounces($collect);
 ```
 
 
-#### <a name="create_delete_bounces"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createDeleteBounces") createDeleteBounces
+#### <a name="create_delete_bounces"></a>![Method: ](https://apidocs.io/img/method.png ".EmailController.createDeleteBounces") createDeleteBounces
 
 > Delete an email address from the bounced address list
 
@@ -610,7 +610,7 @@ $result = $email->createDeleteBounces($collect);
 ```
 
 
-#### <a name="create_list_invalid"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createListInvalid") createListInvalid
+#### <a name="create_list_invalid"></a>![Method: ](https://apidocs.io/img/method.png ".EmailController.createListInvalid") createListInvalid
 
 > List out all invalid email addresses
 
@@ -647,7 +647,7 @@ $result = $email->createListInvalid($collect);
 ```
 
 
-#### <a name="create_list_unsubscribes"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createListUnsubscribes") createListUnsubscribes
+#### <a name="create_list_unsubscribes"></a>![Method: ](https://apidocs.io/img/method.png ".EmailController.createListUnsubscribes") createListUnsubscribes
 
 > List all unsubscribed email addresses
 
@@ -684,7 +684,7 @@ $result = $email->createListUnsubscribes($collect);
 ```
 
 
-#### <a name="create_delete_unsubscribes"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createDeleteUnsubscribes") createDeleteUnsubscribes
+#### <a name="create_delete_unsubscribes"></a>![Method: ](https://apidocs.io/img/method.png ".EmailController.createDeleteUnsubscribes") createDeleteUnsubscribes
 
 > Delete emails from the unsubscribe list
 
@@ -717,7 +717,7 @@ $result = $email->createDeleteUnsubscribes($collect);
 ```
 
 
-#### <a name="add_unsubscribes"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.addUnsubscribes") addUnsubscribes
+#### <a name="add_unsubscribes"></a>![Method: ](https://apidocs.io/img/method.png ".EmailController.addUnsubscribes") addUnsubscribes
 
 > Add an email to the unsubscribe list
 
@@ -750,7 +750,7 @@ $result = $email->addUnsubscribes($collect);
 ```
 
 
-#### <a name="create_delete_block"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createDeleteBlock") createDeleteBlock
+#### <a name="create_delete_block"></a>![Method: ](https://apidocs.io/img/method.png ".EmailController.createDeleteBlock") createDeleteBlock
 
 > Deletes a blocked email
 
@@ -783,7 +783,7 @@ $result = $email->createDeleteBlock($collect);
 ```
 
 
-#### <a name="create_delete_spam"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createDeleteSpam") createDeleteSpam
+#### <a name="create_delete_spam"></a>![Method: ](https://apidocs.io/img/method.png ".EmailController.createDeleteSpam") createDeleteSpam
 
 > Deletes a email address marked as spam from the spam list
 
@@ -816,7 +816,7 @@ $result = $email->createDeleteSpam($collect);
 ```
 
 
-#### <a name="create_send_email"></a>![Method: ](http://apidocs.io/img/method.png ".EmailController.createSendEmail") createSendEmail
+#### <a name="create_send_email"></a>![Method: ](https://apidocs.io/img/method.png ".EmailController.createSendEmail") createSendEmail
 
 > Send out an email
 
@@ -879,7 +879,7 @@ $result = $email->createSendEmail($collect);
 
 [Back to List of Controllers](#list_of_controllers)
 
-### <a name="number_verification_controller"></a>![Class: ](http://apidocs.io/img/class.png ".NumberVerificationController") NumberVerificationController
+### <a name="number_verification_controller"></a>![Class: ](https://apidocs.io/img/class.png ".NumberVerificationController") NumberVerificationController
 
 #### Get singleton instance
 
@@ -889,7 +889,7 @@ The singleton instance of the ``` NumberVerificationController ``` class can be 
 $numberVerification = $client->getNumberVerification();
 ```
 
-#### <a name="create_verify_number"></a>![Method: ](http://apidocs.io/img/method.png ".NumberVerificationController.createVerifyNumber") createVerifyNumber
+#### <a name="create_verify_number"></a>![Method: ](https://apidocs.io/img/method.png ".NumberVerificationController.createVerifyNumber") createVerifyNumber
 
 > Number Verification
 
@@ -928,7 +928,7 @@ $result = $numberVerification->createVerifyNumber($collect);
 
 [Back to List of Controllers](#list_of_controllers)
 
-### <a name="carrier_controller"></a>![Class: ](http://apidocs.io/img/class.png ".CarrierController") CarrierController
+### <a name="carrier_controller"></a>![Class: ](https://apidocs.io/img/class.png ".CarrierController") CarrierController
 
 #### Get singleton instance
 
@@ -938,7 +938,7 @@ The singleton instance of the ``` CarrierController ``` class can be accessed fr
 $carrier = $client->getCarrier();
 ```
 
-#### <a name="create_carrier_lookup"></a>![Method: ](http://apidocs.io/img/method.png ".CarrierController.createCarrierLookup") createCarrierLookup
+#### <a name="create_carrier_lookup"></a>![Method: ](https://apidocs.io/img/method.png ".CarrierController.createCarrierLookup") createCarrierLookup
 
 > Get the Carrier Lookup
 
@@ -971,7 +971,7 @@ $result = $carrier->createCarrierLookup($collect);
 ```
 
 
-#### <a name="create_carrier_lookup_list"></a>![Method: ](http://apidocs.io/img/method.png ".CarrierController.createCarrierLookupList") createCarrierLookupList
+#### <a name="create_carrier_lookup_list"></a>![Method: ](https://apidocs.io/img/method.png ".CarrierController.createCarrierLookupList") createCarrierLookupList
 
 > Get the All Purchase Number's Carrier lookup
 
@@ -993,10 +993,10 @@ function createCarrierLookupList($options)
 #### Example Usage
 
 ```php
-$page = 225;
+$page = 251;
 $collect['page'] = $page;
 
-$pagesize = 225;
+$pagesize = 251;
 $collect['pagesize'] = $pagesize;
 
 $responseType = 'json';
@@ -1010,7 +1010,7 @@ $result = $carrier->createCarrierLookupList($collect);
 
 [Back to List of Controllers](#list_of_controllers)
 
-### <a name="call_controller"></a>![Class: ](http://apidocs.io/img/class.png ".CallController") CallController
+### <a name="call_controller"></a>![Class: ](https://apidocs.io/img/class.png ".CallController") CallController
 
 #### Get singleton instance
 
@@ -1020,7 +1020,7 @@ The singleton instance of the ``` CallController ``` class can be accessed from 
 $call = $client->getCall();
 ```
 
-#### <a name="create_view_call"></a>![Method: ](http://apidocs.io/img/method.png ".CallController.createViewCall") createViewCall
+#### <a name="create_view_call"></a>![Method: ](https://apidocs.io/img/method.png ".CallController.createViewCall") createViewCall
 
 > View Call Response
 
@@ -1053,7 +1053,7 @@ $result = $call->createViewCall($collect);
 ```
 
 
-#### <a name="create_group_call"></a>![Method: ](http://apidocs.io/img/method.png ".CallController.createGroupCall") createGroupCall
+#### <a name="create_group_call"></a>![Method: ](https://apidocs.io/img/method.png ".CallController.createGroupCall") createGroupCall
 
 > Group Call
 
@@ -1129,7 +1129,7 @@ $collect['heartBeatUrl'] = $heartBeatUrl;
 $heartBeatMethod = string::GET;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 225;
+$timeout = 251;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
@@ -1162,7 +1162,7 @@ $result = $call->createGroupCall($collect);
 ```
 
 
-#### <a name="create_voice_effect"></a>![Method: ](http://apidocs.io/img/method.png ".CallController.createVoiceEffect") createVoiceEffect
+#### <a name="create_voice_effect"></a>![Method: ](https://apidocs.io/img/method.png ".CallController.createVoiceEffect") createVoiceEffect
 
 > Voice Effect
 
@@ -1195,19 +1195,19 @@ $collect['callSid'] = $callSid;
 $audioDirection = string::IN;
 $collect['audioDirection'] = $audioDirection;
 
-$pitchSemiTones = 225.249670820893;
+$pitchSemiTones = 251.47388230845;
 $collect['pitchSemiTones'] = $pitchSemiTones;
 
-$pitchOctaves = 225.249670820893;
+$pitchOctaves = 251.47388230845;
 $collect['pitchOctaves'] = $pitchOctaves;
 
-$pitch = 225.249670820893;
+$pitch = 251.47388230845;
 $collect['pitch'] = $pitch;
 
-$rate = 225.249670820893;
+$rate = 251.47388230845;
 $collect['rate'] = $rate;
 
-$tempo = 225.249670820893;
+$tempo = 251.47388230845;
 $collect['tempo'] = $tempo;
 
 $responseType = 'json';
@@ -1219,7 +1219,7 @@ $result = $call->createVoiceEffect($collect);
 ```
 
 
-#### <a name="create_record_call"></a>![Method: ](http://apidocs.io/img/method.png ".CallController.createRecordCall") createRecordCall
+#### <a name="create_record_call"></a>![Method: ](https://apidocs.io/img/method.png ".CallController.createRecordCall") createRecordCall
 
 > Record a Call
 
@@ -1254,7 +1254,7 @@ $collect['record'] = $record;
 $direction = string::IN;
 $collect['direction'] = $direction;
 
-$timeLimit = 225;
+$timeLimit = 251;
 $collect['timeLimit'] = $timeLimit;
 
 $callBackUrl = 'CallBackUrl';
@@ -1272,7 +1272,7 @@ $result = $call->createRecordCall($collect);
 ```
 
 
-#### <a name="create_play_audio"></a>![Method: ](http://apidocs.io/img/method.png ".CallController.createPlayAudio") createPlayAudio
+#### <a name="create_play_audio"></a>![Method: ](https://apidocs.io/img/method.png ".CallController.createPlayAudio") createPlayAudio
 
 > Play Dtmf and send the Digit
 
@@ -1304,7 +1304,7 @@ $collect['callSid'] = $callSid;
 $audioUrl = 'AudioUrl';
 $collect['audioUrl'] = $audioUrl;
 
-$length = 225;
+$length = 251;
 $collect['length'] = $length;
 
 $direction = string::IN;
@@ -1325,7 +1325,7 @@ $result = $call->createPlayAudio($collect);
 ```
 
 
-#### <a name="create_list_calls"></a>![Method: ](http://apidocs.io/img/method.png ".CallController.createListCalls") createListCalls
+#### <a name="create_list_calls"></a>![Method: ](https://apidocs.io/img/method.png ".CallController.createListCalls") createListCalls
 
 > A list of calls associated with your Message360 account
 
@@ -1350,10 +1350,10 @@ function createListCalls($options)
 #### Example Usage
 
 ```php
-$page = 225;
+$page = 251;
 $collect['page'] = $page;
 
-$pageSize = 225;
+$pageSize = 251;
 $collect['pageSize'] = $pageSize;
 
 $to = 'To';
@@ -1374,7 +1374,7 @@ $result = $call->createListCalls($collect);
 ```
 
 
-#### <a name="create_interrupted_call"></a>![Method: ](http://apidocs.io/img/method.png ".CallController.createInterruptedCall") createInterruptedCall
+#### <a name="create_interrupted_call"></a>![Method: ](https://apidocs.io/img/method.png ".CallController.createInterruptedCall") createInterruptedCall
 
 > Interrupt the Call by Call Sid
 
@@ -1419,7 +1419,7 @@ $result = $call->createInterruptedCall($collect);
 ```
 
 
-#### <a name="create_send_digit"></a>![Method: ](http://apidocs.io/img/method.png ".CallController.createSendDigit") createSendDigit
+#### <a name="create_send_digit"></a>![Method: ](https://apidocs.io/img/method.png ".CallController.createSendDigit") createSendDigit
 
 > Play Dtmf and send the Digit
 
@@ -1460,7 +1460,7 @@ $result = $call->createSendDigit($collect);
 ```
 
 
-#### <a name="create_make_call"></a>![Method: ](http://apidocs.io/img/method.png ".CallController.createMakeCall") createMakeCall
+#### <a name="create_make_call"></a>![Method: ](https://apidocs.io/img/method.png ".CallController.createMakeCall") createMakeCall
 
 > You can experiment with initiating a call through Message360 and view the request response generated when doing so and get the response in json
 
@@ -1534,19 +1534,19 @@ $collect['fallBackMethod'] = $fallBackMethod;
 $heartBeatUrl = 'HeartBeatUrl';
 $collect['heartBeatUrl'] = $heartBeatUrl;
 
-$heartBeatMethod = true;
+$heartBeatMethod = false;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 225;
+$timeout = 87;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
 $collect['playDtmf'] = $playDtmf;
 
-$hideCallerId = true;
+$hideCallerId = false;
 $collect['hideCallerId'] = $hideCallerId;
 
-$record = true;
+$record = false;
 $collect['record'] = $record;
 
 $recordCallBackUrl = 'RecordCallBackUrl';
@@ -1555,7 +1555,7 @@ $collect['recordCallBackUrl'] = $recordCallBackUrl;
 $recordCallBackMethod = string::GET;
 $collect['recordCallBackMethod'] = $recordCallBackMethod;
 
-$transcribe = true;
+$transcribe = false;
 $collect['transcribe'] = $transcribe;
 
 $transcribeCallBackUrl = 'TranscribeCallBackUrl';
@@ -1575,7 +1575,7 @@ $result = $call->createMakeCall($collect);
 
 [Back to List of Controllers](#list_of_controllers)
 
-### <a name="sms_controller"></a>![Class: ](http://apidocs.io/img/class.png ".SMSController") SMSController
+### <a name="sms_controller"></a>![Class: ](https://apidocs.io/img/class.png ".SMSController") SMSController
 
 #### Get singleton instance
 
@@ -1585,7 +1585,7 @@ The singleton instance of the ``` SMSController ``` class can be accessed from t
 $sMS = $client->getSMS();
 ```
 
-#### <a name="create_view_sms"></a>![Method: ](http://apidocs.io/img/method.png ".SMSController.createViewSMS") createViewSMS
+#### <a name="create_view_sms"></a>![Method: ](https://apidocs.io/img/method.png ".SMSController.createViewSMS") createViewSMS
 
 > View Particular SMS
 
@@ -1618,7 +1618,7 @@ $result = $sMS->createViewSMS($collect);
 ```
 
 
-#### <a name="create_list_inbound_sms"></a>![Method: ](http://apidocs.io/img/method.png ".SMSController.createListInboundSMS") createListInboundSMS
+#### <a name="create_list_inbound_sms"></a>![Method: ](https://apidocs.io/img/method.png ".SMSController.createListInboundSMS") createListInboundSMS
 
 > List All Inbound SMS
 
@@ -1642,7 +1642,7 @@ function createListInboundSMS($options)
 #### Example Usage
 
 ```php
-$page = 225;
+$page = 87;
 $collect['page'] = $page;
 
 $pagesize = 'pagesize';
@@ -1663,7 +1663,7 @@ $result = $sMS->createListInboundSMS($collect);
 ```
 
 
-#### <a name="create_list_sms"></a>![Method: ](http://apidocs.io/img/method.png ".SMSController.createListSMS") createListSMS
+#### <a name="create_list_sms"></a>![Method: ](https://apidocs.io/img/method.png ".SMSController.createListSMS") createListSMS
 
 > List All SMS
 
@@ -1688,10 +1688,10 @@ function createListSMS($options)
 #### Example Usage
 
 ```php
-$page = 225;
+$page = 87;
 $collect['page'] = $page;
 
-$pagesize = 225;
+$pagesize = 87;
 $collect['pagesize'] = $pagesize;
 
 $from = 'from';
@@ -1712,7 +1712,7 @@ $result = $sMS->createListSMS($collect);
 ```
 
 
-#### <a name="create_send_sms"></a>![Method: ](http://apidocs.io/img/method.png ".SMSController.createSendSMS") createSendSMS
+#### <a name="create_send_sms"></a>![Method: ](https://apidocs.io/img/method.png ".SMSController.createSendSMS") createSendSMS
 
 > Send an SMS from a message360 number
 
@@ -1771,52 +1771,7 @@ $result = $sMS->createSendSMS($collect);
 
 [Back to List of Controllers](#list_of_controllers)
 
-### <a name="account_controller"></a>![Class: ](http://apidocs.io/img/class.png ".AccountController") AccountController
-
-#### Get singleton instance
-
-The singleton instance of the ``` AccountController ``` class can be accessed from the API Client.
-
-```php
-$account = $client->getAccount();
-```
-
-#### <a name="create_view_account"></a>![Method: ](http://apidocs.io/img/method.png ".AccountController.createViewAccount") createViewAccount
-
-> Display Account Description
-
-
-```php
-function createViewAccount($options)
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| date |  ``` Required ```  | TODO: Add a parameter description |
-| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
-
-
-
-#### Example Usage
-
-```php
-$date = 'date';
-$collect['date'] = $date;
-
-$responseType = 'json';
-$collect['responseType'] = $responseType;
-
-
-$result = $account->createViewAccount($collect);
-
-```
-
-
-[Back to List of Controllers](#list_of_controllers)
-
-### <a name="web_rtc_controller"></a>![Class: ](http://apidocs.io/img/class.png ".WebRTCController") WebRTCController
+### <a name="web_rtc_controller"></a>![Class: ](https://apidocs.io/img/class.png ".WebRTCController") WebRTCController
 
 #### Get singleton instance
 
@@ -1826,7 +1781,7 @@ The singleton instance of the ``` WebRTCController ``` class can be accessed fro
 $webRTC = $client->getWebRTC();
 ```
 
-#### <a name="create_check_funds"></a>![Method: ](http://apidocs.io/img/method.png ".WebRTCController.createCheckFunds") createCheckFunds
+#### <a name="create_check_funds"></a>![Method: ](https://apidocs.io/img/method.png ".WebRTCController.createCheckFunds") createCheckFunds
 
 > TODO: Add a method description
 
@@ -1859,44 +1814,7 @@ $result = $webRTC->createCheckFunds($collect);
 ```
 
 
-#### <a name="create_authenticate_number"></a>![Method: ](http://apidocs.io/img/method.png ".WebRTCController.createAuthenticateNumber") createAuthenticateNumber
-
-> Authenticate a message360 number for use
-
-
-```php
-function createAuthenticateNumber($options)
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| phoneNumber |  ``` Required ```  | Phone number to authenticate for use |
-| accountSid |  ``` Required ```  | Your message360 Account SID |
-| authToken |  ``` Required ```  | Your message360 token |
-
-
-
-#### Example Usage
-
-```php
-$phoneNumber = 'phone_number';
-$collect['phoneNumber'] = $phoneNumber;
-
-$accountSid = 'account_sid';
-$collect['accountSid'] = $accountSid;
-
-$authToken = 'auth_token';
-$collect['authToken'] = $authToken;
-
-
-$result = $webRTC->createAuthenticateNumber($collect);
-
-```
-
-
-#### <a name="create_token"></a>![Method: ](http://apidocs.io/img/method.png ".WebRTCController.createToken") createToken
+#### <a name="create_token"></a>![Method: ](https://apidocs.io/img/method.png ".WebRTCController.createToken") createToken
 
 > message360 webrtc
 
@@ -1911,6 +1829,8 @@ function createToken($options)
 |-----------|------|-------------|
 | accountSid |  ``` Required ```  | Your message360 Account SID |
 | authToken |  ``` Required ```  | Your message360 Token |
+| username |  ``` Required ```  | WebRTC username authentication |
+| password |  ``` Required ```  | WebRTC password authentication |
 
 
 
@@ -1923,6 +1843,12 @@ $collect['accountSid'] = $accountSid;
 $authToken = 'auth_token';
 $collect['authToken'] = $authToken;
 
+$username = 'username';
+$collect['username'] = $username;
+
+$password = 'password';
+$collect['password'] = $password;
+
 
 $result = $webRTC->createToken($collect);
 
@@ -1931,7 +1857,7 @@ $result = $webRTC->createToken($collect);
 
 [Back to List of Controllers](#list_of_controllers)
 
-### <a name="sub_account_controller"></a>![Class: ](http://apidocs.io/img/class.png ".SubAccountController") SubAccountController
+### <a name="sub_account_controller"></a>![Class: ](https://apidocs.io/img/class.png ".SubAccountController") SubAccountController
 
 #### Get singleton instance
 
@@ -1941,9 +1867,9 @@ The singleton instance of the ``` SubAccountController ``` class can be accessed
 $subAccount = $client->getSubAccount();
 ```
 
-#### <a name="create_sub_account"></a>![Method: ](http://apidocs.io/img/method.png ".SubAccountController.createSubAccount") createSubAccount
+#### <a name="create_sub_account"></a>![Method: ](https://apidocs.io/img/method.png ".SubAccountController.createSubAccount") createSubAccount
 
-> Create Sub account
+> Create a sub user account under the parent account
 
 
 ```php
@@ -1954,23 +1880,23 @@ function createSubAccount($options)
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| firstname |  ``` Required ```  | TODO: Add a parameter description |
-| lastname |  ``` Required ```  | TODO: Add a parameter description |
-| email |  ``` Required ```  | TODO: Add a parameter description |
-| responseType |  ``` Optional ```  ``` DefaultValue ```  | ResponseType Format either json or xml |
+| firstName |  ``` Required ```  | Sub account user first name |
+| lastName |  ``` Required ```  | sub account user last name |
+| email |  ``` Required ```  | Sub account email address |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
 
 
 
 #### Example Usage
 
 ```php
-$firstname = 'firstname';
-$collect['firstname'] = $firstname;
+$firstName = 'FirstName';
+$collect['firstName'] = $firstName;
 
-$lastname = 'lastname';
-$collect['lastname'] = $lastname;
+$lastName = 'LastName';
+$collect['lastName'] = $lastName;
 
-$email = 'email';
+$email = 'Email';
 $collect['email'] = $email;
 
 $responseType = 'json';
@@ -1982,7 +1908,7 @@ $result = $subAccount->createSubAccount($collect);
 ```
 
 
-#### <a name="create_suspend_sub_account"></a>![Method: ](http://apidocs.io/img/method.png ".SubAccountController.createSuspendSubAccount") createSuspendSubAccount
+#### <a name="create_suspend_sub_account"></a>![Method: ](https://apidocs.io/img/method.png ".SubAccountController.createSuspendSubAccount") createSuspendSubAccount
 
 > Suspend or unsuspend
 
@@ -1995,8 +1921,8 @@ function createSuspendSubAccount($options)
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| subaccountsid |  ``` Required ```  | TODO: Add a parameter description |
-| activate |  ``` Required ```  | TODO: Add a parameter description |
+| subAccountSID |  ``` Required ```  | The SubaccountSid to be activated or suspended |
+| activate |  ``` Required ```  ``` DefaultValue ```  | 0 to suspend or 1 to activate |
 | responseType |  ``` Optional ```  | TODO: Add a parameter description |
 
 
@@ -2004,10 +1930,10 @@ function createSuspendSubAccount($options)
 #### Example Usage
 
 ```php
-$subaccountsid = 'subaccountsid';
-$collect['subaccountsid'] = $subaccountsid;
+$subAccountSID = 'SubAccountSID';
+$collect['subAccountSID'] = $subAccountSID;
 
-$activate = int::ACTIVATE;
+$activate = int::DEACTIVATE;
 $collect['activate'] = $activate;
 
 $responseType = 'ResponseType';
@@ -2019,46 +1945,46 @@ $result = $subAccount->createSuspendSubAccount($collect);
 ```
 
 
-#### <a name="create_delete_merge_sub_account"></a>![Method: ](http://apidocs.io/img/method.png ".SubAccountController.createDeleteMergeSubAccount") createDeleteMergeSubAccount
+#### <a name="create_delete_sub_account"></a>![Method: ](https://apidocs.io/img/method.png ".SubAccountController.createDeleteSubAccount") createDeleteSubAccount
 
-> Delete or Merge Sub account
+> Delete sub account or merge numbers into parent
 
 
 ```php
-function createDeleteMergeSubAccount($options)
+function createDeleteSubAccount($options)
 ```
 
 #### Parameters
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| subaccountsid |  ``` Required ```  | TODO: Add a parameter description |
-| mergenumber |  ``` Required ```  | TODO: Add a parameter description |
-| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format either json or xml |
+| subAccountSID |  ``` Required ```  | The SubaccountSid to be deleted |
+| mergeNumber |  ``` Required ```  ``` DefaultValue ```  | 0 to delete or 1 to merge numbers to parent account. |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
 
 
 
 #### Example Usage
 
 ```php
-$subaccountsid = 'subaccountsid';
-$collect['subaccountsid'] = $subaccountsid;
+$subAccountSID = 'SubAccountSID';
+$collect['subAccountSID'] = $subAccountSID;
 
-$mergenumber = int::DELETE;
-$collect['mergenumber'] = $mergenumber;
+$mergeNumber = int::DELETE;
+$collect['mergeNumber'] = $mergeNumber;
 
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
 
-$result = $subAccount->createDeleteMergeSubAccount($collect);
+$result = $subAccount->createDeleteSubAccount($collect);
 
 ```
 
 
 [Back to List of Controllers](#list_of_controllers)
 
-### <a name="address_controller"></a>![Class: ](http://apidocs.io/img/class.png ".AddressController") AddressController
+### <a name="address_controller"></a>![Class: ](https://apidocs.io/img/class.png ".AddressController") AddressController
 
 #### Get singleton instance
 
@@ -2068,7 +1994,7 @@ The singleton instance of the ``` AddressController ``` class can be accessed fr
 $address = $client->getAddress();
 ```
 
-#### <a name="create_address"></a>![Method: ](http://apidocs.io/img/method.png ".AddressController.createAddress") createAddress
+#### <a name="create_address"></a>![Method: ](https://apidocs.io/img/method.png ".AddressController.createAddress") createAddress
 
 > To add an address to your address book, you create a new address object. You can retrieve and delete individual addresses as well as get a list of addresses. Addresses are identified by a unique random ID.
 
@@ -2090,38 +2016,38 @@ function createAddress($options)
 | description |  ``` Optional ```  | Description of addresses. |
 | email |  ``` Optional ```  | Email Id of user. |
 | phone |  ``` Optional ```  | Phone number of user. |
-| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response Type Either json or xml |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type either json or xml |
 
 
 
 #### Example Usage
 
 ```php
-$name = 'name';
+$name = 'Name';
 $collect['name'] = $name;
 
-$address = 'address';
+$address = 'Address';
 $collect['address'] = $address;
 
-$country = 'country';
+$country = 'Country';
 $collect['country'] = $country;
 
-$state = 'state';
+$state = 'State';
 $collect['state'] = $state;
 
-$city = 'city';
+$city = 'City';
 $collect['city'] = $city;
 
-$zip = 'zip';
+$zip = 'Zip';
 $collect['zip'] = $zip;
 
-$description = 'description';
+$description = 'Description';
 $collect['description'] = $description;
 
 $email = 'email';
 $collect['email'] = $email;
 
-$phone = 'phone';
+$phone = 'Phone';
 $collect['phone'] = $phone;
 
 $responseType = 'json';
@@ -2133,7 +2059,7 @@ $result = $address->createAddress($collect);
 ```
 
 
-#### <a name="create_delete_address"></a>![Method: ](http://apidocs.io/img/method.png ".AddressController.createDeleteAddress") createDeleteAddress
+#### <a name="create_delete_address"></a>![Method: ](https://apidocs.io/img/method.png ".AddressController.createDeleteAddress") createDeleteAddress
 
 > To delete Address to your address book
 
@@ -2146,7 +2072,7 @@ function createDeleteAddress($options)
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| addressid |  ``` Required ```  | The identifier of the address to be deleted. |
+| addressSID |  ``` Required ```  | The identifier of the address to be deleted. |
 | responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type either json or xml |
 
 
@@ -2154,8 +2080,8 @@ function createDeleteAddress($options)
 #### Example Usage
 
 ```php
-$addressid = 'addressid';
-$collect['addressid'] = $addressid;
+$addressSID = 'AddressSID';
+$collect['addressSID'] = $addressSID;
 
 $responseType = 'json';
 $collect['responseType'] = $responseType;
@@ -2166,7 +2092,7 @@ $result = $address->createDeleteAddress($collect);
 ```
 
 
-#### <a name="create_verify_address"></a>![Method: ](http://apidocs.io/img/method.png ".AddressController.createVerifyAddress") createVerifyAddress
+#### <a name="create_verify_address"></a>![Method: ](https://apidocs.io/img/method.png ".AddressController.createVerifyAddress") createVerifyAddress
 
 > Validates an address given.
 
@@ -2179,16 +2105,16 @@ function createVerifyAddress($options)
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| addressid |  ``` Required ```  | The identifier of the address to be verified. |
-| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type either JSON or xml |
+| addressSID |  ``` Required ```  | The identifier of the address to be verified. |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type either json or xml |
 
 
 
 #### Example Usage
 
 ```php
-$addressid = 'addressid';
-$collect['addressid'] = $addressid;
+$addressSID = 'AddressSID';
+$collect['addressSID'] = $addressSID;
 
 $responseType = 'json';
 $collect['responseType'] = $responseType;
@@ -2199,7 +2125,7 @@ $result = $address->createVerifyAddress($collect);
 ```
 
 
-#### <a name="create_list_address"></a>![Method: ](http://apidocs.io/img/method.png ".AddressController.createListAddress") createListAddress
+#### <a name="create_list_address"></a>![Method: ](https://apidocs.io/img/method.png ".AddressController.createListAddress") createListAddress
 
 > List All Address 
 
@@ -2213,8 +2139,8 @@ function createListAddress($options)
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | page |  ``` Optional ```  ``` DefaultValue ```  | Return requested # of items starting the value, default=0, must be an integer |
-| pageSize |  ``` Optional ```  ``` DefaultValue ```  | How many results to return, default=10, max 100, must be an integer |
-| addressId |  ``` Optional ```  | addresses Sid |
+| pageSize |  ``` Optional ```  ``` DefaultValue ```  | How many results to return, default is 10, max is 100, must be an integer |
+| addressSID |  ``` Optional ```  | addresses Sid |
 | dateCreated |  ``` Optional ```  | date created address. |
 | responseType |  ``` Optional ```  ``` DefaultValue ```  | Response Type either json or xml |
 
@@ -2229,10 +2155,10 @@ $collect['page'] = $page;
 $pageSize = 10;
 $collect['pageSize'] = $pageSize;
 
-$addressId = 'addressId';
-$collect['addressId'] = $addressId;
+$addressSID = 'AddressSID';
+$collect['addressSID'] = $addressSID;
 
-$dateCreated = 'dateCreated';
+$dateCreated = 'DateCreated';
 $collect['dateCreated'] = $dateCreated;
 
 $responseType = 'json';
@@ -2244,7 +2170,7 @@ $result = $address->createListAddress($collect);
 ```
 
 
-#### <a name="create_view_address"></a>![Method: ](http://apidocs.io/img/method.png ".AddressController.createViewAddress") createViewAddress
+#### <a name="create_view_address"></a>![Method: ](https://apidocs.io/img/method.png ".AddressController.createViewAddress") createViewAddress
 
 > View Address Specific address Book by providing the address id
 
@@ -2257,7 +2183,7 @@ function createViewAddress($options)
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| addressId |  ``` Required ```  | The identifier of the address to be retrieved. |
+| addressSID |  ``` Required ```  | The identifier of the address to be retrieved. |
 | responseType |  ``` Optional ```  ``` DefaultValue ```  | Response Type either json or xml |
 
 
@@ -2265,8 +2191,8 @@ function createViewAddress($options)
 #### Example Usage
 
 ```php
-$addressId = 'addressId';
-$collect['addressId'] = $addressId;
+$addressSID = 'AddressSID';
+$collect['addressSID'] = $addressSID;
 
 $responseType = 'json';
 $collect['responseType'] = $responseType;
@@ -2279,7 +2205,7 @@ $result = $address->createViewAddress($collect);
 
 [Back to List of Controllers](#list_of_controllers)
 
-### <a name="phone_number_controller"></a>![Class: ](http://apidocs.io/img/class.png ".PhoneNumberController") PhoneNumberController
+### <a name="phone_number_controller"></a>![Class: ](https://apidocs.io/img/class.png ".PhoneNumberController") PhoneNumberController
 
 #### Get singleton instance
 
@@ -2289,7 +2215,7 @@ The singleton instance of the ``` PhoneNumberController ``` class can be accesse
 $phoneNumber = $client->getPhoneNumber();
 ```
 
-#### <a name="update_phone_number"></a>![Method: ](http://apidocs.io/img/method.png ".PhoneNumberController.updatePhoneNumber") updatePhoneNumber
+#### <a name="update_phone_number"></a>![Method: ](https://apidocs.io/img/method.png ".PhoneNumberController.updatePhoneNumber") updatePhoneNumber
 
 > Update Phone Number Details
 
@@ -2374,7 +2300,7 @@ $result = $phoneNumber->updatePhoneNumber($collect);
 ```
 
 
-#### <a name="create_buy_number"></a>![Method: ](http://apidocs.io/img/method.png ".PhoneNumberController.createBuyNumber") createBuyNumber
+#### <a name="create_buy_number"></a>![Method: ](https://apidocs.io/img/method.png ".PhoneNumberController.createBuyNumber") createBuyNumber
 
 > Buy Phone Number 
 
@@ -2407,7 +2333,7 @@ $result = $phoneNumber->createBuyNumber($collect);
 ```
 
 
-#### <a name="create_release_number"></a>![Method: ](http://apidocs.io/img/method.png ".PhoneNumberController.createReleaseNumber") createReleaseNumber
+#### <a name="create_release_number"></a>![Method: ](https://apidocs.io/img/method.png ".PhoneNumberController.createReleaseNumber") createReleaseNumber
 
 > Release number from account
 
@@ -2440,7 +2366,7 @@ $result = $phoneNumber->createReleaseNumber($collect);
 ```
 
 
-#### <a name="create_view_number_details"></a>![Method: ](http://apidocs.io/img/method.png ".PhoneNumberController.createViewNumberDetails") createViewNumberDetails
+#### <a name="create_view_number_details"></a>![Method: ](https://apidocs.io/img/method.png ".PhoneNumberController.createViewNumberDetails") createViewNumberDetails
 
 > Get Phone Number Details
 
@@ -2473,7 +2399,7 @@ $result = $phoneNumber->createViewNumberDetails($collect);
 ```
 
 
-#### <a name="create_list_number"></a>![Method: ](http://apidocs.io/img/method.png ".PhoneNumberController.createListNumber") createListNumber
+#### <a name="create_list_number"></a>![Method: ](https://apidocs.io/img/method.png ".PhoneNumberController.createListNumber") createListNumber
 
 > List Account's Phone number details
 
@@ -2497,10 +2423,10 @@ function createListNumber($options)
 #### Example Usage
 
 ```php
-$page = 133;
+$page = 87;
 $collect['page'] = $page;
 
-$pageSize = 133;
+$pageSize = 87;
 $collect['pageSize'] = $pageSize;
 
 $numberType = string::ALL;
@@ -2518,7 +2444,7 @@ $result = $phoneNumber->createListNumber($collect);
 ```
 
 
-#### <a name="create_available_phone_number"></a>![Method: ](http://apidocs.io/img/method.png ".PhoneNumberController.createAvailablePhoneNumber") createAvailablePhoneNumber
+#### <a name="create_available_phone_number"></a>![Method: ](https://apidocs.io/img/method.png ".PhoneNumberController.createAvailablePhoneNumber") createAvailablePhoneNumber
 
 > Available Phone Number
 
@@ -2547,7 +2473,7 @@ $collect['numberType'] = $numberType;
 $areaCode = 'AreaCode';
 $collect['areaCode'] = $areaCode;
 
-$pageSize = 133;
+$pageSize = 87;
 $collect['pageSize'] = $pageSize;
 
 $responseType = 'json';
@@ -2561,7 +2487,7 @@ $result = $phoneNumber->createAvailablePhoneNumber($collect);
 
 [Back to List of Controllers](#list_of_controllers)
 
-### <a name="recording_controller"></a>![Class: ](http://apidocs.io/img/class.png ".RecordingController") RecordingController
+### <a name="recording_controller"></a>![Class: ](https://apidocs.io/img/class.png ".RecordingController") RecordingController
 
 #### Get singleton instance
 
@@ -2571,7 +2497,7 @@ The singleton instance of the ``` RecordingController ``` class can be accessed 
 $recording = $client->getRecording();
 ```
 
-#### <a name="create_list_recording"></a>![Method: ](http://apidocs.io/img/method.png ".RecordingController.createListRecording") createListRecording
+#### <a name="create_list_recording"></a>![Method: ](https://apidocs.io/img/method.png ".RecordingController.createListRecording") createListRecording
 
 > List out Recordings
 
@@ -2595,10 +2521,10 @@ function createListRecording($options)
 #### Example Usage
 
 ```php
-$page = 133;
+$page = 87;
 $collect['page'] = $page;
 
-$pageSize = 133;
+$pageSize = 87;
 $collect['pageSize'] = $pageSize;
 
 $dateCreated = 'DateCreated';
@@ -2616,7 +2542,7 @@ $result = $recording->createListRecording($collect);
 ```
 
 
-#### <a name="create_delete_recording"></a>![Method: ](http://apidocs.io/img/method.png ".RecordingController.createDeleteRecording") createDeleteRecording
+#### <a name="create_delete_recording"></a>![Method: ](https://apidocs.io/img/method.png ".RecordingController.createDeleteRecording") createDeleteRecording
 
 > Delete Recording Record
 
@@ -2649,7 +2575,7 @@ $result = $recording->createDeleteRecording($collect);
 ```
 
 
-#### <a name="create_view_recording"></a>![Method: ](http://apidocs.io/img/method.png ".RecordingController.createViewRecording") createViewRecording
+#### <a name="create_view_recording"></a>![Method: ](https://apidocs.io/img/method.png ".RecordingController.createViewRecording") createViewRecording
 
 > View a specific Recording
 
@@ -2684,7 +2610,7 @@ $result = $recording->createViewRecording($collect);
 
 [Back to List of Controllers](#list_of_controllers)
 
-### <a name="transcription_controller"></a>![Class: ](http://apidocs.io/img/class.png ".TranscriptionController") TranscriptionController
+### <a name="transcription_controller"></a>![Class: ](https://apidocs.io/img/class.png ".TranscriptionController") TranscriptionController
 
 #### Get singleton instance
 
@@ -2694,7 +2620,7 @@ The singleton instance of the ``` TranscriptionController ``` class can be acces
 $transcription = $client->getTranscription();
 ```
 
-#### <a name="create_audio_url_transcription"></a>![Method: ](http://apidocs.io/img/method.png ".TranscriptionController.createAudioURLTranscription") createAudioURLTranscription
+#### <a name="create_audio_url_transcription"></a>![Method: ](https://apidocs.io/img/method.png ".TranscriptionController.createAudioURLTranscription") createAudioURLTranscription
 
 > Audio URL Transcriptions
 
@@ -2727,7 +2653,7 @@ $result = $transcription->createAudioURLTranscription($collect);
 ```
 
 
-#### <a name="create_recording_transcription"></a>![Method: ](http://apidocs.io/img/method.png ".TranscriptionController.createRecordingTranscription") createRecordingTranscription
+#### <a name="create_recording_transcription"></a>![Method: ](https://apidocs.io/img/method.png ".TranscriptionController.createRecordingTranscription") createRecordingTranscription
 
 > Recording Transcriptions
 
@@ -2760,7 +2686,7 @@ $result = $transcription->createRecordingTranscription($collect);
 ```
 
 
-#### <a name="create_view_transcription"></a>![Method: ](http://apidocs.io/img/method.png ".TranscriptionController.createViewTranscription") createViewTranscription
+#### <a name="create_view_transcription"></a>![Method: ](https://apidocs.io/img/method.png ".TranscriptionController.createViewTranscription") createViewTranscription
 
 > View Specific Transcriptions
 
@@ -2793,7 +2719,7 @@ $result = $transcription->createViewTranscription($collect);
 ```
 
 
-#### <a name="create_list_transcription"></a>![Method: ](http://apidocs.io/img/method.png ".TranscriptionController.createListTranscription") createListTranscription
+#### <a name="create_list_transcription"></a>![Method: ](https://apidocs.io/img/method.png ".TranscriptionController.createListTranscription") createListTranscription
 
 > Get All transcriptions
 
@@ -2817,10 +2743,10 @@ function createListTranscription($options)
 #### Example Usage
 
 ```php
-$page = 133;
+$page = 87;
 $collect['page'] = $page;
 
-$pageSize = 133;
+$pageSize = 87;
 $collect['pageSize'] = $pageSize;
 
 $status = string::INPROGRESS;
@@ -2840,7 +2766,7 @@ $result = $transcription->createListTranscription($collect);
 
 [Back to List of Controllers](#list_of_controllers)
 
-### <a name="usage_controller"></a>![Class: ](http://apidocs.io/img/class.png ".UsageController") UsageController
+### <a name="usage_controller"></a>![Class: ](https://apidocs.io/img/class.png ".UsageController") UsageController
 
 #### Get singleton instance
 
@@ -2850,7 +2776,7 @@ The singleton instance of the ``` UsageController ``` class can be accessed from
 $usage = $client->getUsage();
 ```
 
-#### <a name="create_list_usage"></a>![Method: ](http://apidocs.io/img/method.png ".UsageController.createListUsage") createListUsage
+#### <a name="create_list_usage"></a>![Method: ](https://apidocs.io/img/method.png ".UsageController.createListUsage") createListUsage
 
 > Get all usage 
 
@@ -2887,6 +2813,51 @@ $collect['responseType'] = $responseType;
 
 
 $result = $usage->createListUsage($collect);
+
+```
+
+
+[Back to List of Controllers](#list_of_controllers)
+
+### <a name="account_controller"></a>![Class: ](https://apidocs.io/img/class.png ".AccountController") AccountController
+
+#### Get singleton instance
+
+The singleton instance of the ``` AccountController ``` class can be accessed from the API Client.
+
+```php
+$account = $client->getAccount();
+```
+
+#### <a name="create_view_account"></a>![Method: ](https://apidocs.io/img/method.png ".AccountController.createViewAccount") createViewAccount
+
+> Display Account Description
+
+
+```php
+function createViewAccount($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| date |  ``` Required ```  | TODO: Add a parameter description |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
+
+
+
+#### Example Usage
+
+```php
+$date = 'Date';
+$collect['date'] = $date;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $account->createViewAccount($collect);
 
 ```
 

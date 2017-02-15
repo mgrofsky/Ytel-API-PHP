@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/14/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
 namespace Message360Lib\Controllers;
@@ -22,13 +22,13 @@ use Unirest\Request;
 /**
  * @todo Add a general description for this controller.
  */
-class ConferenceController extends BaseController {
-
+class ConferenceController extends BaseController
+{
     /**
      * @var ConferenceController The reference to *Singleton* instance of this class
      */
     private static $instance;
-    
+
     /**
      * Returns the *Singleton* instance of this class.
      * @return ConferenceController The *Singleton* instance.
@@ -44,21 +44,23 @@ class ConferenceController extends BaseController {
 
     /**
      * Deaf Mute Participant
+     *
      * @param  array  $options    Array with all options for search
-     * @param  string     $options['conferenceSid']      Required parameter: Example: 
-     * @param  string     $options['participantSid']     Required parameter: Example: 
-     * @param  bool       $options['muted']              Optional parameter: Example: 
-     * @param  bool       $options['deaf']               Optional parameter: Example: 
-     * @param  string     $options['responseType']       Optional parameter: Response Type either json or xml
+     * @param string $options['conferenceSid']  TODO: type description here
+     * @param string $options['participantSid'] TODO: type description here
+     * @param bool   $options['muted']          (optional) TODO: type description here
+     * @param bool   $options['deaf']           (optional) TODO: type description here
+     * @param string $options['responseType']   (optional) Response Type either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createDeafMuteParticipant (
-                $options) 
-    { 
+    public function createDeafMuteParticipant(
+        $options
+    ) {
         //check that all required arguments are provided
-        if(!isset($options['conferenceSid'], $options['participantSid']))
+        if (!isset($options['conferenceSid'], $options['participantSid'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
 
 
         //the base uri for api requests
@@ -93,45 +95,47 @@ class ConferenceController extends BaseController {
 
         //call on-before Http callback
         $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
         }
 
         //and invoke the API call request to fetch the response
         $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
 
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
         //call on-after Http callback
-        if($this->getHttpCallBack() != null) {
-            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-            
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
         }
 
-        //Error handling using HTTP status codes
-        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
-            throw new APIException("HTTP Response Not OK", $_httpContext);
-        }
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
 
         return $response->body;
     }
-        
+
     /**
      * List Conference
+     *
      * @param  array  $options    Array with all options for search
-     * @param  integer     $options['page']             Optional parameter: Which page of the overall response will be returned. Zero indexed
-     * @param  integer     $options['pageSize']         Optional parameter: Number of individual resources listed in the response per page
-     * @param  string      $options['friendlyName']     Optional parameter: Only return conferences with the specified FriendlyName
-     * @param  string      $options['status']           Optional parameter: Example: 
-     * @param  string      $options['dateCreated']      Optional parameter: Example: 
-     * @param  string      $options['dateUpdated']      Optional parameter: Example: 
-     * @param  string      $options['responseType']     Optional parameter: Response type format xml or json
+     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
+     *                                         indexed
+     * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
+     *                                         page
+     * @param string  $options['friendlyName'] (optional) Only return conferences with the specified FriendlyName
+     * @param string  $options['status']       (optional) TODO: type description here
+     * @param string  $options['dateCreated']  (optional) TODO: type description here
+     * @param string  $options['dateUpdated']  (optional) TODO: type description here
+     * @param string  $options['responseType'] (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createListConference (
-                $options) 
-    {
+    public function createListConference(
+        $options
+    ) {
+
         //the base uri for api requests
         $_queryBuilder = Configuration::getBaseUri();
         
@@ -166,43 +170,43 @@ class ConferenceController extends BaseController {
 
         //call on-before Http callback
         $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
         }
 
         //and invoke the API call request to fetch the response
         $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
 
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
         //call on-after Http callback
-        if($this->getHttpCallBack() != null) {
-            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-            
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
         }
 
-        //Error handling using HTTP status codes
-        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
-            throw new APIException("HTTP Response Not OK", $_httpContext);
-        }
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
 
         return $response->body;
     }
-        
+
     /**
      * View Conference
+     *
      * @param  array  $options    Array with all options for search
-     * @param  string     $options['conferencesid']     Required parameter: The unique identifier of each conference resource
-     * @param  string     $options['responseType']      Optional parameter: Response type format xml or json
+     * @param string $options['conferencesid'] The unique identifier of each conference resource
+     * @param string $options['responseType']  (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createViewConference (
-                $options) 
-    { 
+    public function createViewConference(
+        $options
+    ) {
         //check that all required arguments are provided
-        if(!isset($options['conferencesid']))
+        if (!isset($options['conferencesid'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
 
 
         //the base uri for api requests
@@ -234,47 +238,47 @@ class ConferenceController extends BaseController {
 
         //call on-before Http callback
         $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
         }
 
         //and invoke the API call request to fetch the response
         $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
 
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
         //call on-after Http callback
-        if($this->getHttpCallBack() != null) {
-            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-            
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
         }
 
-        //Error handling using HTTP status codes
-        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
-            throw new APIException("HTTP Response Not OK", $_httpContext);
-        }
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
 
         return $response->body;
     }
-        
+
     /**
-     * Add Participant in conference 
+     * Add Participant in conference
+     *
      * @param  array  $options    Array with all options for search
-     * @param  string      $options['conferencesid']         Required parameter: Unique Conference Sid
-     * @param  string      $options['participantnumber']     Required parameter: Particiant Number
-     * @param  integer     $options['tocountrycode']         Required parameter: Example: 
-     * @param  bool        $options['muted']                 Optional parameter: Example: 
-     * @param  bool        $options['deaf']                  Optional parameter: Example: 
-     * @param  string      $options['responseType']          Optional parameter: Response type format xml or json
+     * @param string  $options['conferencesid']     Unique Conference Sid
+     * @param string  $options['participantnumber'] Particiant Number
+     * @param integer $options['tocountrycode']     TODO: type description here
+     * @param bool    $options['muted']             (optional) TODO: type description here
+     * @param bool    $options['deaf']              (optional) TODO: type description here
+     * @param string  $options['responseType']      (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function addParticipant (
-                $options) 
-    { 
+    public function addParticipant(
+        $options
+    ) {
         //check that all required arguments are provided
-        if(!isset($options['conferencesid'], $options['participantnumber'], $options['tocountrycode']))
+        if (!isset($options['conferencesid'], $options['participantnumber'], $options['tocountrycode'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
 
 
         //the base uri for api requests
@@ -310,47 +314,47 @@ class ConferenceController extends BaseController {
 
         //call on-before Http callback
         $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
         }
 
         //and invoke the API call request to fetch the response
         $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
 
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
         //call on-after Http callback
-        if($this->getHttpCallBack() != null) {
-            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-            
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
         }
 
-        //Error handling using HTTP status codes
-        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
-            throw new APIException("HTTP Response Not OK", $_httpContext);
-        }
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
 
         return $response->body;
     }
-        
+
     /**
      * List Participant
+     *
      * @param  array  $options    Array with all options for search
-     * @param  string      $options['conferenceSid']     Required parameter: unique conference sid
-     * @param  integer     $options['page']              Optional parameter: page number
-     * @param  integer     $options['pagesize']          Optional parameter: Example: 
-     * @param  bool        $options['muted']             Optional parameter: Example: 
-     * @param  bool        $options['deaf']              Optional parameter: Example: 
-     * @param  string      $options['responseType']      Optional parameter: Response format, xml or json
+     * @param string  $options['conferenceSid'] unique conference sid
+     * @param integer $options['page']          (optional) page number
+     * @param integer $options['pagesize']      (optional) TODO: type description here
+     * @param bool    $options['muted']         (optional) TODO: type description here
+     * @param bool    $options['deaf']          (optional) TODO: type description here
+     * @param string  $options['responseType']  (optional) Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createListParticipant (
-                $options) 
-    { 
+    public function createListParticipant(
+        $options
+    ) {
         //check that all required arguments are provided
-        if(!isset($options['conferenceSid']))
+        if (!isset($options['conferenceSid'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
 
 
         //the base uri for api requests
@@ -386,44 +390,44 @@ class ConferenceController extends BaseController {
 
         //call on-before Http callback
         $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
         }
 
         //and invoke the API call request to fetch the response
         $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
 
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
         //call on-after Http callback
-        if($this->getHttpCallBack() != null) {
-            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-            
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
         }
 
-        //Error handling using HTTP status codes
-        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
-            throw new APIException("HTTP Response Not OK", $_httpContext);
-        }
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
 
         return $response->body;
     }
-        
+
     /**
      * View Participant
+     *
      * @param  array  $options    Array with all options for search
-     * @param  string     $options['conferenceSid']      Required parameter: unique conference sid
-     * @param  string     $options['participantSid']     Required parameter: Example: 
-     * @param  string     $options['responseType']       Optional parameter: Response type format xml or json
+     * @param string $options['conferenceSid']  unique conference sid
+     * @param string $options['participantSid'] TODO: type description here
+     * @param string $options['responseType']   (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createViewParticipant (
-                $options) 
-    { 
+    public function createViewParticipant(
+        $options
+    ) {
         //check that all required arguments are provided
-        if(!isset($options['conferenceSid'], $options['participantSid']))
+        if (!isset($options['conferenceSid'], $options['participantSid'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
 
 
         //the base uri for api requests
@@ -456,44 +460,40 @@ class ConferenceController extends BaseController {
 
         //call on-before Http callback
         $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
         }
 
         //and invoke the API call request to fetch the response
         $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
 
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
         //call on-after Http callback
-        if($this->getHttpCallBack() != null) {
-            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-            
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
         }
 
-        //Error handling using HTTP status codes
-        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
-            throw new APIException("HTTP Response Not OK", $_httpContext);
-        }
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
 
         return $response->body;
     }
-        
 
 
     /**
-	 * Array access utility method
+    * Array access utility method
      * @param  array          $arr         Array of values to read from
      * @param  string         $key         Key to get the value from the array
      * @param  mixed|null     $default     Default value to use if the key was not found
      * @return mixed
      */
-    private function val($arr, $key, $default = NULL)
+    private function val($arr, $key, $default = null)
     {
-        if(isset($arr[$key])) {
+        if (isset($arr[$key])) {
             return is_bool($arr[$key]) ? var_export($arr[$key], true) : $arr[$key];
         }
         return $default;
     }
-
 }

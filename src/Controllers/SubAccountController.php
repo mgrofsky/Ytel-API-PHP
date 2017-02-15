@@ -2,7 +2,7 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/14/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
 namespace Message360Lib\Controllers;
@@ -22,13 +22,13 @@ use Unirest\Request;
 /**
  * @todo Add a general description for this controller.
  */
-class SubAccountController extends BaseController {
-
+class SubAccountController extends BaseController
+{
     /**
      * @var SubAccountController The reference to *Singleton* instance of this class
      */
     private static $instance;
-    
+
     /**
      * Returns the *Singleton* instance of this class.
      * @return SubAccountController The *Singleton* instance.
@@ -43,21 +43,23 @@ class SubAccountController extends BaseController {
     }
 
     /**
-     * Create Sub account
+     * Create a sub user account under the parent account
+     *
      * @param  array  $options    Array with all options for search
-     * @param  string     $options['firstname']        Required parameter: Example: 
-     * @param  string     $options['lastname']         Required parameter: Example: 
-     * @param  string     $options['email']            Required parameter: Example: 
-     * @param  string     $options['responseType']     Optional parameter: ResponseType Format either json or xml
+     * @param string $options['firstName']    Sub account user first name
+     * @param string $options['lastName']     sub account user last name
+     * @param string $options['email']        Sub account email address
+     * @param string $options['responseType'] (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createSubAccount (
-                $options) 
-    { 
+    public function createSubAccount(
+        $options
+    ) {
         //check that all required arguments are provided
-        if(!isset($options['firstname'], $options['lastname'], $options['email']))
+        if (!isset($options['firstName'], $options['lastName'], $options['email'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
 
 
         //the base uri for api requests
@@ -81,9 +83,9 @@ class SubAccountController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'firstname'    => $this->val($options, 'firstname'),
-            'lastname'     => $this->val($options, 'lastname'),
-            'email'        => $this->val($options, 'email')
+            'FirstName'    => $this->val($options, 'firstName'),
+            'LastName'     => $this->val($options, 'lastName'),
+            'Email'        => $this->val($options, 'email')
         );
 
         //set HTTP basic auth parameters
@@ -91,44 +93,44 @@ class SubAccountController extends BaseController {
 
         //call on-before Http callback
         $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
         }
 
         //and invoke the API call request to fetch the response
         $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
 
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
         //call on-after Http callback
-        if($this->getHttpCallBack() != null) {
-            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-            
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
         }
 
-        //Error handling using HTTP status codes
-        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
-            throw new APIException("HTTP Response Not OK", $_httpContext);
-        }
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
 
         return $response->body;
     }
-        
+
     /**
      * Suspend or unsuspend
+     *
      * @param  array  $options    Array with all options for search
-     * @param  string     $options['subaccountsid']     Required parameter: Example: 
-     * @param  int        $options['activate']          Required parameter: Example: 
-     * @param  string     $options['responseType']      Optional parameter: Example: 
+     * @param string $options['subAccountSID'] The SubaccountSid to be activated or suspended
+     * @param int    $options['activate']      0 to suspend or 1 to activate
+     * @param string $options['responseType']  (optional) TODO: type description here
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createSuspendSubAccount (
-                $options) 
-    { 
+    public function createSuspendSubAccount(
+        $options
+    ) {
         //check that all required arguments are provided
-        if(!isset($options['subaccountsid'], $options['activate']))
+        if (!isset($options['subAccountSID'], $options['activate'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
 
 
         //the base uri for api requests
@@ -152,8 +154,8 @@ class SubAccountController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'subaccountsid' => $this->val($options, 'subaccountsid'),
-            'activate'      => $this->val($options, 'activate')
+            'SubAccountSID' => $this->val($options, 'subAccountSID'),
+            'Activate'      => $this->val($options, 'activate')
         );
 
         //set HTTP basic auth parameters
@@ -161,44 +163,44 @@ class SubAccountController extends BaseController {
 
         //call on-before Http callback
         $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
         }
 
         //and invoke the API call request to fetch the response
         $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
 
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
         //call on-after Http callback
-        if($this->getHttpCallBack() != null) {
-            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-            
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
         }
 
-        //Error handling using HTTP status codes
-        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
-            throw new APIException("HTTP Response Not OK", $_httpContext);
-        }
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
 
         return $response->body;
     }
-        
+
     /**
-     * Delete or Merge Sub account
+     * Delete sub account or merge numbers into parent
+     *
      * @param  array  $options    Array with all options for search
-     * @param  string     $options['subaccountsid']     Required parameter: Example: 
-     * @param  int        $options['mergenumber']       Required parameter: Example: 
-     * @param  string     $options['responseType']      Optional parameter: Response type format either json or xml
+     * @param string $options['subAccountSID'] The SubaccountSid to be deleted
+     * @param int    $options['mergeNumber']   0 to delete or 1 to merge numbers to parent account.
+     * @param string $options['responseType']  (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createDeleteMergeSubAccount (
-                $options) 
-    { 
+    public function createDeleteSubAccount(
+        $options
+    ) {
         //check that all required arguments are provided
-        if(!isset($options['subaccountsid'], $options['mergenumber']))
+        if (!isset($options['subAccountSID'], $options['mergeNumber'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
 
 
         //the base uri for api requests
@@ -222,8 +224,8 @@ class SubAccountController extends BaseController {
 
         //prepare parameters
         $_parameters = array (
-            'subaccountsid' => $this->val($options, 'subaccountsid'),
-            'mergenumber'   => $this->val($options, 'mergenumber')
+            'SubAccountSID' => $this->val($options, 'subAccountSID'),
+            'MergeNumber'   => $this->val($options, 'mergeNumber')
         );
 
         //set HTTP basic auth parameters
@@ -231,44 +233,40 @@ class SubAccountController extends BaseController {
 
         //call on-before Http callback
         $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
         }
 
         //and invoke the API call request to fetch the response
         $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
 
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
         //call on-after Http callback
-        if($this->getHttpCallBack() != null) {
-            $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-            $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-            
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);            
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
         }
 
-        //Error handling using HTTP status codes
-        if (($response->code < 200) || ($response->code > 208)) { //[200,208] = HTTP OK
-            throw new APIException("HTTP Response Not OK", $_httpContext);
-        }
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
 
         return $response->body;
     }
-        
 
 
     /**
-	 * Array access utility method
+    * Array access utility method
      * @param  array          $arr         Array of values to read from
      * @param  string         $key         Key to get the value from the array
      * @param  mixed|null     $default     Default value to use if the key was not found
      * @return mixed
      */
-    private function val($arr, $key, $default = NULL)
+    private function val($arr, $key, $default = null)
     {
-        if(isset($arr[$key])) {
+        if (isset($arr[$key])) {
             return is_bool($arr[$key]) ? var_export($arr[$key], true) : $arr[$key];
         }
         return $default;
     }
-
 }

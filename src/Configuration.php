@@ -2,16 +2,17 @@
 /*
  * Message360
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ) on 12/14/2016
+ * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
 namespace Message360Lib;
 
 /**
  * All configuration including auth info and base URI for the API access
- * are configured in this class. 
+ * are configured in this class.
  */
-class Configuration {
+class Configuration
+{
     /**
      * The environment being used'
      * @var string
@@ -35,7 +36,6 @@ class Configuration {
      * @todo Replace the $basicAuthPassword with an appropriate value
      */
     public static $basicAuthPassword = 'TODO: Replace';
-
     /**
      * Get the base uri for a given server in the current environment
      * @param  string $server Server name
@@ -44,9 +44,10 @@ class Configuration {
     public static function getBaseUri($server = Servers::DEFAULT_)
     {
         return APIHelper::appendUrlWithTemplateParameters(
-            static::$environmentsMap[static::$environment][$server], 
+            static::$environmentsMap[static::$environment][$server],
             array(
-            ));
+            )
+        );
     }
 
     /**
