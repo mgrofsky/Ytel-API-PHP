@@ -43,74 +43,6 @@ class SMSController extends BaseController
     }
 
     /**
-     * View Particular SMS
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string $options['messagesid']   Message sid
-     * @param string $options['responseType'] (optional) Response type format xml or json
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function createViewSMS(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['messagesid'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/sms/viewsms.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'messagesid'   => $this->val($options, 'messagesid')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
      * List All Inbound SMS
      *
      * @param  array  $options    Array with all options for search
@@ -309,6 +241,74 @@ class SMSController extends BaseController
             'body'                  => $this->val($options, 'body'),
             'method'                => $this->val($options, 'method'),
             'messagestatuscallback' => $this->val($options, 'messagestatuscallback')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * View a Particular SMS
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string $options['messagesid']   Message sid
+     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function createViewSMS(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['messagesid'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/sms/viewsms.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'messagesid'   => $this->val($options, 'messagesid')
         );
 
         //set HTTP basic auth parameters
