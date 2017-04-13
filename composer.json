@@ -1,8 +1,8 @@
 {
-    "name": "apimatic/message360apiv2",
+    "name": "apimatic/message360apiv3",
     "type": "library",
-    "description": "message360 API version 2",
-    "keywords": ["message360 API V2","API","SDK"],
+    "description": "message360 API version 3",
+    "keywords": ["message360 API V3","API","SDK"],
     "homepage": "https://apimatic.io",
     "license": "MIT",
     "authors": [
@@ -19,7 +19,10 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "mashape/unirest-php": "~3.0.1",
-        "apimatic/jsonmapper": "~1.0.0"
+        "apimatic/jsonmapper": "~1.2.0"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^2.7"
     },
     "autoload": {
         "psr-4": {

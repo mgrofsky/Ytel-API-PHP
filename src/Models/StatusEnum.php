@@ -8,17 +8,22 @@
 namespace Message360Lib\Models;
 
 /**
- * Choose account status either 0 or 1
+ * Transcription Status
  */
-class ActivateStatus
+class StatusEnum
 {
     /**
      * TODO: Write general description for this element
      */
-    const ACTIVATE = 1;
+    const INPROGRESS = "inprogress";
 
     /**
      * TODO: Write general description for this element
      */
-    const DEACTIVATE = 0;
+    const SUCCESS = "success";
+
+    /**
+     * TODO: Write general description for this element
+     */
+    const FAILURE = "failure";
 }

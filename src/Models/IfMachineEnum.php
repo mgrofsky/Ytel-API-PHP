@@ -8,22 +8,17 @@
 namespace Message360Lib\Models;
 
 /**
- * Transcription Status
+ * How Message360 should handle the receiving numbers voicemail machine
  */
-class Status
+class IfMachineEnum
 {
     /**
      * TODO: Write general description for this element
      */
-    const INPROGRESS = "inprogress";
+    const CONTINUE_ = "continue";
 
     /**
      * TODO: Write general description for this element
      */
-    const SUCCESS = "success";
-
-    /**
-     * TODO: Write general description for this element
-     */
-    const FAILURE = "failure";
+    const HANGUP = "hangup";
 }

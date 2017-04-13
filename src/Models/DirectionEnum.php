@@ -8,17 +8,22 @@
 namespace Message360Lib\Models;
 
 /**
- * Audio Direction
+ * Play DTMF Direction & in play audio & sendDigit
  */
-class AudioDirection
+class DirectionEnum
 {
     /**
-     * TODO: Write general description for this element
+     * in direction
      */
     const IN = "in";
 
     /**
-     * TODO: Write general description for this element
+     * out direction
      */
     const OUT = "out";
+
+    /**
+     * both
+     */
+    const BOTH = "both";
 }

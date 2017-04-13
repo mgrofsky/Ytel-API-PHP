@@ -10,7 +10,7 @@ namespace Message360Lib\Models;
 /**
  * Interrupted Call Status
  */
-class InterruptedCallStatus
+class InterruptedCallStatusEnum
 {
     /**
      * Interrupt Call will be cancel

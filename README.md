@@ -273,7 +273,7 @@ function createListInboundShortCode($options)
 #### Example Usage
 
 ```php
-$page = 185;
+$page = 33;
 $collect['page'] = $page;
 
 $pagesize = 10;
@@ -322,7 +322,7 @@ function createListShortCode($options)
 #### Example Usage
 
 ```php
-$page = 185;
+$page = 247;
 $collect['page'] = $page;
 
 $pagesize = 10;
@@ -372,7 +372,7 @@ function createListTemplates($options)
 $type = 'authorization';
 $collect['type'] = $type;
 
-$page = 185;
+$page = 247;
 $collect['page'] = $page;
 
 $pagesize = 10;
@@ -462,10 +462,10 @@ $collect['conferenceSid'] = $conferenceSid;
 $participantSid = 'ParticipantSid';
 $collect['participantSid'] = $participantSid;
 
-$muted = false;
+$muted = true;
 $collect['muted'] = $muted;
 
-$deaf = false;
+$deaf = true;
 $collect['deaf'] = $deaf;
 
 $responseType = 'json';
@@ -503,10 +503,10 @@ function createListConference($options)
 #### Example Usage
 
 ```php
-$page = 22;
+$page = 247;
 $collect['page'] = $page;
 
-$pageSize = 22;
+$pageSize = 247;
 $collect['pageSize'] = $pageSize;
 
 $friendlyName = 'FriendlyName';
@@ -594,13 +594,13 @@ $collect['conferencesid'] = $conferencesid;
 $participantnumber = 'participantnumber';
 $collect['participantnumber'] = $participantnumber;
 
-$tocountrycode = 22;
+$tocountrycode = 247;
 $collect['tocountrycode'] = $tocountrycode;
 
-$muted = false;
+$muted = true;
 $collect['muted'] = $muted;
 
-$deaf = false;
+$deaf = true;
 $collect['deaf'] = $deaf;
 
 $responseType = 'json';
@@ -640,16 +640,16 @@ function createListParticipant($options)
 $conferenceSid = 'ConferenceSid';
 $collect['conferenceSid'] = $conferenceSid;
 
-$page = 22;
+$page = 247;
 $collect['page'] = $page;
 
-$pagesize = 22;
+$pagesize = 247;
 $collect['pagesize'] = $pagesize;
 
-$muted = false;
+$muted = true;
 $collect['muted'] = $muted;
 
-$deaf = false;
+$deaf = true;
 $collect['deaf'] = $deaf;
 
 $responseType = 'json';
@@ -1270,10 +1270,10 @@ function createCarrierLookupList($options)
 #### Example Usage
 
 ```php
-$page = 22;
+$page = 247;
 $collect['page'] = $page;
 
-$pagesize = 22;
+$pagesize = 247;
 $collect['pagesize'] = $pagesize;
 
 $responseType = 'json';
@@ -1406,7 +1406,7 @@ $collect['heartBeatUrl'] = $heartBeatUrl;
 $heartBeatMethod = string::GET;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 113;
+$timeout = 247;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
@@ -1415,7 +1415,7 @@ $collect['playDtmf'] = $playDtmf;
 $hideCallerId = 'HideCallerId';
 $collect['hideCallerId'] = $hideCallerId;
 
-$record = false;
+$record = true;
 $collect['record'] = $record;
 
 $recordCallBackUrl = 'RecordCallBackUrl';
@@ -1424,7 +1424,7 @@ $collect['recordCallBackUrl'] = $recordCallBackUrl;
 $recordCallBackMethod = string::GET;
 $collect['recordCallBackMethod'] = $recordCallBackMethod;
 
-$transcribe = false;
+$transcribe = true;
 $collect['transcribe'] = $transcribe;
 
 $transcribeCallBackUrl = 'TranscribeCallBackUrl';
@@ -1472,19 +1472,19 @@ $collect['callSid'] = $callSid;
 $audioDirection = string::IN;
 $collect['audioDirection'] = $audioDirection;
 
-$pitchSemiTones = 113.875354483666;
+$pitchSemiTones = 83.6937546211731;
 $collect['pitchSemiTones'] = $pitchSemiTones;
 
-$pitchOctaves = 113.875354483666;
+$pitchOctaves = 83.6937546211731;
 $collect['pitchOctaves'] = $pitchOctaves;
 
-$pitch = 113.875354483666;
+$pitch = 83.6937546211731;
 $collect['pitch'] = $pitch;
 
-$rate = 113.875354483666;
+$rate = 83.6937546211731;
 $collect['rate'] = $rate;
 
-$tempo = 113.875354483666;
+$tempo = 83.6937546211731;
 $collect['tempo'] = $tempo;
 
 $responseType = 'json';
@@ -1531,7 +1531,7 @@ $collect['record'] = $record;
 $direction = string::IN;
 $collect['direction'] = $direction;
 
-$timeLimit = 113;
+$timeLimit = 83;
 $collect['timeLimit'] = $timeLimit;
 
 $callBackUrl = 'CallBackUrl';
@@ -1581,7 +1581,7 @@ $collect['callSid'] = $callSid;
 $audioUrl = 'AudioUrl';
 $collect['audioUrl'] = $audioUrl;
 
-$length = 113;
+$length = 83;
 $collect['length'] = $length;
 
 $direction = string::IN;
@@ -1765,7 +1765,7 @@ $collect['heartBeatUrl'] = $heartBeatUrl;
 $heartBeatMethod = false;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 113;
+$timeout = 83;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
@@ -1826,7 +1826,7 @@ function createListCalls($options)
 #### Example Usage
 
 ```php
-$page = 113;
+$page = 83;
 $collect['page'] = $page;
 
 $pageSize = 10;
@@ -1846,6 +1846,67 @@ $collect['responseType'] = $responseType;
 
 
 $result = $call->createListCalls($collect);
+
+```
+
+
+#### <a name="create_send_ringless_vm"></a>![Method: ](https://apidocs.io/img/method.png ".CallController.createSendRinglessVM") createSendRinglessVM
+
+> API endpoint used to send a Ringless Voicemail
+
+
+```php
+function createSendRinglessVM($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| fromCountryCode |  ``` Required ```  | From country code |
+| from |  ``` Required ```  | This number to display on Caller ID as calling |
+| toCountryCode |  ``` Required ```  | To country code |
+| to |  ``` Required ```  | To number |
+| voiceMailURL |  ``` Required ```  | URL to an audio file |
+| method |  ``` Required ```  ``` DefaultValue ```  | Not currently used in this version |
+| statusCallBackUrl |  ``` Optional ```  | URL to post the status of the Ringless request |
+| statsCallBackMethod |  ``` Optional ```  | POST or GET |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
+
+
+
+#### Example Usage
+
+```php
+$fromCountryCode = 'FromCountryCode';
+$collect['fromCountryCode'] = $fromCountryCode;
+
+$from = 'From';
+$collect['from'] = $from;
+
+$toCountryCode = 'ToCountryCode';
+$collect['toCountryCode'] = $toCountryCode;
+
+$to = 'To';
+$collect['to'] = $to;
+
+$voiceMailURL = 'VoiceMailURL';
+$collect['voiceMailURL'] = $voiceMailURL;
+
+$method = 'GET';
+$collect['method'] = $method;
+
+$statusCallBackUrl = 'StatusCallBackUrl';
+$collect['statusCallBackUrl'] = $statusCallBackUrl;
+
+$statsCallBackMethod = 'StatsCallBackMethod';
+$collect['statsCallBackMethod'] = $statsCallBackMethod;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $call->createSendRinglessVM($collect);
 
 ```
 
@@ -2504,7 +2565,7 @@ function createListNumber($options)
 #### Example Usage
 
 ```php
-$page = 72;
+$page = 175;
 $collect['page'] = $page;
 
 $pageSize = 10;
@@ -2602,10 +2663,10 @@ function createListRecording($options)
 #### Example Usage
 
 ```php
-$page = 72;
+$page = 175;
 $collect['page'] = $page;
 
-$pageSize = 72;
+$pageSize = 175;
 $collect['pageSize'] = $pageSize;
 
 $dateCreated = 'DateCreated';
@@ -2725,7 +2786,7 @@ function createListInboundSMS($options)
 #### Example Usage
 
 ```php
-$page = 72;
+$page = 175;
 $collect['page'] = $page;
 
 $pagesize = 'pagesize';
@@ -2771,10 +2832,10 @@ function createListSMS($options)
 #### Example Usage
 
 ```php
-$page = 72;
+$page = 175;
 $collect['page'] = $page;
 
-$pagesize = 72;
+$pagesize = 175;
 $collect['pagesize'] = $pagesize;
 
 $from = 'from';
@@ -3020,10 +3081,10 @@ function createListTranscription($options)
 #### Example Usage
 
 ```php
-$page = 72;
+$page = 175;
 $collect['page'] = $page;
 
-$pageSize = 72;
+$pageSize = 175;
 $collect['pageSize'] = $pageSize;
 
 $status = string::INPROGRESS;

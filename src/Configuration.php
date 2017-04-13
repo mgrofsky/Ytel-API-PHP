@@ -56,7 +56,7 @@ class Configuration
      */
     private static $environmentsMap = array(
         Environments::PRODUCTION => array(
-            Servers::DEFAULT_ => 'https://api.message360.com/api/v2',
+            Servers::DEFAULT_ => 'https://api.message360.com/api/v3',
         ),
         Environments::PREPRODUCTION => array(
             Servers::DEFAULT_ => 'https://api-preprod.message360.com/api/v2',
