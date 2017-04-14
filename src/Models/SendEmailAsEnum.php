@@ -10,7 +10,7 @@ namespace Message360Lib\Models;
 /**
  * send email TEXT or HTML format
  */
-class SendEmailAs
+class SendEmailAsEnum
 {
     /**
      * Email send as text format

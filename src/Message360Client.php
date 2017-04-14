@@ -26,6 +26,15 @@ class Message360Client
     }
  
     /**
+     * Singleton access to ShortCode controller
+     * @return Controllers\ShortCodeController The *Singleton* instance
+     */
+    public function getShortCode()
+    {
+        return Controllers\ShortCodeController::getInstance();
+    }
+ 
+    /**
      * Singleton access to Conference controller
      * @return Controllers\ConferenceController The *Singleton* instance
      */
@@ -71,15 +80,6 @@ class Message360Client
     }
  
     /**
-     * Singleton access to SMS controller
-     * @return Controllers\SMSController The *Singleton* instance
-     */
-    public function getSMS()
-    {
-        return Controllers\SMSController::getInstance();
-    }
- 
-    /**
      * Singleton access to WebRTC controller
      * @return Controllers\WebRTCController The *Singleton* instance
      */
@@ -122,6 +122,15 @@ class Message360Client
     public function getRecording()
     {
         return Controllers\RecordingController::getInstance();
+    }
+ 
+    /**
+     * Singleton access to SMS controller
+     * @return Controllers\SMSController The *Singleton* instance
+     */
+    public function getSMS()
+    {
+        return Controllers\SMSController::getInstance();
     }
  
     /**

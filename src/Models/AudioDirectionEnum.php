@@ -8,17 +8,17 @@
 namespace Message360Lib\Models;
 
 /**
- * Audio Format file type mp3 or wav
+ * Audio Direction
  */
-class AudioFormat
+class AudioDirectionEnum
 {
     /**
-     * mp3 file
+     * TODO: Write general description for this element
      */
-    const MP3 = "mp3";
+    const IN = "in";
 
     /**
-     * wav file
+     * TODO: Write general description for this element
      */
-    const WAV = "wav";
+    const OUT = "out";
 }

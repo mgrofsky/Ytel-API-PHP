@@ -10,7 +10,7 @@ namespace Message360Lib\Models;
 /**
  * Phone Number Type All,SMS or Voice
  */
-class NumberType
+class NumberTypeEnum
 {
     /**
      * Get all phone Number type

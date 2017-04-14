@@ -8,22 +8,17 @@
 namespace Message360Lib\Models;
 
 /**
- * Play DTMF Direction & in play audio & sendDigit
+ * Audio Format file type mp3 or wav
  */
-class Direction
+class AudioFormatEnum
 {
     /**
-     * in direction
+     * mp3 file
      */
-    const IN = "in";
+    const MP3 = "mp3";
 
     /**
-     * out direction
+     * wav file
      */
-    const OUT = "out";
-
-    /**
-     * both
-     */
-    const BOTH = "both";
+    const WAV = "wav";
 }

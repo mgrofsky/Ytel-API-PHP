@@ -10,7 +10,7 @@ namespace Message360Lib\Models;
 /**
  * Types Of Method
  */
-class HttpAction
+class HttpActionEnum
 {
     /**
      * Get type

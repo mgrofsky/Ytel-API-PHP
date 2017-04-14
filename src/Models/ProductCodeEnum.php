@@ -10,7 +10,7 @@ namespace Message360Lib\Models;
 /**
  * Returns a list of all usage for a specific "product" or feature of Message360.
  */
-class ProductCode
+class ProductCodeEnum
 {
     /**
      * TODO: Write general description for this element

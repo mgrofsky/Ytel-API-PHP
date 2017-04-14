@@ -10,7 +10,7 @@ namespace Message360Lib\Models;
 /**
  * Choose sub account either merge or delete
  */
-class MergeNumberStatus
+class MergeNumberStatusEnum
 {
     /**
      * TODO: Write general description for this element

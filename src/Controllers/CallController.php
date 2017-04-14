@@ -455,79 +455,6 @@ class CallController extends BaseController
     }
 
     /**
-     * A list of calls associated with your Message360 account
-     *
-     * @param  array  $options    Array with all options for search
-     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
-     *                                         indexed
-     * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
-     *                                         page
-     * @param string  $options['to']           (optional) Only list calls to this number
-     * @param string  $options['from']         (optional) Only list calls from this number
-     * @param string  $options['dateCreated']  (optional) Only list calls starting within the specified date range
-     * @param string  $options['responseType'] (optional) Response type format xml or json
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function createListCalls(
-        $options
-    ) {
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/calls/listcalls.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'Page'         => $this->val($options, 'page'),
-            'PageSize'     => $this->val($options, 'pageSize'),
-            'To'           => $this->val($options, 'to'),
-            'From'         => $this->val($options, 'from'),
-            'DateCreated'  => $this->val($options, 'dateCreated')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
      * Interrupt the Call by Call Sid
      *
      * @param  array  $options    Array with all options for search
@@ -771,6 +698,161 @@ class CallController extends BaseController
             'Transcribe'            => $this->val($options, 'transcribe'),
             'TranscribeCallBackUrl' => $this->val($options, 'transcribeCallBackUrl'),
             'IfMachine'             => $this->val($options, 'ifMachine')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * A list of calls associated with your Message360 account
+     *
+     * @param  array  $options    Array with all options for search
+     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
+     *                                         indexed
+     * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
+     *                                         page
+     * @param string  $options['to']           (optional) Only list calls to this number
+     * @param string  $options['from']         (optional) Only list calls from this number
+     * @param string  $options['dateCreated']  (optional) Only list calls starting within the specified date range
+     * @param string  $options['responseType'] (optional) Response type format xml or json
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function createListCalls(
+        $options
+    ) {
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/calls/listcalls.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'Page'         => $this->val($options, 'page'),
+            'PageSize'     => $this->val($options, 'pageSize', 10),
+            'To'           => $this->val($options, 'to'),
+            'From'         => $this->val($options, 'from'),
+            'DateCreated'  => $this->val($options, 'dateCreated')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * API endpoint used to send a Ringless Voicemail
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string $options['fromCountryCode']     From country code
+     * @param string $options['from']                This number to display on Caller ID as calling
+     * @param string $options['toCountryCode']       To country code
+     * @param string $options['to']                  To number
+     * @param string $options['voiceMailURL']        URL to an audio file
+     * @param string $options['method']              Not currently used in this version
+     * @param string $options['statusCallBackUrl']   (optional) URL to post the status of the Ringless request
+     * @param string $options['statsCallBackMethod'] (optional) POST or GET
+     * @param string $options['responseType']        (optional) Response type format xml or json
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function createSendRinglessVM(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['fromCountryCode'], $options['from'], $options['toCountryCode'], $options['to'], $options['voiceMailURL'], $options['method'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/calls/makeringlessvoicemailcall.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType'        => $this->val($options, 'responseType', 'json'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'        => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'FromCountryCode'     => $this->val($options, 'fromCountryCode'),
+            'From'                => $this->val($options, 'from'),
+            'ToCountryCode'       => $this->val($options, 'toCountryCode'),
+            'To'                  => $this->val($options, 'to'),
+            'VoiceMailURL'        => $this->val($options, 'voiceMailURL'),
+            'Method'              => $this->val($options, 'method'),
+            'StatusCallBackUrl'   => $this->val($options, 'statusCallBackUrl'),
+            'StatsCallBackMethod' => $this->val($options, 'statsCallBackMethod')
         );
 
         //set HTTP basic auth parameters

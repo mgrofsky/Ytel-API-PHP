@@ -130,20 +130,297 @@ $client = new Message360Lib\Message360Client($basicAuthUserName, $basicAuthPassw
 
 ### <a name="list_of_controllers"></a>List of Controllers
 
+* [ShortCodeController](#short_code_controller)
 * [ConferenceController](#conference_controller)
 * [EmailController](#email_controller)
 * [NumberVerificationController](#number_verification_controller)
 * [CarrierController](#carrier_controller)
 * [CallController](#call_controller)
-* [SMSController](#sms_controller)
 * [WebRTCController](#web_rtc_controller)
 * [SubAccountController](#sub_account_controller)
 * [AddressController](#address_controller)
 * [PhoneNumberController](#phone_number_controller)
 * [RecordingController](#recording_controller)
+* [SMSController](#sms_controller)
 * [TranscriptionController](#transcription_controller)
 * [UsageController](#usage_controller)
 * [AccountController](#account_controller)
+
+### <a name="short_code_controller"></a>![Class: ](https://apidocs.io/img/class.png ".ShortCodeController") ShortCodeController
+
+#### Get singleton instance
+
+The singleton instance of the ``` ShortCodeController ``` class can be accessed from the API Client.
+
+```php
+$shortCode = $client->getShortCode();
+```
+
+#### <a name="create_view_template"></a>![Method: ](https://apidocs.io/img/method.png ".ShortCodeController.createViewTemplate") createViewTemplate
+
+> View a Shared ShortCode Template
+
+
+```php
+function createViewTemplate($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| templateid |  ``` Required ```  | The unique identifier for a template object |
+| responseType |  ``` Required ```  ``` DefaultValue ```  | Response type format xml or json |
+
+
+
+#### Example Usage
+
+```php
+$templateid = uniqid();
+$collect['templateid'] = $templateid;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $shortCode->createViewTemplate($collect);
+
+```
+
+
+#### <a name="create_send_short_code"></a>![Method: ](https://apidocs.io/img/method.png ".ShortCodeController.createSendShortCode") createSendShortCode
+
+> Send an SMS from a message360 ShortCode
+
+
+```php
+function createSendShortCode(
+        $options,
+        $fieldParameters = null)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| shortcode |  ``` Required ```  | The Short Code number that is the sender of this message |
+| tocountrycode |  ``` Required ```  ``` DefaultValue ```  | The country code for sending this message |
+| to |  ``` Required ```  | A valid 10-digit number that should receive the message+ |
+| templateid |  ``` Required ```  | The unique identifier for the template used for the message |
+| method |  ``` Optional ```  ``` DefaultValue ```  | Specifies the HTTP method used to request the required URL once the Short Code message is sent. |
+| messageStatusCallback |  ``` Optional ```  | URL that can be requested to receive notification when Short Code message was sent. |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
+| fieldParameters | ``` Optional ``` | Additional optional form parameters are supported by this method |
+
+
+
+#### Example Usage
+
+```php
+$shortcode = 'shortcode';
+$collect['shortcode'] = $shortcode;
+
+$tocountrycode = '1';
+$collect['tocountrycode'] = $tocountrycode;
+
+$to = 'to';
+$collect['to'] = $to;
+
+$templateid = uniqid();
+$collect['templateid'] = $templateid;
+
+$method = 'GET';
+$collect['method'] = $method;
+
+$messageStatusCallback = 'MessageStatusCallback';
+$collect['messageStatusCallback'] = $messageStatusCallback;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+// key-value map for optional form parameters
+$formParams = array('key' => 'value');
+
+
+$result = $shortCode->createSendShortCode($collect, $formParams, );
+
+```
+
+
+#### <a name="create_list_inbound_short_code"></a>![Method: ](https://apidocs.io/img/method.png ".ShortCodeController.createListInboundShortCode") createListInboundShortCode
+
+> List All Inbound ShortCode
+
+
+```php
+function createListInboundShortCode($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| page |  ``` Optional ```  | Which page of the overall response will be returned. Zero indexed |
+| pagesize |  ``` Optional ```  ``` DefaultValue ```  | Number of individual resources listed in the response per page |
+| from |  ``` Optional ```  | From Number to Inbound ShortCode |
+| shortcode |  ``` Optional ```  | Only list messages sent to this Short Code |
+| dateReceived |  ``` Optional ```  | Only list messages sent with the specified date |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
+
+
+
+#### Example Usage
+
+```php
+$page = 33;
+$collect['page'] = $page;
+
+$pagesize = 10;
+$collect['pagesize'] = $pagesize;
+
+$from = 'from';
+$collect['from'] = $from;
+
+$shortcode = 'Shortcode';
+$collect['shortcode'] = $shortcode;
+
+$dateReceived = 'DateReceived';
+$collect['dateReceived'] = $dateReceived;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $shortCode->createListInboundShortCode($collect);
+
+```
+
+
+#### <a name="create_list_short_code"></a>![Method: ](https://apidocs.io/img/method.png ".ShortCodeController.createListShortCode") createListShortCode
+
+> List ShortCode Messages
+
+
+```php
+function createListShortCode($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| page |  ``` Optional ```  | Which page of the overall response will be returned. Zero indexed |
+| pagesize |  ``` Optional ```  ``` DefaultValue ```  | Number of individual resources listed in the response per page |
+| from |  ``` Optional ```  | Messages sent from this number |
+| to |  ``` Optional ```  | Messages sent to this number |
+| datesent |  ``` Optional ```  | Only list SMS messages sent in the specified date range |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
+
+
+
+#### Example Usage
+
+```php
+$page = 247;
+$collect['page'] = $page;
+
+$pagesize = 10;
+$collect['pagesize'] = $pagesize;
+
+$from = 'from';
+$collect['from'] = $from;
+
+$to = 'to';
+$collect['to'] = $to;
+
+$datesent = 'datesent';
+$collect['datesent'] = $datesent;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $shortCode->createListShortCode($collect);
+
+```
+
+
+#### <a name="create_list_templates"></a>![Method: ](https://apidocs.io/img/method.png ".ShortCodeController.createListTemplates") createListTemplates
+
+> List Shortcode Templates by Type
+
+
+```php
+function createListTemplates($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| type |  ``` Optional ```  ``` DefaultValue ```  | The type (category) of template Valid values: marketing, authorization |
+| page |  ``` Optional ```  | The page count to retrieve from the total results in the collection. Page indexing starts at 1. |
+| pagesize |  ``` Optional ```  ``` DefaultValue ```  | The count of objects to return per page. |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
+
+
+
+#### Example Usage
+
+```php
+$type = 'authorization';
+$collect['type'] = $type;
+
+$page = 247;
+$collect['page'] = $page;
+
+$pagesize = 10;
+$collect['pagesize'] = $pagesize;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $shortCode->createListTemplates($collect);
+
+```
+
+
+#### <a name="create_view_short_code"></a>![Method: ](https://apidocs.io/img/method.png ".ShortCodeController.createViewShortCode") createViewShortCode
+
+> View a ShortCode Message
+
+
+```php
+function createViewShortCode($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| messagesid |  ``` Required ```  | Message sid |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
+
+
+
+#### Example Usage
+
+```php
+$messagesid = 'messagesid';
+$collect['messagesid'] = $messagesid;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $shortCode->createViewShortCode($collect);
+
+```
+
+
+[Back to List of Controllers](#list_of_controllers)
 
 ### <a name="conference_controller"></a>![Class: ](https://apidocs.io/img/class.png ".ConferenceController") ConferenceController
 
@@ -185,10 +462,10 @@ $collect['conferenceSid'] = $conferenceSid;
 $participantSid = 'ParticipantSid';
 $collect['participantSid'] = $participantSid;
 
-$muted = false;
+$muted = true;
 $collect['muted'] = $muted;
 
-$deaf = false;
+$deaf = true;
 $collect['deaf'] = $deaf;
 
 $responseType = 'json';
@@ -226,10 +503,10 @@ function createListConference($options)
 #### Example Usage
 
 ```php
-$page = 38;
+$page = 247;
 $collect['page'] = $page;
 
-$pageSize = 38;
+$pageSize = 247;
 $collect['pageSize'] = $pageSize;
 
 $friendlyName = 'FriendlyName';
@@ -317,13 +594,13 @@ $collect['conferencesid'] = $conferencesid;
 $participantnumber = 'participantnumber';
 $collect['participantnumber'] = $participantnumber;
 
-$tocountrycode = 38;
+$tocountrycode = 247;
 $collect['tocountrycode'] = $tocountrycode;
 
-$muted = false;
+$muted = true;
 $collect['muted'] = $muted;
 
-$deaf = false;
+$deaf = true;
 $collect['deaf'] = $deaf;
 
 $responseType = 'json';
@@ -363,16 +640,16 @@ function createListParticipant($options)
 $conferenceSid = 'ConferenceSid';
 $collect['conferenceSid'] = $conferenceSid;
 
-$page = 38;
+$page = 247;
 $collect['page'] = $page;
 
-$pagesize = 38;
+$pagesize = 247;
 $collect['pagesize'] = $pagesize;
 
-$muted = false;
+$muted = true;
 $collect['muted'] = $muted;
 
-$deaf = false;
+$deaf = true;
 $collect['deaf'] = $deaf;
 
 $responseType = 'json';
@@ -993,10 +1270,10 @@ function createCarrierLookupList($options)
 #### Example Usage
 
 ```php
-$page = 251;
+$page = 247;
 $collect['page'] = $page;
 
-$pagesize = 251;
+$pagesize = 247;
 $collect['pagesize'] = $pagesize;
 
 $responseType = 'json';
@@ -1129,7 +1406,7 @@ $collect['heartBeatUrl'] = $heartBeatUrl;
 $heartBeatMethod = string::GET;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 251;
+$timeout = 247;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
@@ -1195,19 +1472,19 @@ $collect['callSid'] = $callSid;
 $audioDirection = string::IN;
 $collect['audioDirection'] = $audioDirection;
 
-$pitchSemiTones = 251.47388230845;
+$pitchSemiTones = 83.6937546211731;
 $collect['pitchSemiTones'] = $pitchSemiTones;
 
-$pitchOctaves = 251.47388230845;
+$pitchOctaves = 83.6937546211731;
 $collect['pitchOctaves'] = $pitchOctaves;
 
-$pitch = 251.47388230845;
+$pitch = 83.6937546211731;
 $collect['pitch'] = $pitch;
 
-$rate = 251.47388230845;
+$rate = 83.6937546211731;
 $collect['rate'] = $rate;
 
-$tempo = 251.47388230845;
+$tempo = 83.6937546211731;
 $collect['tempo'] = $tempo;
 
 $responseType = 'json';
@@ -1248,13 +1525,13 @@ function createRecordCall($options)
 $callSid = 'CallSid';
 $collect['callSid'] = $callSid;
 
-$record = true;
+$record = false;
 $collect['record'] = $record;
 
 $direction = string::IN;
 $collect['direction'] = $direction;
 
-$timeLimit = 251;
+$timeLimit = 83;
 $collect['timeLimit'] = $timeLimit;
 
 $callBackUrl = 'CallBackUrl';
@@ -1304,16 +1581,16 @@ $collect['callSid'] = $callSid;
 $audioUrl = 'AudioUrl';
 $collect['audioUrl'] = $audioUrl;
 
-$length = 251;
+$length = 83;
 $collect['length'] = $length;
 
 $direction = string::IN;
 $collect['direction'] = $direction;
 
-$loop = true;
+$loop = false;
 $collect['loop'] = $loop;
 
-$mix = true;
+$mix = false;
 $collect['mix'] = $mix;
 
 $responseType = 'json';
@@ -1321,55 +1598,6 @@ $collect['responseType'] = $responseType;
 
 
 $result = $call->createPlayAudio($collect);
-
-```
-
-
-#### <a name="create_list_calls"></a>![Method: ](https://apidocs.io/img/method.png ".CallController.createListCalls") createListCalls
-
-> A list of calls associated with your Message360 account
-
-
-```php
-function createListCalls($options)
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| page |  ``` Optional ```  | Which page of the overall response will be returned. Zero indexed |
-| pageSize |  ``` Optional ```  | Number of individual resources listed in the response per page |
-| to |  ``` Optional ```  | Only list calls to this number |
-| from |  ``` Optional ```  | Only list calls from this number |
-| dateCreated |  ``` Optional ```  | Only list calls starting within the specified date range |
-| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
-
-
-
-#### Example Usage
-
-```php
-$page = 251;
-$collect['page'] = $page;
-
-$pageSize = 251;
-$collect['pageSize'] = $pageSize;
-
-$to = 'To';
-$collect['to'] = $to;
-
-$from = 'From';
-$collect['from'] = $from;
-
-$dateCreated = 'DateCreated';
-$collect['dateCreated'] = $dateCreated;
-
-$responseType = 'json';
-$collect['responseType'] = $responseType;
-
-
-$result = $call->createListCalls($collect);
 
 ```
 
@@ -1537,7 +1765,7 @@ $collect['heartBeatUrl'] = $heartBeatUrl;
 $heartBeatMethod = false;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 87;
+$timeout = 83;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
@@ -1573,58 +1801,13 @@ $result = $call->createMakeCall($collect);
 ```
 
 
-[Back to List of Controllers](#list_of_controllers)
+#### <a name="create_list_calls"></a>![Method: ](https://apidocs.io/img/method.png ".CallController.createListCalls") createListCalls
 
-### <a name="sms_controller"></a>![Class: ](https://apidocs.io/img/class.png ".SMSController") SMSController
-
-#### Get singleton instance
-
-The singleton instance of the ``` SMSController ``` class can be accessed from the API Client.
-
-```php
-$sMS = $client->getSMS();
-```
-
-#### <a name="create_view_sms"></a>![Method: ](https://apidocs.io/img/method.png ".SMSController.createViewSMS") createViewSMS
-
-> View Particular SMS
+> A list of calls associated with your Message360 account
 
 
 ```php
-function createViewSMS($options)
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| messagesid |  ``` Required ```  | Message sid |
-| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
-
-
-
-#### Example Usage
-
-```php
-$messagesid = 'messagesid';
-$collect['messagesid'] = $messagesid;
-
-$responseType = 'json';
-$collect['responseType'] = $responseType;
-
-
-$result = $sMS->createViewSMS($collect);
-
-```
-
-
-#### <a name="create_list_inbound_sms"></a>![Method: ](https://apidocs.io/img/method.png ".SMSController.createListInboundSMS") createListInboundSMS
-
-> List All Inbound SMS
-
-
-```php
-function createListInboundSMS($options)
+function createListCalls($options)
 ```
 
 #### Parameters
@@ -1632,9 +1815,10 @@ function createListInboundSMS($options)
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | page |  ``` Optional ```  | Which page of the overall response will be returned. Zero indexed |
-| pagesize |  ``` Optional ```  | Number of individual resources listed in the response per page |
-| from |  ``` Optional ```  | From Number to Inbound SMS |
-| to |  ``` Optional ```  | To Number to get Inbound SMS |
+| pageSize |  ``` Optional ```  ``` DefaultValue ```  | Number of individual resources listed in the response per page |
+| to |  ``` Optional ```  | Only list calls to this number |
+| from |  ``` Optional ```  | Only list calls from this number |
+| dateCreated |  ``` Optional ```  | Only list calls starting within the specified date range |
 | responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
 
 
@@ -1642,45 +1826,51 @@ function createListInboundSMS($options)
 #### Example Usage
 
 ```php
-$page = 87;
+$page = 83;
 $collect['page'] = $page;
 
-$pagesize = 'pagesize';
-$collect['pagesize'] = $pagesize;
+$pageSize = 10;
+$collect['pageSize'] = $pageSize;
 
-$from = 'from';
+$to = 'To';
+$collect['to'] = $to;
+
+$from = 'From';
 $collect['from'] = $from;
 
-$to = 'to';
-$collect['to'] = $to;
+$dateCreated = 'DateCreated';
+$collect['dateCreated'] = $dateCreated;
 
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
 
-$result = $sMS->createListInboundSMS($collect);
+$result = $call->createListCalls($collect);
 
 ```
 
 
-#### <a name="create_list_sms"></a>![Method: ](https://apidocs.io/img/method.png ".SMSController.createListSMS") createListSMS
+#### <a name="create_send_ringless_vm"></a>![Method: ](https://apidocs.io/img/method.png ".CallController.createSendRinglessVM") createSendRinglessVM
 
-> List All SMS
+> API endpoint used to send a Ringless Voicemail
 
 
 ```php
-function createListSMS($options)
+function createSendRinglessVM($options)
 ```
 
 #### Parameters
 
 | Parameter | Tags | Description |
 |-----------|------|-------------|
-| page |  ``` Optional ```  | Which page of the overall response will be returned. Zero indexed |
-| pagesize |  ``` Optional ```  | Number of individual resources listed in the response per page |
-| from |  ``` Optional ```  | Messages sent from this number |
-| to |  ``` Optional ```  | Messages sent to this number |
-| datesent |  ``` Optional ```  | Only list SMS messages sent in the specified date range |
+| fromCountryCode |  ``` Required ```  | From country code |
+| from |  ``` Required ```  | This number to display on Caller ID as calling |
+| toCountryCode |  ``` Required ```  | To country code |
+| to |  ``` Required ```  | To number |
+| voiceMailURL |  ``` Required ```  | URL to an audio file |
+| method |  ``` Required ```  ``` DefaultValue ```  | Not currently used in this version |
+| statusCallBackUrl |  ``` Optional ```  | URL to post the status of the Ringless request |
+| statsCallBackMethod |  ``` Optional ```  | POST or GET |
 | responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
 
 
@@ -1688,83 +1878,35 @@ function createListSMS($options)
 #### Example Usage
 
 ```php
-$page = 87;
-$collect['page'] = $page;
+$fromCountryCode = 'FromCountryCode';
+$collect['fromCountryCode'] = $fromCountryCode;
 
-$pagesize = 87;
-$collect['pagesize'] = $pagesize;
-
-$from = 'from';
+$from = 'From';
 $collect['from'] = $from;
 
-$to = 'to';
+$toCountryCode = 'ToCountryCode';
+$collect['toCountryCode'] = $toCountryCode;
+
+$to = 'To';
 $collect['to'] = $to;
 
-$datesent = 'datesent';
-$collect['datesent'] = $datesent;
+$voiceMailURL = 'VoiceMailURL';
+$collect['voiceMailURL'] = $voiceMailURL;
 
-$responseType = 'json';
-$collect['responseType'] = $responseType;
-
-
-$result = $sMS->createListSMS($collect);
-
-```
-
-
-#### <a name="create_send_sms"></a>![Method: ](https://apidocs.io/img/method.png ".SMSController.createSendSMS") createSendSMS
-
-> Send an SMS from a message360 number
-
-
-```php
-function createSendSMS($options)
-```
-
-#### Parameters
-
-| Parameter | Tags | Description |
-|-----------|------|-------------|
-| fromcountrycode |  ``` Required ```  ``` DefaultValue ```  | From Country Code |
-| from |  ``` Required ```  | SMS enabled Message360 number to send this message from |
-| tocountrycode |  ``` Required ```  ``` DefaultValue ```  | To country code |
-| to |  ``` Required ```  | Number to send the SMS to |
-| body |  ``` Required ```  | Text Message To Send |
-| method |  ``` Optional ```  | Specifies the HTTP method used to request the required URL once SMS sent. |
-| messagestatuscallback |  ``` Optional ```  | URL that can be requested to receive notification when SMS has Sent. A set of default parameters will be sent here once the SMS is finished. |
-| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
-
-
-
-#### Example Usage
-
-```php
-$fromcountrycode = 1;
-$collect['fromcountrycode'] = $fromcountrycode;
-
-$from = 'from';
-$collect['from'] = $from;
-
-$tocountrycode = 1;
-$collect['tocountrycode'] = $tocountrycode;
-
-$to = 'to';
-$collect['to'] = $to;
-
-$body = 'body';
-$collect['body'] = $body;
-
-$method = string::GET;
+$method = 'GET';
 $collect['method'] = $method;
 
-$messagestatuscallback = 'messagestatuscallback';
-$collect['messagestatuscallback'] = $messagestatuscallback;
+$statusCallBackUrl = 'StatusCallBackUrl';
+$collect['statusCallBackUrl'] = $statusCallBackUrl;
+
+$statsCallBackMethod = 'StatsCallBackMethod';
+$collect['statsCallBackMethod'] = $statsCallBackMethod;
 
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
 
-$result = $sMS->createSendSMS($collect);
+$result = $call->createSendRinglessVM($collect);
 
 ```
 
@@ -2413,7 +2555,7 @@ function createListNumber($options)
 | Parameter | Tags | Description |
 |-----------|------|-------------|
 | page |  ``` Optional ```  | Which page of the overall response will be returned. Zero indexed |
-| pageSize |  ``` Optional ```  | Number of individual resources listed in the response per page |
+| pageSize |  ``` Optional ```  ``` DefaultValue ```  | Number of individual resources listed in the response per page |
 | numberType |  ``` Optional ```  | TODO: Add a parameter description |
 | friendlyName |  ``` Optional ```  | TODO: Add a parameter description |
 | responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
@@ -2423,10 +2565,10 @@ function createListNumber($options)
 #### Example Usage
 
 ```php
-$page = 87;
+$page = 175;
 $collect['page'] = $page;
 
-$pageSize = 87;
+$pageSize = 10;
 $collect['pageSize'] = $pageSize;
 
 $numberType = string::ALL;
@@ -2459,7 +2601,7 @@ function createAvailablePhoneNumber($options)
 |-----------|------|-------------|
 | numberType |  ``` Required ```  | Number type either SMS,Voice or all |
 | areaCode |  ``` Required ```  | Phone Number Area Code |
-| pageSize |  ``` Optional ```  | Page Size |
+| pageSize |  ``` Optional ```  ``` DefaultValue ```  | Page Size |
 | responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
 
 
@@ -2473,7 +2615,7 @@ $collect['numberType'] = $numberType;
 $areaCode = 'AreaCode';
 $collect['areaCode'] = $areaCode;
 
-$pageSize = 87;
+$pageSize = 10;
 $collect['pageSize'] = $pageSize;
 
 $responseType = 'json';
@@ -2521,10 +2663,10 @@ function createListRecording($options)
 #### Example Usage
 
 ```php
-$page = 87;
+$page = 175;
 $collect['page'] = $page;
 
-$pageSize = 87;
+$pageSize = 175;
 $collect['pageSize'] = $pageSize;
 
 $dateCreated = 'DateCreated';
@@ -2604,6 +2746,202 @@ $collect['responseType'] = $responseType;
 
 
 $result = $recording->createViewRecording($collect);
+
+```
+
+
+[Back to List of Controllers](#list_of_controllers)
+
+### <a name="sms_controller"></a>![Class: ](https://apidocs.io/img/class.png ".SMSController") SMSController
+
+#### Get singleton instance
+
+The singleton instance of the ``` SMSController ``` class can be accessed from the API Client.
+
+```php
+$sMS = $client->getSMS();
+```
+
+#### <a name="create_list_inbound_sms"></a>![Method: ](https://apidocs.io/img/method.png ".SMSController.createListInboundSMS") createListInboundSMS
+
+> List All Inbound SMS
+
+
+```php
+function createListInboundSMS($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| page |  ``` Optional ```  | Which page of the overall response will be returned. Zero indexed |
+| pagesize |  ``` Optional ```  | Number of individual resources listed in the response per page |
+| from |  ``` Optional ```  | From Number to Inbound SMS |
+| to |  ``` Optional ```  | To Number to get Inbound SMS |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
+
+
+
+#### Example Usage
+
+```php
+$page = 175;
+$collect['page'] = $page;
+
+$pagesize = 'pagesize';
+$collect['pagesize'] = $pagesize;
+
+$from = 'from';
+$collect['from'] = $from;
+
+$to = 'to';
+$collect['to'] = $to;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $sMS->createListInboundSMS($collect);
+
+```
+
+
+#### <a name="create_list_sms"></a>![Method: ](https://apidocs.io/img/method.png ".SMSController.createListSMS") createListSMS
+
+> List All SMS
+
+
+```php
+function createListSMS($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| page |  ``` Optional ```  | Which page of the overall response will be returned. Zero indexed |
+| pagesize |  ``` Optional ```  | Number of individual resources listed in the response per page |
+| from |  ``` Optional ```  | Messages sent from this number |
+| to |  ``` Optional ```  | Messages sent to this number |
+| datesent |  ``` Optional ```  | Only list SMS messages sent in the specified date range |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
+
+
+
+#### Example Usage
+
+```php
+$page = 175;
+$collect['page'] = $page;
+
+$pagesize = 175;
+$collect['pagesize'] = $pagesize;
+
+$from = 'from';
+$collect['from'] = $from;
+
+$to = 'to';
+$collect['to'] = $to;
+
+$datesent = 'datesent';
+$collect['datesent'] = $datesent;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $sMS->createListSMS($collect);
+
+```
+
+
+#### <a name="create_send_sms"></a>![Method: ](https://apidocs.io/img/method.png ".SMSController.createSendSMS") createSendSMS
+
+> Send an SMS from a message360 number
+
+
+```php
+function createSendSMS($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| fromcountrycode |  ``` Required ```  ``` DefaultValue ```  | From Country Code |
+| from |  ``` Required ```  | SMS enabled Message360 number to send this message from |
+| tocountrycode |  ``` Required ```  ``` DefaultValue ```  | To country code |
+| to |  ``` Required ```  | Number to send the SMS to |
+| body |  ``` Required ```  | Text Message To Send |
+| method |  ``` Optional ```  | Specifies the HTTP method used to request the required URL once SMS sent. |
+| messagestatuscallback |  ``` Optional ```  | URL that can be requested to receive notification when SMS has Sent. A set of default parameters will be sent here once the SMS is finished. |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
+
+
+
+#### Example Usage
+
+```php
+$fromcountrycode = 1;
+$collect['fromcountrycode'] = $fromcountrycode;
+
+$from = 'from';
+$collect['from'] = $from;
+
+$tocountrycode = 1;
+$collect['tocountrycode'] = $tocountrycode;
+
+$to = 'to';
+$collect['to'] = $to;
+
+$body = 'body';
+$collect['body'] = $body;
+
+$method = string::GET;
+$collect['method'] = $method;
+
+$messagestatuscallback = 'messagestatuscallback';
+$collect['messagestatuscallback'] = $messagestatuscallback;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $sMS->createSendSMS($collect);
+
+```
+
+
+#### <a name="create_view_sms"></a>![Method: ](https://apidocs.io/img/method.png ".SMSController.createViewSMS") createViewSMS
+
+> View a Particular SMS
+
+
+```php
+function createViewSMS($options)
+```
+
+#### Parameters
+
+| Parameter | Tags | Description |
+|-----------|------|-------------|
+| messagesid |  ``` Required ```  | Message sid |
+| responseType |  ``` Optional ```  ``` DefaultValue ```  | Response type format xml or json |
+
+
+
+#### Example Usage
+
+```php
+$messagesid = 'messagesid';
+$collect['messagesid'] = $messagesid;
+
+$responseType = 'json';
+$collect['responseType'] = $responseType;
+
+
+$result = $sMS->createViewSMS($collect);
 
 ```
 
@@ -2743,10 +3081,10 @@ function createListTranscription($options)
 #### Example Usage
 
 ```php
-$page = 87;
+$page = 175;
 $collect['page'] = $page;
 
-$pageSize = 87;
+$pageSize = 175;
 $collect['pageSize'] = $pageSize;
 
 $status = string::INPROGRESS;
