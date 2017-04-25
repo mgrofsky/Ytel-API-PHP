@@ -48,9 +48,9 @@ class ConferenceController extends BaseController
      * @param  array  $options    Array with all options for search
      * @param string $options['conferenceSid']  TODO: type description here
      * @param string $options['participantSid'] TODO: type description here
+     * @param string $options['responseType']   Response Type either json or xml
      * @param bool   $options['muted']          (optional) TODO: type description here
      * @param bool   $options['deaf']           (optional) TODO: type description here
-     * @param string $options['responseType']   (optional) Response Type either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -58,7 +58,7 @@ class ConferenceController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['conferenceSid'], $options['participantSid'])) {
+        if (!isset($options['conferenceSid'], $options['participantSid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -71,7 +71,7 @@ class ConferenceController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'   => $this->val($options, 'responseType', 'json'),
+            'ResponseType'   => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -120,6 +120,7 @@ class ConferenceController extends BaseController
      * List Conference
      *
      * @param  array  $options    Array with all options for search
+     * @param string  $options['responseType'] Response type format xml or json
      * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
      *                                         indexed
      * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
@@ -128,13 +129,17 @@ class ConferenceController extends BaseController
      * @param string  $options['status']       (optional) TODO: type description here
      * @param string  $options['dateCreated']  (optional) TODO: type description here
      * @param string  $options['dateUpdated']  (optional) TODO: type description here
-     * @param string  $options['responseType'] (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createListConference(
         $options
     ) {
+        //check that all required arguments are provided
+        if (!isset($options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
 
         //the base uri for api requests
         $_queryBuilder = Configuration::getBaseUri();
@@ -144,7 +149,7 @@ class ConferenceController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -196,7 +201,7 @@ class ConferenceController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['conferencesid'] The unique identifier of each conference resource
-     * @param string $options['responseType']  (optional) Response type format xml or json
+     * @param string $options['responseType']  Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -204,7 +209,7 @@ class ConferenceController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['conferencesid'])) {
+        if (!isset($options['conferencesid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -217,7 +222,7 @@ class ConferenceController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'  => $this->val($options, 'responseType', 'json'),
+            'ResponseType'  => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -266,9 +271,9 @@ class ConferenceController extends BaseController
      * @param string  $options['conferencesid']     Unique Conference Sid
      * @param string  $options['participantnumber'] Particiant Number
      * @param integer $options['tocountrycode']     TODO: type description here
+     * @param string  $options['responseType']      Response type format xml or json
      * @param bool    $options['muted']             (optional) TODO: type description here
      * @param bool    $options['deaf']              (optional) TODO: type description here
-     * @param string  $options['responseType']      (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -276,7 +281,7 @@ class ConferenceController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['conferencesid'], $options['participantnumber'], $options['tocountrycode'])) {
+        if (!isset($options['conferencesid'], $options['participantnumber'], $options['tocountrycode'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -289,7 +294,7 @@ class ConferenceController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'      => $this->val($options, 'responseType', 'json'),
+            'ResponseType'      => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -340,11 +345,11 @@ class ConferenceController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['conferenceSid'] unique conference sid
+     * @param string  $options['responseType']  Response format, xml or json
      * @param integer $options['page']          (optional) page number
      * @param integer $options['pagesize']      (optional) TODO: type description here
      * @param bool    $options['muted']         (optional) TODO: type description here
      * @param bool    $options['deaf']          (optional) TODO: type description here
-     * @param string  $options['responseType']  (optional) Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -352,7 +357,7 @@ class ConferenceController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['conferenceSid'])) {
+        if (!isset($options['conferenceSid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -365,7 +370,7 @@ class ConferenceController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'  => $this->val($options, 'responseType', 'json'),
+            'ResponseType'  => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -417,7 +422,7 @@ class ConferenceController extends BaseController
      * @param  array  $options    Array with all options for search
      * @param string $options['conferenceSid']  unique conference sid
      * @param string $options['participantSid'] TODO: type description here
-     * @param string $options['responseType']   (optional) Response type format xml or json
+     * @param string $options['responseType']   Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -425,7 +430,7 @@ class ConferenceController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['conferenceSid'], $options['participantSid'])) {
+        if (!isset($options['conferenceSid'], $options['participantSid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -438,7 +443,7 @@ class ConferenceController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'   => $this->val($options, 'responseType', 'json'),
+            'ResponseType'   => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url

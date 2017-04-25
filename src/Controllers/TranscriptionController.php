@@ -47,7 +47,7 @@ class TranscriptionController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['audioUrl']     Audio url
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -55,7 +55,7 @@ class TranscriptionController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['audioUrl'])) {
+        if (!isset($options['audioUrl'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -68,7 +68,7 @@ class TranscriptionController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -115,7 +115,7 @@ class TranscriptionController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['recordingSid'] Unique Recording sid
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -123,7 +123,7 @@ class TranscriptionController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['recordingSid'])) {
+        if (!isset($options['recordingSid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -136,7 +136,7 @@ class TranscriptionController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -183,7 +183,7 @@ class TranscriptionController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['transcriptionSid'] Unique Transcription ID
-     * @param string $options['responseType']     (optional) Response type format xml or json
+     * @param string $options['responseType']     Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -191,7 +191,7 @@ class TranscriptionController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['transcriptionSid'])) {
+        if (!isset($options['transcriptionSid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -204,7 +204,7 @@ class TranscriptionController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'     => $this->val($options, 'responseType', 'json'),
+            'ResponseType'     => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -250,17 +250,22 @@ class TranscriptionController extends BaseController
      * Get All transcriptions
      *
      * @param  array  $options    Array with all options for search
+     * @param string  $options['responseType']    Response type format xml or json
      * @param integer $options['page']            (optional) TODO: type description here
      * @param integer $options['pageSize']        (optional) TODO: type description here
      * @param string  $options['status']          (optional) TODO: type description here
      * @param string  $options['dateTranscribed'] (optional) TODO: type description here
-     * @param string  $options['responseType']    (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createListTranscription(
         $options
     ) {
+        //check that all required arguments are provided
+        if (!isset($options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
 
         //the base uri for api requests
         $_queryBuilder = Configuration::getBaseUri();
@@ -270,7 +275,7 @@ class TranscriptionController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'    => $this->val($options, 'responseType', 'json'),
+            'ResponseType'    => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url

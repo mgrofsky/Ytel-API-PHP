@@ -46,19 +46,24 @@ class RecordingController extends BaseController
      * List out Recordings
      *
      * @param  array  $options    Array with all options for search
+     * @param string  $options['responseType'] Response type format xml or json
      * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
      *                                         indexed
      * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
      *                                         page
      * @param string  $options['dateCreated']  (optional) TODO: type description here
      * @param string  $options['callSid']      (optional) TODO: type description here
-     * @param string  $options['responseType'] (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createListRecording(
         $options
     ) {
+        //check that all required arguments are provided
+        if (!isset($options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
 
         //the base uri for api requests
         $_queryBuilder = Configuration::getBaseUri();
@@ -68,7 +73,7 @@ class RecordingController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -118,7 +123,7 @@ class RecordingController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['recordingSid'] Unique Recording Sid to be delete
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -126,7 +131,7 @@ class RecordingController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['recordingSid'])) {
+        if (!isset($options['recordingSid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -139,7 +144,7 @@ class RecordingController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -186,7 +191,7 @@ class RecordingController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['recordingSid'] Search Recording sid
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -194,7 +199,7 @@ class RecordingController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['recordingSid'])) {
+        if (!isset($options['recordingSid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -207,7 +212,7 @@ class RecordingController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url

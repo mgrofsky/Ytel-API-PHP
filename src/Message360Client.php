@@ -44,15 +44,6 @@ class Message360Client
     }
  
     /**
-     * Singleton access to Email controller
-     * @return Controllers\EmailController The *Singleton* instance
-     */
-    public function getEmail()
-    {
-        return Controllers\EmailController::getInstance();
-    }
- 
-    /**
      * Singleton access to NumberVerification controller
      * @return Controllers\NumberVerificationController The *Singleton* instance
      */
@@ -62,12 +53,12 @@ class Message360Client
     }
  
     /**
-     * Singleton access to Carrier controller
-     * @return Controllers\CarrierController The *Singleton* instance
+     * Singleton access to WebRTC controller
+     * @return Controllers\WebRTCController The *Singleton* instance
      */
-    public function getCarrier()
+    public function getWebRTC()
     {
-        return Controllers\CarrierController::getInstance();
+        return Controllers\WebRTCController::getInstance();
     }
  
     /**
@@ -77,15 +68,6 @@ class Message360Client
     public function getCall()
     {
         return Controllers\CallController::getInstance();
-    }
- 
-    /**
-     * Singleton access to WebRTC controller
-     * @return Controllers\WebRTCController The *Singleton* instance
-     */
-    public function getWebRTC()
-    {
-        return Controllers\WebRTCController::getInstance();
     }
  
     /**
@@ -107,12 +89,21 @@ class Message360Client
     }
  
     /**
-     * Singleton access to PhoneNumber controller
-     * @return Controllers\PhoneNumberController The *Singleton* instance
+     * Singleton access to Email controller
+     * @return Controllers\EmailController The *Singleton* instance
      */
-    public function getPhoneNumber()
+    public function getEmail()
     {
-        return Controllers\PhoneNumberController::getInstance();
+        return Controllers\EmailController::getInstance();
+    }
+ 
+    /**
+     * Singleton access to SMS controller
+     * @return Controllers\SMSController The *Singleton* instance
+     */
+    public function getSMS()
+    {
+        return Controllers\SMSController::getInstance();
     }
  
     /**
@@ -125,12 +116,21 @@ class Message360Client
     }
  
     /**
-     * Singleton access to SMS controller
-     * @return Controllers\SMSController The *Singleton* instance
+     * Singleton access to Carrier controller
+     * @return Controllers\CarrierController The *Singleton* instance
      */
-    public function getSMS()
+    public function getCarrier()
     {
-        return Controllers\SMSController::getInstance();
+        return Controllers\CarrierController::getInstance();
+    }
+ 
+    /**
+     * Singleton access to PhoneNumber controller
+     * @return Controllers\PhoneNumberController The *Singleton* instance
+     */
+    public function getPhoneNumber()
+    {
+        return Controllers\PhoneNumberController::getInstance();
     }
  
     /**

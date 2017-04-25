@@ -47,7 +47,7 @@ class AccountController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['date']         TODO: type description here
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -55,7 +55,7 @@ class AccountController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['date'])) {
+        if (!isset($options['date'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -68,7 +68,7 @@ class AccountController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url

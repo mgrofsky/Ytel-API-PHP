@@ -119,21 +119,21 @@ class ShortCodeController extends BaseController
      * @param string      $options['to']                    A valid 10-digit number that should receive the message+
      * @param uuid|string $options['templateid']            The unique identifier for the template used for the
      *                                                      message
+     * @param string      $options['responseType']          Response type format xml or json
+     * @param string      $options['data']                  format of your data, example: {companyname}:test,{otpcode}:
+     *                                                      1234
      * @param string      $options['method']                (optional) Specifies the HTTP method used to request the
      *                                                      required URL once the Short Code message is sent.
      * @param string      $options['messageStatusCallback'] (optional) URL that can be requested to receive
      *                                                      notification when Short Code message was sent.
-     * @param string      $options['responseType']          (optional) Response type format xml or json
-     * @param    array  $fieldParameters    Additional optional form parameters are supported by this endpoint
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createSendShortCode(
-        $options,
-        $fieldParameters = null
+        $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['shortcode'], $options['tocountrycode'], $options['to'], $options['templateid'])) {
+        if (!isset($options['shortcode'], $options['tocountrycode'], $options['to'], $options['templateid'], $options['responseType'], $options['data'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -146,7 +146,7 @@ class ShortCodeController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'          => $this->val($options, 'responseType', 'json'),
+            'ResponseType'          => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -163,6 +163,7 @@ class ShortCodeController extends BaseController
             'tocountrycode'         => $this->val($options, 'tocountrycode'),
             'to'                    => $this->val($options, 'to'),
             'templateid'            => $this->val($options, 'templateid'),
+            'data'                  => $this->val($options, 'data'),
             'Method'                => $this->val($options, 'method', 'GET'),
             'MessageStatusCallback' => $this->val($options, 'messageStatusCallback')
         );
@@ -197,6 +198,7 @@ class ShortCodeController extends BaseController
      * List All Inbound ShortCode
      *
      * @param  array  $options    Array with all options for search
+     * @param string  $options['responseType'] Response type format xml or json
      * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
      *                                         indexed
      * @param integer $options['pagesize']     (optional) Number of individual resources listed in the response per
@@ -204,13 +206,17 @@ class ShortCodeController extends BaseController
      * @param string  $options['from']         (optional) From Number to Inbound ShortCode
      * @param string  $options['shortcode']    (optional) Only list messages sent to this Short Code
      * @param string  $options['dateReceived'] (optional) Only list messages sent with the specified date
-     * @param string  $options['responseType'] (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createListInboundShortCode(
         $options
     ) {
+        //check that all required arguments are provided
+        if (!isset($options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
 
         //the base uri for api requests
         $_queryBuilder = Configuration::getBaseUri();
@@ -220,7 +226,7 @@ class ShortCodeController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //process optional query parameters
@@ -274,6 +280,7 @@ class ShortCodeController extends BaseController
      * List ShortCode Messages
      *
      * @param  array  $options    Array with all options for search
+     * @param string  $options['responseType'] Response type format xml or json
      * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
      *                                         indexed
      * @param integer $options['pagesize']     (optional) Number of individual resources listed in the response per
@@ -281,13 +288,17 @@ class ShortCodeController extends BaseController
      * @param string  $options['from']         (optional) Messages sent from this number
      * @param string  $options['to']           (optional) Messages sent to this number
      * @param string  $options['datesent']     (optional) Only list SMS messages sent in the specified date range
-     * @param string  $options['responseType'] (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createListShortCode(
         $options
     ) {
+        //check that all required arguments are provided
+        if (!isset($options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
 
         //the base uri for api requests
         $_queryBuilder = Configuration::getBaseUri();
@@ -297,7 +308,7 @@ class ShortCodeController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -347,18 +358,23 @@ class ShortCodeController extends BaseController
      * List Shortcode Templates by Type
      *
      * @param  array  $options    Array with all options for search
+     * @param string  $options['responseType'] Response type format xml or json
      * @param string  $options['type']         (optional) The type (category) of template Valid values: marketing,
      *                                         authorization
      * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
      *                                         collection. Page indexing starts at 1.
      * @param integer $options['pagesize']     (optional) The count of objects to return per page.
-     * @param string  $options['responseType'] (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createListTemplates(
         $options
     ) {
+        //check that all required arguments are provided
+        if (!isset($options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
 
         //the base uri for api requests
         $_queryBuilder = Configuration::getBaseUri();
@@ -368,7 +384,7 @@ class ShortCodeController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -417,7 +433,7 @@ class ShortCodeController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['messagesid']   Message sid
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -425,7 +441,7 @@ class ShortCodeController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['messagesid'])) {
+        if (!isset($options['messagesid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -438,7 +454,7 @@ class ShortCodeController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
