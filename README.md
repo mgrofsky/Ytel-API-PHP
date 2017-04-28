@@ -274,7 +274,7 @@ function createListInboundShortCode($options)
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
-$page = 80;
+$page = 251;
 $collect['page'] = $page;
 
 $pagesize = 10;
@@ -323,7 +323,7 @@ function createListShortCode($options)
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
-$page = 80;
+$page = 251;
 $collect['page'] = $page;
 
 $pagesize = 10;
@@ -373,7 +373,7 @@ $collect['responseType'] = $responseType;
 $type = 'authorization';
 $collect['type'] = $type;
 
-$page = 80;
+$page = 251;
 $collect['page'] = $page;
 
 $pagesize = 10;
@@ -463,10 +463,10 @@ $collect['participantSid'] = $participantSid;
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
-$muted = false;
+$muted = true;
 $collect['muted'] = $muted;
 
-$deaf = false;
+$deaf = true;
 $collect['deaf'] = $deaf;
 
 
@@ -504,10 +504,10 @@ function createListConference($options)
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
-$page = 80;
+$page = 251;
 $collect['page'] = $page;
 
-$pageSize = 80;
+$pageSize = 251;
 $collect['pageSize'] = $pageSize;
 
 $friendlyName = 'FriendlyName';
@@ -592,16 +592,16 @@ $collect['conferencesid'] = $conferencesid;
 $participantnumber = 'participantnumber';
 $collect['participantnumber'] = $participantnumber;
 
-$tocountrycode = 80;
+$tocountrycode = 251;
 $collect['tocountrycode'] = $tocountrycode;
 
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
-$muted = false;
+$muted = true;
 $collect['muted'] = $muted;
 
-$deaf = false;
+$deaf = true;
 $collect['deaf'] = $deaf;
 
 
@@ -641,16 +641,16 @@ $collect['conferenceSid'] = $conferenceSid;
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
-$page = 80;
+$page = 251;
 $collect['page'] = $page;
 
-$pagesize = 80;
+$pagesize = 251;
 $collect['pagesize'] = $pagesize;
 
-$muted = false;
+$muted = true;
 $collect['muted'] = $muted;
 
-$deaf = false;
+$deaf = true;
 $collect['deaf'] = $deaf;
 
 
@@ -922,7 +922,7 @@ $collect['heartBeatUrl'] = $heartBeatUrl;
 $heartBeatMethod = string::GET;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 172;
+$timeout = 210;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
@@ -988,19 +988,19 @@ $collect['responseType'] = $responseType;
 $audioDirection = string::IN;
 $collect['audioDirection'] = $audioDirection;
 
-$pitchSemiTones = 172.207608193721;
+$pitchSemiTones = 210.040202485416;
 $collect['pitchSemiTones'] = $pitchSemiTones;
 
-$pitchOctaves = 172.207608193721;
+$pitchOctaves = 210.040202485416;
 $collect['pitchOctaves'] = $pitchOctaves;
 
-$pitch = 172.207608193721;
+$pitch = 210.040202485416;
 $collect['pitch'] = $pitch;
 
-$rate = 172.207608193721;
+$rate = 210.040202485416;
 $collect['rate'] = $rate;
 
-$tempo = 172.207608193721;
+$tempo = 210.040202485416;
 $collect['tempo'] = $tempo;
 
 
@@ -1047,7 +1047,7 @@ $collect['responseType'] = $responseType;
 $direction = string::IN;
 $collect['direction'] = $direction;
 
-$timeLimit = 172;
+$timeLimit = 210;
 $collect['timeLimit'] = $timeLimit;
 
 $callBackUrl = 'CallBackUrl';
@@ -1097,7 +1097,7 @@ $collect['audioUrl'] = $audioUrl;
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
-$length = 172;
+$length = 210;
 $collect['length'] = $length;
 
 $direction = string::IN;
@@ -1281,7 +1281,7 @@ $collect['heartBeatUrl'] = $heartBeatUrl;
 $heartBeatMethod = true;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 172;
+$timeout = 210;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
@@ -1342,7 +1342,7 @@ function createListCalls($options)
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
-$page = 172;
+$page = 210;
 $collect['page'] = $page;
 
 $pageSize = 10;
@@ -2301,10 +2301,10 @@ function createListSMS($options)
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
-$page = 130;
+$page = 46;
 $collect['page'] = $page;
 
-$pagesize = 130;
+$pagesize = 46;
 $collect['pagesize'] = $pagesize;
 
 $from = 'from';
@@ -2349,7 +2349,7 @@ function createListInboundSMS($options)
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
-$page = 130;
+$page = 46;
 $collect['page'] = $page;
 
 $pagesize = 'pagesize';
@@ -2496,10 +2496,10 @@ function createListRecording($options)
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
-$page = 130;
+$page = 138;
 $collect['page'] = $page;
 
-$pageSize = 130;
+$pageSize = 138;
 $collect['pageSize'] = $pageSize;
 
 $dateCreated = 'DateCreated';
@@ -2617,10 +2617,10 @@ function createCarrierLookupList($options)
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
-$page = 130;
+$page = 138;
 $collect['page'] = $page;
 
-$pagesize = 130;
+$pagesize = 138;
 $collect['pagesize'] = $pagesize;
 
 
@@ -2800,7 +2800,7 @@ function createListNumber($options)
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
-$page = 221;
+$page = 138;
 $collect['page'] = $page;
 
 $pageSize = 10;
@@ -3082,10 +3082,10 @@ function createListTranscription($options)
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
-$page = 221;
+$page = 138;
 $collect['page'] = $page;
 
-$pageSize = 221;
+$pageSize = 138;
 $collect['pageSize'] = $pageSize;
 
 $status = string::INPROGRESS;
