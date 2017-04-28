@@ -49,7 +49,7 @@ class UsageController extends BaseController
      * @param int    $options['productCode']  Product Code
      * @param string $options['startDate']    Start Usage Date
      * @param string $options['endDate']      End Usage Date
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -57,7 +57,7 @@ class UsageController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['productCode'], $options['startDate'], $options['endDate'])) {
+        if (!isset($options['productCode'], $options['startDate'], $options['endDate'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -70,7 +70,7 @@ class UsageController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url

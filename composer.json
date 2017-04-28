@@ -7,10 +7,10 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Mehdi Jaffery",
-            "email": "mehdi.jaffery@apimatic.io",
-            "homepage": "https://github.com/apimatic",
-            "role": "Developer"
+            "name": "APIMatic SDK Generator",
+            "email": "support@apimatic.io",
+            "homepage": "https://apimatic.io",
+            "role": "API Tool"
         }
     ],
     "require": {

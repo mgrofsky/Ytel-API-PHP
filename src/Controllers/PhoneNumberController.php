@@ -43,106 +43,11 @@ class PhoneNumberController extends BaseController
     }
 
     /**
-     * Update Phone Number Details
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string $options['phoneNumber']          TODO: type description here
-     * @param string $options['friendlyName']         (optional) TODO: type description here
-     * @param string $options['voiceUrl']             (optional) URL requested once the call connects
-     * @param string $options['voiceMethod']          (optional) TODO: type description here
-     * @param string $options['voiceFallbackUrl']     (optional) URL requested if the voice URL is not available
-     * @param string $options['voiceFallbackMethod']  (optional) TODO: type description here
-     * @param string $options['hangupCallback']       (optional) TODO: type description here
-     * @param string $options['hangupCallbackMethod'] (optional) TODO: type description here
-     * @param string $options['heartbeatUrl']         (optional) URL requested once the call connects
-     * @param string $options['heartbeatMethod']      (optional) URL that can be requested every 60 seconds during the
-     *                                                call to notify of elapsed time
-     * @param string $options['smsUrl']               (optional) URL requested when an SMS is received
-     * @param string $options['smsMethod']            (optional) TODO: type description here
-     * @param string $options['smsFallbackUrl']       (optional) URL requested once the call connects
-     * @param string $options['smsFallbackMethod']    (optional) URL requested if the sms URL is not available
-     * @param string $options['responseType']         (optional) Response type format xml or json
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function updatePhoneNumber(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['phoneNumber'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/incomingphone/updatenumber.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'         => $this->val($options, 'responseType', 'json'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'         => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'PhoneNumber'          => $this->val($options, 'phoneNumber'),
-            'FriendlyName'         => $this->val($options, 'friendlyName'),
-            'VoiceUrl'             => $this->val($options, 'voiceUrl'),
-            'VoiceMethod'          => $this->val($options, 'voiceMethod'),
-            'VoiceFallbackUrl'     => $this->val($options, 'voiceFallbackUrl'),
-            'VoiceFallbackMethod'  => $this->val($options, 'voiceFallbackMethod'),
-            'HangupCallback'       => $this->val($options, 'hangupCallback'),
-            'HangupCallbackMethod' => $this->val($options, 'hangupCallbackMethod'),
-            'HeartbeatUrl'         => $this->val($options, 'heartbeatUrl'),
-            'HeartbeatMethod'      => $this->val($options, 'heartbeatMethod'),
-            'SmsUrl'               => $this->val($options, 'smsUrl'),
-            'SmsMethod'            => $this->val($options, 'smsMethod'),
-            'SmsFallbackUrl'       => $this->val($options, 'smsFallbackUrl'),
-            'SmsFallbackMethod'    => $this->val($options, 'smsFallbackMethod')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
      * Buy Phone Number
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['phoneNumber']  Phone number to be purchase
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -150,7 +55,7 @@ class PhoneNumberController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['phoneNumber'])) {
+        if (!isset($options['phoneNumber'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -163,7 +68,7 @@ class PhoneNumberController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -210,7 +115,7 @@ class PhoneNumberController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['phoneNumber']  Phone number to be relase
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -218,7 +123,7 @@ class PhoneNumberController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['phoneNumber'])) {
+        if (!isset($options['phoneNumber'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -231,7 +136,7 @@ class PhoneNumberController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -278,7 +183,7 @@ class PhoneNumberController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['phoneNumber']  Get Phone number Detail
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -286,7 +191,7 @@ class PhoneNumberController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['phoneNumber'])) {
+        if (!isset($options['phoneNumber'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -299,7 +204,7 @@ class PhoneNumberController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -345,19 +250,24 @@ class PhoneNumberController extends BaseController
      * List Account's Phone number details
      *
      * @param  array  $options    Array with all options for search
+     * @param string  $options['responseType'] Response type format xml or json
      * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
      *                                         indexed
      * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
      *                                         page
      * @param string  $options['numberType']   (optional) TODO: type description here
      * @param string  $options['friendlyName'] (optional) TODO: type description here
-     * @param string  $options['responseType'] (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createListNumber(
         $options
     ) {
+        //check that all required arguments are provided
+        if (!isset($options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
 
         //the base uri for api requests
         $_queryBuilder = Configuration::getBaseUri();
@@ -367,7 +277,7 @@ class PhoneNumberController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -418,8 +328,8 @@ class PhoneNumberController extends BaseController
      * @param  array  $options    Array with all options for search
      * @param string  $options['numberType']   Number type either SMS,Voice or all
      * @param string  $options['areaCode']     Phone Number Area Code
+     * @param string  $options['responseType'] Response type format xml or json
      * @param integer $options['pageSize']     (optional) Page Size
-     * @param string  $options['responseType'] (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -427,7 +337,7 @@ class PhoneNumberController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['numberType'], $options['areaCode'])) {
+        if (!isset($options['numberType'], $options['areaCode'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -440,7 +350,7 @@ class PhoneNumberController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -456,6 +366,101 @@ class PhoneNumberController extends BaseController
             'NumberType'   => $this->val($options, 'numberType'),
             'AreaCode'     => $this->val($options, 'areaCode'),
             'PageSize'     => $this->val($options, 'pageSize', 10)
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Update Phone Number Details
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string $options['phoneNumber']          TODO: type description here
+     * @param string $options['responseType']         Response type format xml or json
+     * @param string $options['friendlyName']         (optional) TODO: type description here
+     * @param string $options['voiceUrl']             (optional) URL requested once the call connects
+     * @param string $options['voiceMethod']          (optional) TODO: type description here
+     * @param string $options['voiceFallbackUrl']     (optional) URL requested if the voice URL is not available
+     * @param string $options['voiceFallbackMethod']  (optional) TODO: type description here
+     * @param string $options['hangupCallback']       (optional) TODO: type description here
+     * @param string $options['hangupCallbackMethod'] (optional) TODO: type description here
+     * @param string $options['heartbeatUrl']         (optional) URL requested once the call connects
+     * @param string $options['heartbeatMethod']      (optional) URL that can be requested every 60 seconds during the
+     *                                                call to notify of elapsed time
+     * @param string $options['smsUrl']               (optional) URL requested when an SMS is received
+     * @param string $options['smsMethod']            (optional) TODO: type description here
+     * @param string $options['smsFallbackUrl']       (optional) URL requested once the call connects
+     * @param string $options['smsFallbackMethod']    (optional) URL requested if the sms URL is not available
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function updatePhoneNumber(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['phoneNumber'], $options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/incomingphone/updatenumber.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType'         => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'         => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'PhoneNumber'          => $this->val($options, 'phoneNumber'),
+            'FriendlyName'         => $this->val($options, 'friendlyName'),
+            'VoiceUrl'             => $this->val($options, 'voiceUrl'),
+            'VoiceMethod'          => $this->val($options, 'voiceMethod'),
+            'VoiceFallbackUrl'     => $this->val($options, 'voiceFallbackUrl'),
+            'VoiceFallbackMethod'  => $this->val($options, 'voiceFallbackMethod'),
+            'HangupCallback'       => $this->val($options, 'hangupCallback'),
+            'HangupCallbackMethod' => $this->val($options, 'hangupCallbackMethod'),
+            'HeartbeatUrl'         => $this->val($options, 'heartbeatUrl'),
+            'HeartbeatMethod'      => $this->val($options, 'heartbeatMethod'),
+            'SmsUrl'               => $this->val($options, 'smsUrl'),
+            'SmsMethod'            => $this->val($options, 'smsMethod'),
+            'SmsFallbackUrl'       => $this->val($options, 'smsFallbackUrl'),
+            'SmsFallbackMethod'    => $this->val($options, 'smsFallbackMethod')
         );
 
         //set HTTP basic auth parameters

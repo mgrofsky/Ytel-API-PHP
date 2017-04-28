@@ -49,7 +49,7 @@ class SubAccountController extends BaseController
      * @param string $options['firstName']    Sub account user first name
      * @param string $options['lastName']     sub account user last name
      * @param string $options['email']        Sub account email address
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -57,7 +57,7 @@ class SubAccountController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['firstName'], $options['lastName'], $options['email'])) {
+        if (!isset($options['firstName'], $options['lastName'], $options['email'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -70,7 +70,7 @@ class SubAccountController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -120,7 +120,7 @@ class SubAccountController extends BaseController
      * @param  array  $options    Array with all options for search
      * @param string $options['subAccountSID'] The SubaccountSid to be activated or suspended
      * @param int    $options['activate']      0 to suspend or 1 to activate
-     * @param string $options['responseType']  (optional) TODO: type description here
+     * @param string $options['responseType']  TODO: type description here
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -128,7 +128,7 @@ class SubAccountController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['subAccountSID'], $options['activate'])) {
+        if (!isset($options['subAccountSID'], $options['activate'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -190,7 +190,7 @@ class SubAccountController extends BaseController
      * @param  array  $options    Array with all options for search
      * @param string $options['subAccountSID'] The SubaccountSid to be deleted
      * @param int    $options['mergeNumber']   0 to delete or 1 to merge numbers to parent account.
-     * @param string $options['responseType']  (optional) Response type format xml or json
+     * @param string $options['responseType']  Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -198,7 +198,7 @@ class SubAccountController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['subAccountSID'], $options['mergeNumber'])) {
+        if (!isset($options['subAccountSID'], $options['mergeNumber'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -211,7 +211,7 @@ class SubAccountController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'  => $this->val($options, 'responseType', 'json'),
+            'ResponseType'  => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url

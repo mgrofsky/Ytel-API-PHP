@@ -48,7 +48,7 @@ class NumberVerificationController extends BaseController
      * @param  array  $options    Array with all options for search
      * @param string $options['phonenumber']  TODO: type description here
      * @param string $options['type']         TODO: type description here
-     * @param string $options['responseType'] (optional) Response Type either json or xml
+     * @param string $options['responseType'] Response Type either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -56,7 +56,7 @@ class NumberVerificationController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['phonenumber'], $options['type'])) {
+        if (!isset($options['phonenumber'], $options['type'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -69,7 +69,7 @@ class NumberVerificationController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url

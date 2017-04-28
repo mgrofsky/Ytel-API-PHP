@@ -55,10 +55,10 @@ class AddressController extends BaseController
      *                                        greater than 2 letters.
      * @param string $options['city']         City Name.
      * @param string $options['zip']          Zip code of city.
+     * @param string $options['responseType'] Response type either json or xml
      * @param string $options['description']  (optional) Description of addresses.
      * @param string $options['email']        (optional) Email Id of user.
      * @param string $options['phone']        (optional) Phone number of user.
-     * @param string $options['responseType'] (optional) Response type either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -66,7 +66,7 @@ class AddressController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['name'], $options['address'], $options['country'], $options['state'], $options['city'], $options['zip'])) {
+        if (!isset($options['name'], $options['address'], $options['country'], $options['state'], $options['city'], $options['zip'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -79,7 +79,7 @@ class AddressController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -134,7 +134,7 @@ class AddressController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['addressSID']   The identifier of the address to be deleted.
-     * @param string $options['responseType'] (optional) Response type either json or xml
+     * @param string $options['responseType'] Response type either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -142,7 +142,7 @@ class AddressController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['addressSID'])) {
+        if (!isset($options['addressSID'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -155,7 +155,7 @@ class AddressController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -202,7 +202,7 @@ class AddressController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['addressSID']   The identifier of the address to be verified.
-     * @param string $options['responseType'] (optional) Response type either json or xml
+     * @param string $options['responseType'] Response type either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -210,7 +210,7 @@ class AddressController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['addressSID'])) {
+        if (!isset($options['addressSID'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -223,7 +223,7 @@ class AddressController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -269,19 +269,24 @@ class AddressController extends BaseController
      * List All Address
      *
      * @param  array  $options    Array with all options for search
+     * @param string  $options['responseType'] Response Type either json or xml
      * @param integer $options['page']         (optional) Return requested # of items starting the value, default=0,
      *                                         must be an integer
      * @param integer $options['pageSize']     (optional) How many results to return, default is 10, max is 100, must
      *                                         be an integer
      * @param string  $options['addressSID']   (optional) addresses Sid
      * @param string  $options['dateCreated']  (optional) date created address.
-     * @param string  $options['responseType'] (optional) Response Type either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createListAddress(
         $options
     ) {
+        //check that all required arguments are provided
+        if (!isset($options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
 
         //the base uri for api requests
         $_queryBuilder = Configuration::getBaseUri();
@@ -291,7 +296,7 @@ class AddressController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -341,7 +346,7 @@ class AddressController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['addressSID']   The identifier of the address to be retrieved.
-     * @param string $options['responseType'] (optional) Response Type either json or xml
+     * @param string $options['responseType'] Response Type either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -349,7 +354,7 @@ class AddressController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['addressSID'])) {
+        if (!isset($options['addressSID'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -362,7 +367,7 @@ class AddressController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url

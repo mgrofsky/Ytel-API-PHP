@@ -43,86 +43,23 @@ class EmailController extends BaseController
     }
 
     /**
-     * This endpoint allows you to delete entries in the Invalid Emails list.
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string $options['email']        TODO: type description here
-     * @param string $options['responseType'] (optional) Example: json
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function createDeleteInvalid(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['email'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/email/deleteinvalidemail.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'email'        => $this->val($options, 'email')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
      * Outputs email addresses on your blocklist
      *
      * @param  array  $options    Array with all options for search
+     * @param string $options['responseType'] Response type format xml or json
      * @param string $options['offset']       (optional) Where to start in the output list
      * @param string $options['limit']        (optional) Maximum number of records to return
-     * @param string $options['responseType'] (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createListBlocks(
         $options
     ) {
+        //check that all required arguments are provided
+        if (!isset($options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
 
         //the base uri for api requests
         $_queryBuilder = Configuration::getBaseUri();
@@ -132,7 +69,7 @@ class EmailController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -179,7 +116,7 @@ class EmailController extends BaseController
      * List out all email addresses marked as spam
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['responseType'] Response type format xml or json
      * @param string $options['offset']       (optional) The record number to start the list at
      * @param string $options['limit']        (optional) Maximum number of records to return
      * @return string response from the API call
@@ -188,6 +125,11 @@ class EmailController extends BaseController
     public function createListSpam(
         $options
     ) {
+        //check that all required arguments are provided
+        if (!isset($options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
 
         //the base uri for api requests
         $_queryBuilder = Configuration::getBaseUri();
@@ -197,7 +139,7 @@ class EmailController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -244,7 +186,7 @@ class EmailController extends BaseController
      * List out all email addresses that have bounced
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['responseType'] Response type format xml or json
      * @param string $options['offset']       (optional) The record to start the list at
      * @param string $options['limit']        (optional) The maximum number of records to return
      * @return string response from the API call
@@ -253,6 +195,11 @@ class EmailController extends BaseController
     public function createListBounces(
         $options
     ) {
+        //check that all required arguments are provided
+        if (!isset($options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
 
         //the base uri for api requests
         $_queryBuilder = Configuration::getBaseUri();
@@ -262,7 +209,7 @@ class EmailController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -309,8 +256,8 @@ class EmailController extends BaseController
      * Delete an email address from the bounced address list
      *
      * @param  array  $options    Array with all options for search
+     * @param string $options['responseType'] Response type format xml or json
      * @param string $options['email']        The email address to remove from the bounce list
-     * @param string $options['responseType'] (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -318,7 +265,7 @@ class EmailController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['email'])) {
+        if (!isset($options['responseType'], $options['email'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -331,7 +278,7 @@ class EmailController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -377,7 +324,7 @@ class EmailController extends BaseController
      * List out all invalid email addresses
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['responseType'] Response type format xml or json
      * @param string $options['offet']        (optional) Starting record for listing out emails
      * @param string $options['limit']        (optional) Maximum number of records to return
      * @return string response from the API call
@@ -386,6 +333,11 @@ class EmailController extends BaseController
     public function createListInvalid(
         $options
     ) {
+        //check that all required arguments are provided
+        if (!isset($options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
 
         //the base uri for api requests
         $_queryBuilder = Configuration::getBaseUri();
@@ -395,7 +347,7 @@ class EmailController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -442,7 +394,7 @@ class EmailController extends BaseController
      * List all unsubscribed email addresses
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['responseType'] Response type format xml or json
      * @param string $options['offset']       (optional) Starting record of the list
      * @param string $options['limit']        (optional) Maximum number of records to be returned
      * @return string response from the API call
@@ -451,6 +403,11 @@ class EmailController extends BaseController
     public function createListUnsubscribes(
         $options
     ) {
+        //check that all required arguments are provided
+        if (!isset($options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
 
         //the base uri for api requests
         $_queryBuilder = Configuration::getBaseUri();
@@ -460,7 +417,7 @@ class EmailController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -508,7 +465,7 @@ class EmailController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['email']        The email to remove from the unsubscribe list
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -516,7 +473,7 @@ class EmailController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['email'])) {
+        if (!isset($options['email'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -529,7 +486,7 @@ class EmailController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -576,7 +533,7 @@ class EmailController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['email']        The email to add to the unsubscribe list
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -584,7 +541,7 @@ class EmailController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['email'])) {
+        if (!isset($options['email'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -597,7 +554,7 @@ class EmailController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -644,7 +601,7 @@ class EmailController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['email']        Email address to remove from block list
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -652,7 +609,7 @@ class EmailController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['email'])) {
+        if (!isset($options['email'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -665,7 +622,7 @@ class EmailController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -711,8 +668,8 @@ class EmailController extends BaseController
      * Deletes a email address marked as spam from the spam list
      *
      * @param  array  $options    Array with all options for search
+     * @param string $options['responseType'] Response type format xml or json
      * @param string $options['email']        Email address
-     * @param string $options['responseType'] (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -720,7 +677,7 @@ class EmailController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['email'])) {
+        if (!isset($options['responseType'], $options['email'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -733,7 +690,7 @@ class EmailController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -784,10 +741,10 @@ class EmailController extends BaseController
      * @param string $options['type']         email format type, html or text
      * @param string $options['subject']      Email subject
      * @param string $options['message']      The body of the email message
+     * @param string $options['responseType'] Response type format xml or json
      * @param string $options['cc']           (optional) CC Email address
      * @param string $options['bcc']          (optional) BCC Email address
      * @param string $options['attachment']   (optional) File to be attached.File must be less than 7MB.
-     * @param string $options['responseType'] (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -795,7 +752,7 @@ class EmailController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['to'], $options['from'], $options['type'], $options['subject'], $options['message'])) {
+        if (!isset($options['to'], $options['from'], $options['type'], $options['subject'], $options['message'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -808,7 +765,7 @@ class EmailController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -829,6 +786,74 @@ class EmailController extends BaseController
             'cc'           => $this->val($options, 'cc'),
             'bcc'          => $this->val($options, 'bcc'),
             'attachment'   => $this->val($options, 'attachment')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * This endpoint allows you to delete entries in the Invalid Emails list.
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string $options['email']        TODO: type description here
+     * @param string $options['responseType'] Example: json
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function createDeleteInvalid(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['email'], $options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/email/deleteinvalidemail.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'email'        => $this->val($options, 'email')
         );
 
         //set HTTP basic auth parameters

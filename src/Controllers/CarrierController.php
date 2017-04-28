@@ -43,19 +43,20 @@ class CarrierController extends BaseController
     }
 
     /**
-     * Get the Carrier Lookup
+     * Get the All Purchase Number's Carrier lookup
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['phonenumber']  The number to lookup
-     * @param string $options['responseType'] (optional) Response type format xml or json
+     * @param string  $options['responseType'] Response type format xml or json
+     * @param integer $options['page']         (optional) Page Number
+     * @param integer $options['pagesize']     (optional) Page Size
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createCarrierLookup(
+    public function createCarrierLookupList(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['phonenumber'])) {
+        if (!isset($options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -64,11 +65,11 @@ class CarrierController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/carrier/lookup.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/carrier/lookuplist.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -81,7 +82,8 @@ class CarrierController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'phonenumber'  => $this->val($options, 'phonenumber')
+            'page'         => $this->val($options, 'page'),
+            'pagesize'     => $this->val($options, 'pagesize')
         );
 
         //set HTTP basic auth parameters
@@ -111,28 +113,32 @@ class CarrierController extends BaseController
     }
 
     /**
-     * Get the All Purchase Number's Carrier lookup
+     * Get the Carrier Lookup
      *
      * @param  array  $options    Array with all options for search
-     * @param integer $options['page']         (optional) Page Number
-     * @param integer $options['pagesize']     (optional) Page Size
-     * @param string  $options['responseType'] (optional) Response type format xml or json
+     * @param string $options['phonenumber']  The number to lookup
+     * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createCarrierLookupList(
+    public function createCarrierLookup(
         $options
     ) {
+        //check that all required arguments are provided
+        if (!isset($options['phonenumber'], $options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
 
         //the base uri for api requests
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/carrier/lookuplist.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/carrier/lookup.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -145,8 +151,7 @@ class CarrierController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'page'         => $this->val($options, 'page'),
-            'pagesize'     => $this->val($options, 'pagesize')
+            'phonenumber'  => $this->val($options, 'phonenumber')
         );
 
         //set HTTP basic auth parameters

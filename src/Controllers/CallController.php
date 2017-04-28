@@ -43,74 +43,6 @@ class CallController extends BaseController
     }
 
     /**
-     * View Call Response
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string $options['callsid']      Call Sid id for particular Call
-     * @param string $options['responseType'] (optional) Response type format xml or json
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function createViewCall(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['callsid'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/calls/viewcalls.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'callsid'      => $this->val($options, 'callsid')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
      * Group Call
      *
      * @param  array  $options    Array with all options for search
@@ -119,6 +51,7 @@ class CallController extends BaseController
      * @param string  $options['toCountryCode']         Example: 1
      * @param string  $options['to']                    TODO: type description here
      * @param string  $options['url']                   TODO: type description here
+     * @param string  $options['responseType']          Example: json
      * @param string  $options['method']                (optional) TODO: type description here
      * @param string  $options['statusCallBackUrl']     (optional) TODO: type description here
      * @param string  $options['statusCallBackMethod']  (optional) TODO: type description here
@@ -134,7 +67,6 @@ class CallController extends BaseController
      * @param string  $options['recordCallBackMethod']  (optional) TODO: type description here
      * @param bool    $options['transcribe']            (optional) TODO: type description here
      * @param string  $options['transcribeCallBackUrl'] (optional) TODO: type description here
-     * @param string  $options['responseType']          (optional) Example: json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -142,7 +74,7 @@ class CallController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['fromCountryCode'], $options['from'], $options['toCountryCode'], $options['to'], $options['url'])) {
+        if (!isset($options['fromCountryCode'], $options['from'], $options['toCountryCode'], $options['to'], $options['url'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -155,7 +87,7 @@ class CallController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'          => $this->val($options, 'responseType', 'json'),
+            'ResponseType'          => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -221,13 +153,13 @@ class CallController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['callSid']        TODO: type description here
+     * @param string $options['responseType']   Response type format xml or json
      * @param string $options['audioDirection'] (optional) TODO: type description here
      * @param double $options['pitchSemiTones'] (optional) value between -14 and 14
      * @param double $options['pitchOctaves']   (optional) value between -1 and 1
      * @param double $options['pitch']          (optional) value greater than 0
      * @param double $options['rate']           (optional) value greater than 0
      * @param double $options['tempo']          (optional) value greater than 0
-     * @param string $options['responseType']   (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -235,7 +167,7 @@ class CallController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['callSid'])) {
+        if (!isset($options['callSid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -248,7 +180,7 @@ class CallController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'   => $this->val($options, 'responseType', 'json'),
+            'ResponseType'   => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -302,11 +234,11 @@ class CallController extends BaseController
      * @param  array  $options    Array with all options for search
      * @param string  $options['callSid']      The unique identifier of each call resource
      * @param bool    $options['record']       Set true to initiate recording or false to terminate recording
+     * @param string  $options['responseType'] Response format, xml or json
      * @param string  $options['direction']    (optional) The leg of the call to record
      * @param integer $options['timeLimit']    (optional) Time in seconds the recording duration should not exceed
      * @param string  $options['callBackUrl']  (optional) URL consulted after the recording completes
      * @param string  $options['fileformat']   (optional) Format of the recording file. Can be .mp3 or .wav
-     * @param string  $options['responseType'] (optional) Response format, xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -314,7 +246,7 @@ class CallController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['callSid'], $options['record'])) {
+        if (!isset($options['callSid'], $options['record'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -327,7 +259,7 @@ class CallController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -382,11 +314,11 @@ class CallController extends BaseController
      * @param string  $options['audioUrl']     URL to sound that should be played. You also can add more than one audio
      *                                         file using semicolons e.g. http://example.com/audio1.mp3;http://example.
      *                                         com/audio2.wav
+     * @param string  $options['responseType'] Response type format xml or json
      * @param integer $options['length']       (optional) Time limit in seconds for audio play back
      * @param string  $options['direction']    (optional) The leg of the call audio will be played to
      * @param bool    $options['loop']         (optional) Repeat audio playback indefinitely
      * @param bool    $options['mix']          (optional) If false, all other audio will be muted
-     * @param string  $options['responseType'] (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -394,7 +326,7 @@ class CallController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['callSid'], $options['audioUrl'])) {
+        if (!isset($options['callSid'], $options['audioUrl'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -407,7 +339,7 @@ class CallController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -459,10 +391,10 @@ class CallController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['callSid']      Call SId
+     * @param string $options['responseType'] Response type format xml or json
      * @param string $options['url']          (optional) URL the in-progress call will be redirected to
      * @param string $options['method']       (optional) The method used to request the above Url parameter
      * @param string $options['status']       (optional) Status to set the in-progress call to
-     * @param string $options['responseType'] (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -470,7 +402,7 @@ class CallController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['callSid'])) {
+        if (!isset($options['callSid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -483,7 +415,7 @@ class CallController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -534,8 +466,8 @@ class CallController extends BaseController
      * @param  array  $options    Array with all options for search
      * @param string $options['callSid']           The unique identifier of each call resource
      * @param string $options['playDtmf']          DTMF digits to play to the call. 0-9, #, *, W, or w
+     * @param string $options['responseType']      Response type format xml or json
      * @param string $options['playDtmfDirection'] (optional) The leg of the call DTMF digits should be sent to
-     * @param string $options['responseType']      (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -543,7 +475,7 @@ class CallController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['callSid'], $options['playDtmf'])) {
+        if (!isset($options['callSid'], $options['playDtmf'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -556,7 +488,7 @@ class CallController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'      => $this->val($options, 'responseType', 'json'),
+            'ResponseType'      => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -610,6 +542,7 @@ class CallController extends BaseController
      * @param string  $options['toCountryCode']         To cuntry code number
      * @param string  $options['to']                    To number
      * @param string  $options['url']                   URL requested once the call connects
+     * @param string  $options['responseType']          Response type format xml or json
      * @param string  $options['method']                (optional) Specifies the HTTP method used to request the
      *                                                  required URL once call connects.
      * @param string  $options['statusCallBackUrl']     (optional) specifies the HTTP methodlinkclass used to request
@@ -639,7 +572,6 @@ class CallController extends BaseController
      *                                                  completion
      * @param string  $options['ifMachine']             (optional) How Message360 should handle the receiving numbers
      *                                                  voicemail machine
-     * @param string  $options['responseType']          (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -647,7 +579,7 @@ class CallController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['fromCountryCode'], $options['from'], $options['toCountryCode'], $options['to'], $options['url'])) {
+        if (!isset($options['fromCountryCode'], $options['from'], $options['toCountryCode'], $options['to'], $options['url'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -660,7 +592,7 @@ class CallController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'          => $this->val($options, 'responseType', 'json'),
+            'ResponseType'          => $this->val($options, 'responseType'),
             ));
 
         //process optional query parameters
@@ -730,6 +662,7 @@ class CallController extends BaseController
      * A list of calls associated with your Message360 account
      *
      * @param  array  $options    Array with all options for search
+     * @param string  $options['responseType'] Response type format xml or json
      * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
      *                                         indexed
      * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
@@ -737,13 +670,17 @@ class CallController extends BaseController
      * @param string  $options['to']           (optional) Only list calls to this number
      * @param string  $options['from']         (optional) Only list calls from this number
      * @param string  $options['dateCreated']  (optional) Only list calls starting within the specified date range
-     * @param string  $options['responseType'] (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
     public function createListCalls(
         $options
     ) {
+        //check that all required arguments are provided
+        if (!isset($options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
 
         //the base uri for api requests
         $_queryBuilder = Configuration::getBaseUri();
@@ -753,7 +690,7 @@ class CallController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType', 'json'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -809,9 +746,9 @@ class CallController extends BaseController
      * @param string $options['to']                  To number
      * @param string $options['voiceMailURL']        URL to an audio file
      * @param string $options['method']              Not currently used in this version
+     * @param string $options['responseType']        Response type format xml or json
      * @param string $options['statusCallBackUrl']   (optional) URL to post the status of the Ringless request
      * @param string $options['statsCallBackMethod'] (optional) POST or GET
-     * @param string $options['responseType']        (optional) Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -819,7 +756,7 @@ class CallController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['fromCountryCode'], $options['from'], $options['toCountryCode'], $options['to'], $options['voiceMailURL'], $options['method'])) {
+        if (!isset($options['fromCountryCode'], $options['from'], $options['toCountryCode'], $options['to'], $options['voiceMailURL'], $options['method'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -832,7 +769,7 @@ class CallController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'        => $this->val($options, 'responseType', 'json'),
+            'ResponseType'        => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -853,6 +790,74 @@ class CallController extends BaseController
             'Method'              => $this->val($options, 'method'),
             'StatusCallBackUrl'   => $this->val($options, 'statusCallBackUrl'),
             'StatsCallBackMethod' => $this->val($options, 'statsCallBackMethod')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * View Call Response
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string $options['callsid']      Call Sid id for particular Call
+     * @param string $options['responseType'] Response type format xml or json
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function createViewCall(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['callsid'], $options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/calls/viewcalls.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'callsid'      => $this->val($options, 'callsid')
         );
 
         //set HTTP basic auth parameters
