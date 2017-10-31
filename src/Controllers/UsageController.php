@@ -46,18 +46,18 @@ class UsageController extends BaseController
      * Get all usage
      *
      * @param  array  $options    Array with all options for search
-     * @param int    $options['productCode']  Product Code
-     * @param string $options['startDate']    Start Usage Date
-     * @param string $options['endDate']      End Usage Date
      * @param string $options['responseType'] Response type format xml or json
+     * @param int    $options['productCode']  (optional) Product Code
+     * @param string $options['startDate']    (optional) Start Usage Date
+     * @param string $options['endDate']      (optional) End Usage Date
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createListUsage(
+    public function listUsage(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['productCode'], $options['startDate'], $options['endDate'], $options['responseType'])) {
+        if (!isset($options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -83,9 +83,9 @@ class UsageController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'ProductCode'  => $this->val($options, 'productCode'),
-            'startDate'    => $this->val($options, 'startDate'),
-            'endDate'      => $this->val($options, 'endDate')
+            'ProductCode'  => $this->val($options, 'productCode', Models\ProductCodeEnum::ALL),
+            'startDate'    => $this->val($options, 'startDate', '2016-09-06'),
+            'endDate'      => $this->val($options, 'endDate', '2016-09-06')
         );
 
         //set HTTP basic auth parameters

@@ -51,7 +51,7 @@ class WebRTCController extends BaseController
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createCheckFunds(
+    public function checkFunds(
         $options
     ) {
         //check that all required arguments are provided

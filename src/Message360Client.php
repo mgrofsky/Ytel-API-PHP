@@ -24,16 +24,14 @@ class Message360Client
         Configuration::$basicAuthUserName = $basicAuthUserName ? $basicAuthUserName : Configuration::$basicAuthUserName;
         Configuration::$basicAuthPassword = $basicAuthPassword ? $basicAuthPassword : Configuration::$basicAuthPassword;
     }
- 
     /**
-     * Singleton access to ShortCode controller
-     * @return Controllers\ShortCodeController The *Singleton* instance
+     * Singleton access to SharedShortCode controller
+     * @return Controllers\SharedShortCodeController The *Singleton* instance
      */
-    public function getShortCode()
+    public function getSharedShortCode()
     {
-        return Controllers\ShortCodeController::getInstance();
+        return Controllers\SharedShortCodeController::getInstance();
     }
- 
     /**
      * Singleton access to Conference controller
      * @return Controllers\ConferenceController The *Singleton* instance
@@ -42,97 +40,6 @@ class Message360Client
     {
         return Controllers\ConferenceController::getInstance();
     }
- 
-    /**
-     * Singleton access to NumberVerification controller
-     * @return Controllers\NumberVerificationController The *Singleton* instance
-     */
-    public function getNumberVerification()
-    {
-        return Controllers\NumberVerificationController::getInstance();
-    }
- 
-    /**
-     * Singleton access to WebRTC controller
-     * @return Controllers\WebRTCController The *Singleton* instance
-     */
-    public function getWebRTC()
-    {
-        return Controllers\WebRTCController::getInstance();
-    }
- 
-    /**
-     * Singleton access to Call controller
-     * @return Controllers\CallController The *Singleton* instance
-     */
-    public function getCall()
-    {
-        return Controllers\CallController::getInstance();
-    }
- 
-    /**
-     * Singleton access to SubAccount controller
-     * @return Controllers\SubAccountController The *Singleton* instance
-     */
-    public function getSubAccount()
-    {
-        return Controllers\SubAccountController::getInstance();
-    }
- 
-    /**
-     * Singleton access to Address controller
-     * @return Controllers\AddressController The *Singleton* instance
-     */
-    public function getAddress()
-    {
-        return Controllers\AddressController::getInstance();
-    }
- 
-    /**
-     * Singleton access to Email controller
-     * @return Controllers\EmailController The *Singleton* instance
-     */
-    public function getEmail()
-    {
-        return Controllers\EmailController::getInstance();
-    }
- 
-    /**
-     * Singleton access to SMS controller
-     * @return Controllers\SMSController The *Singleton* instance
-     */
-    public function getSMS()
-    {
-        return Controllers\SMSController::getInstance();
-    }
- 
-    /**
-     * Singleton access to Recording controller
-     * @return Controllers\RecordingController The *Singleton* instance
-     */
-    public function getRecording()
-    {
-        return Controllers\RecordingController::getInstance();
-    }
- 
-    /**
-     * Singleton access to Carrier controller
-     * @return Controllers\CarrierController The *Singleton* instance
-     */
-    public function getCarrier()
-    {
-        return Controllers\CarrierController::getInstance();
-    }
- 
-    /**
-     * Singleton access to PhoneNumber controller
-     * @return Controllers\PhoneNumberController The *Singleton* instance
-     */
-    public function getPhoneNumber()
-    {
-        return Controllers\PhoneNumberController::getInstance();
-    }
- 
     /**
      * Singleton access to Transcription controller
      * @return Controllers\TranscriptionController The *Singleton* instance
@@ -141,7 +48,14 @@ class Message360Client
     {
         return Controllers\TranscriptionController::getInstance();
     }
- 
+    /**
+     * Singleton access to PhoneNumber controller
+     * @return Controllers\PhoneNumberController The *Singleton* instance
+     */
+    public function getPhoneNumber()
+    {
+        return Controllers\PhoneNumberController::getInstance();
+    }
     /**
      * Singleton access to Usage controller
      * @return Controllers\UsageController The *Singleton* instance
@@ -150,7 +64,70 @@ class Message360Client
     {
         return Controllers\UsageController::getInstance();
     }
- 
+    /**
+     * Singleton access to WebRTC controller
+     * @return Controllers\WebRTCController The *Singleton* instance
+     */
+    public function getWebRTC()
+    {
+        return Controllers\WebRTCController::getInstance();
+    }
+    /**
+     * Singleton access to Recording controller
+     * @return Controllers\RecordingController The *Singleton* instance
+     */
+    public function getRecording()
+    {
+        return Controllers\RecordingController::getInstance();
+    }
+    /**
+     * Singleton access to Email controller
+     * @return Controllers\EmailController The *Singleton* instance
+     */
+    public function getEmail()
+    {
+        return Controllers\EmailController::getInstance();
+    }
+    /**
+     * Singleton access to SMS controller
+     * @return Controllers\SMSController The *Singleton* instance
+     */
+    public function getSMS()
+    {
+        return Controllers\SMSController::getInstance();
+    }
+    /**
+     * Singleton access to Call controller
+     * @return Controllers\CallController The *Singleton* instance
+     */
+    public function getCall()
+    {
+        return Controllers\CallController::getInstance();
+    }
+    /**
+     * Singleton access to Carrier controller
+     * @return Controllers\CarrierController The *Singleton* instance
+     */
+    public function getCarrier()
+    {
+        return Controllers\CarrierController::getInstance();
+    }
+    /**
+     * Singleton access to Address controller
+     * @return Controllers\AddressController The *Singleton* instance
+     */
+    public function getAddress()
+    {
+        return Controllers\AddressController::getInstance();
+    }
+    /**
+     * Singleton access to SubAccount controller
+     * @return Controllers\SubAccountController The *Singleton* instance
+     */
+    public function getSubAccount()
+    {
+        return Controllers\SubAccountController::getInstance();
+    }
     /**
      * Singleton access to Account controller
      * @return Controllers\AccountController The *Singleton* instance
@@ -158,5 +135,13 @@ class Message360Client
     public function getAccount()
     {
         return Controllers\AccountController::getInstance();
+    }
+    /**
+     * Singleton access to ShortCode controller
+     * @return Controllers\ShortCodeController The *Singleton* instance
+     */
+    public function getShortCode()
+    {
+        return Controllers\ShortCodeController::getInstance();
     }
 }

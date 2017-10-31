@@ -43,21 +43,20 @@ class SubAccountController extends BaseController
     }
 
     /**
-     * Create a sub user account under the parent account
+     * Delete sub account or merge numbers into parent
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['firstName']    Sub account user first name
-     * @param string $options['lastName']     sub account user last name
-     * @param string $options['email']        Sub account email address
-     * @param string $options['responseType'] Response type format xml or json
+     * @param string $options['subAccountSID'] The SubaccountSid to be deleted
+     * @param int    $options['mergeNumber']   0 to delete or 1 to merge numbers to parent account.
+     * @param string $options['responseType']  Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createSubAccount(
+    public function deleteSubAccount(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['firstName'], $options['lastName'], $options['email'], $options['responseType'])) {
+        if (!isset($options['subAccountSID'], $options['mergeNumber'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -66,11 +65,11 @@ class SubAccountController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/user/createsubaccount.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/user/deletesubaccount.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType'),
+            'ResponseType'  => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -83,9 +82,8 @@ class SubAccountController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'FirstName'    => $this->val($options, 'firstName'),
-            'LastName'     => $this->val($options, 'lastName'),
-            'Email'        => $this->val($options, 'email')
+            'SubAccountSID' => $this->val($options, 'subAccountSID'),
+            'MergeNumber'   => $this->val($options, 'mergeNumber')
         );
 
         //set HTTP basic auth parameters
@@ -120,11 +118,11 @@ class SubAccountController extends BaseController
      * @param  array  $options    Array with all options for search
      * @param string $options['subAccountSID'] The SubaccountSid to be activated or suspended
      * @param int    $options['activate']      0 to suspend or 1 to activate
-     * @param string $options['responseType']  TODO: type description here
+     * @param string $options['responseType']  Example: json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createSuspendSubAccount(
+    public function suspendSubAccount(
         $options
     ) {
         //check that all required arguments are provided
@@ -185,20 +183,21 @@ class SubAccountController extends BaseController
     }
 
     /**
-     * Delete sub account or merge numbers into parent
+     * Create a sub user account under the parent account
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['subAccountSID'] The SubaccountSid to be deleted
-     * @param int    $options['mergeNumber']   0 to delete or 1 to merge numbers to parent account.
-     * @param string $options['responseType']  Response type format xml or json
+     * @param string $options['firstName']    Sub account user first name
+     * @param string $options['lastName']     sub account user last name
+     * @param string $options['email']        Sub account email address
+     * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createDeleteSubAccount(
+    public function createSubAccount(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['subAccountSID'], $options['mergeNumber'], $options['responseType'])) {
+        if (!isset($options['firstName'], $options['lastName'], $options['email'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -207,11 +206,11 @@ class SubAccountController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/user/deletesubaccount.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/user/createsubaccount.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'  => $this->val($options, 'responseType'),
+            'ResponseType' => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -224,8 +223,9 @@ class SubAccountController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'SubAccountSID' => $this->val($options, 'subAccountSID'),
-            'MergeNumber'   => $this->val($options, 'mergeNumber')
+            'FirstName'    => $this->val($options, 'firstName'),
+            'LastName'     => $this->val($options, 'lastName'),
+            'Email'        => $this->val($options, 'email')
         );
 
         //set HTTP basic auth parameters

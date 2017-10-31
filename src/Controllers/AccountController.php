@@ -51,7 +51,7 @@ class AccountController extends BaseController
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createViewAccount(
+    public function viewAccount(
         $options
     ) {
         //check that all required arguments are provided

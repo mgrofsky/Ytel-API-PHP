@@ -22,16 +22,16 @@ use Unirest\Request;
 /**
  * @todo Add a general description for this controller.
  */
-class EmailController extends BaseController
+class SharedShortCodeController extends BaseController
 {
     /**
-     * @var EmailController The reference to *Singleton* instance of this class
+     * @var SharedShortCodeController The reference to *Singleton* instance of this class
      */
     private static $instance;
 
     /**
      * Returns the *Singleton* instance of this class.
-     * @return EmailController The *Singleton* instance.
+     * @return SharedShortCodeController The *Singleton* instance.
      */
     public static function getInstance()
     {
@@ -43,19 +43,19 @@ class EmailController extends BaseController
     }
 
     /**
-     * Deletes a email address marked as spam from the spam list
+     * View a Shared ShortCode Template
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['responseType'] Response type format xml or json
-     * @param string $options['email']        Email address
+     * @param uuid|string $options['templateid']   The unique identifier for a template object
+     * @param string      $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function deleteSpam(
+    public function viewTemplate(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['responseType'], $options['email'])) {
+        if (!isset($options['templateid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -64,7 +64,7 @@ class EmailController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/email/deletespamemail.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/template/view.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -81,7 +81,7 @@ class EmailController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'email'        => $this->val($options, 'email')
+            'templateid'   => $this->val($options, 'templateid')
         );
 
         //set HTTP basic auth parameters
@@ -111,19 +111,19 @@ class EmailController extends BaseController
     }
 
     /**
-     * Deletes a blocked email
+     * View a ShortCode Message
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['email']        Email address to remove from block list
+     * @param string $options['messagesid']   Message sid
      * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function deleteBlock(
+    public function viewSharedShortcodes(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['email'], $options['responseType'])) {
+        if (!isset($options['messagesid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -132,7 +132,7 @@ class EmailController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/email/deleteblocksemail.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/shortcode/viewsms.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -149,7 +149,7 @@ class EmailController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'email'        => $this->val($options, 'email')
+            'messagesid'   => $this->val($options, 'messagesid')
         );
 
         //set HTTP basic auth parameters
@@ -179,19 +179,25 @@ class EmailController extends BaseController
     }
 
     /**
-     * Add an email to the unsubscribe list
+     * List ShortCode Messages
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['email']        The email to add to the unsubscribe list
-     * @param string $options['responseType'] Response type format xml or json
+     * @param string  $options['responseType'] Response type format xml or json
+     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
+     *                                         indexed
+     * @param integer $options['pagesize']     (optional) Number of individual resources listed in the response per
+     *                                         page
+     * @param string  $options['from']         (optional) Messages sent from this number
+     * @param string  $options['to']           (optional) Messages sent to this number
+     * @param string  $options['datesent']     (optional) Only list SMS messages sent in the specified date range
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function addUnsubscribes(
+    public function listOutboundSharedShortcodes(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['email'], $options['responseType'])) {
+        if (!isset($options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -200,7 +206,7 @@ class EmailController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/email/addunsubscribesemail.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/shortcode/listsms.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -217,89 +223,11 @@ class EmailController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'email'        => $this->val($options, 'email')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
-     * Send out an email
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string $options['to']           The to email address
-     * @param string $options['from']         The from email address
-     * @param string $options['type']         email format type, html or text
-     * @param string $options['subject']      Email subject
-     * @param string $options['message']      The body of the email message
-     * @param string $options['responseType'] Response type format xml or json
-     * @param string $options['cc']           (optional) CC Email address
-     * @param string $options['bcc']          (optional) BCC Email address
-     * @param string $options['attachment']   (optional) File to be attached.File must be less than 7MB.
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function sendEmail(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['to'], $options['from'], $options['type'], $options['subject'], $options['message'], $options['responseType'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/email/sendemails.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'to'           => $this->val($options, 'to'),
+            'page'         => $this->val($options, 'page', 1),
+            'pagesize'     => $this->val($options, 'pagesize', 10),
             'from'         => $this->val($options, 'from'),
-            'type'         => $this->val($options, 'type'),
-            'subject'      => $this->val($options, 'subject'),
-            'message'      => $this->val($options, 'message'),
-            'cc'           => $this->val($options, 'cc'),
-            'bcc'          => $this->val($options, 'bcc'),
-            'attachment'   => $this->val($options, 'attachment')
+            'to'           => $this->val($options, 'to'),
+            'datesent'     => $this->val($options, 'datesent')
         );
 
         //set HTTP basic auth parameters
@@ -329,84 +257,21 @@ class EmailController extends BaseController
     }
 
     /**
-     * Delete emails from the unsubscribe list
+     * List All Inbound ShortCode
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['email']        The email to remove from the unsubscribe list
-     * @param string $options['responseType'] Response type format xml or json
+     * @param string  $options['responseType'] Response type format xml or json
+     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
+     *                                         indexed
+     * @param integer $options['pagesize']     (optional) Number of individual resources listed in the response per
+     *                                         page
+     * @param string  $options['from']         (optional) From Number to Inbound ShortCode
+     * @param string  $options['shortcode']    (optional) Only list messages sent to this Short Code
+     * @param string  $options['dateReceived'] (optional) Only list messages sent with the specified date
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function deleteUnsubscribes(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['email'], $options['responseType'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/email/deleteunsubscribedemail.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'email'        => $this->val($options, 'email')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
-     * List all unsubscribed email addresses
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string $options['responseType'] Response type format xml or json
-     * @param string $options['offset']       (optional) Starting record of the list
-     * @param string $options['limit']        (optional) Maximum number of records to be returned
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function listUnsubscribes(
+    public function listInboundSharedShortcodes(
         $options
     ) {
         //check that all required arguments are provided
@@ -419,12 +284,17 @@ class EmailController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/email/listunsubscribedemail.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/shortcode/getinboundsms.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType' => $this->val($options, 'responseType'),
             ));
+
+        //process optional query parameters
+        APIHelper::appendUrlWithQueryParameters($_queryBuilder, array (
+            'DateReceived' => $this->val($options, 'dateReceived'),
+        ));
 
         //validate and preprocess url
         $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
@@ -436,8 +306,10 @@ class EmailController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'offset'       => $this->val($options, 'offset'),
-            'limit'        => $this->val($options, 'limit')
+            'page'         => $this->val($options, 'page', 1),
+            'pagesize'     => $this->val($options, 'pagesize', 10),
+            'from'         => $this->val($options, 'from'),
+            'Shortcode'    => $this->val($options, 'shortcode')
         );
 
         //set HTTP basic auth parameters
@@ -467,16 +339,102 @@ class EmailController extends BaseController
     }
 
     /**
-     * List out all invalid email addresses
+     * Send an SMS from a message360 ShortCode
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['responseType'] Response type format xml or json
-     * @param string $options['offet']        (optional) Starting record for listing out emails
-     * @param string $options['limit']        (optional) Maximum number of records to return
+     * @param string      $options['shortcode']             The Short Code number that is the sender of this message
+     * @param string      $options['to']                    A valid 10-digit number that should receive the message
+     * @param uuid|string $options['templateid']            The unique identifier for the template used for the
+     *                                                      message
+     * @param string      $options['responseType']          Response type format xml or json
+     * @param string      $options['data']                  format of your data, example: {companyname}:test,{otpcode}:
+     *                                                      1234
+     * @param string      $options['method']                (optional) Specifies the HTTP method used to request the
+     *                                                      required URL once the Short Code message is sent.
+     * @param string      $options['messageStatusCallback'] (optional) URL that can be requested to receive
+     *                                                      notification when Short Code message was sent.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function listInvalid(
+    public function sendSharedShortcode(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['shortcode'], $options['to'], $options['templateid'], $options['responseType'], $options['data'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/shortcode/sendsms.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType'          => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'          => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'shortcode'             => $this->val($options, 'shortcode'),
+            'to'                    => $this->val($options, 'to'),
+            'templateid'            => $this->val($options, 'templateid'),
+            'data'                  => $this->val($options, 'data'),
+            'Method'                => $this->val($options, 'method', Models\HttpActionEnum::GET),
+            'MessageStatusCallback' => $this->val($options, 'messageStatusCallback')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * List Shortcode Templates by Type
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string  $options['responseType'] Response type format xml or json
+     * @param string  $options['type']         (optional) The type (category) of template Valid values: marketing,
+     *                                         authorization
+     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
+     *                                         collection. Page indexing starts at 1.
+     * @param integer $options['pagesize']     (optional) The count of objects to return per page.
+     * @param string  $options['shortcode']    (optional) Only list templates of type
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function listTemplates(
         $options
     ) {
         //check that all required arguments are provided
@@ -489,7 +447,7 @@ class EmailController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/email/listinvalidemail.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/template/lists.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -506,8 +464,10 @@ class EmailController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'offet'        => $this->val($options, 'offet'),
-            'limit'        => $this->val($options, 'limit')
+            'type'         => $this->val($options, 'type', 'authorization'),
+            'page'         => $this->val($options, 'page', 1),
+            'pagesize'     => $this->val($options, 'pagesize', 10),
+            'Shortcode'    => $this->val($options, 'shortcode')
         );
 
         //set HTTP basic auth parameters
@@ -537,19 +497,19 @@ class EmailController extends BaseController
     }
 
     /**
-     * Delete an email address from the bounced address list
+     * View a set of properties for a single keyword.
      *
      * @param  array  $options    Array with all options for search
+     * @param string $options['keywordid']    The unique identifier of each keyword
      * @param string $options['responseType'] Response type format xml or json
-     * @param string $options['email']        The email address to remove from the bounce list
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function deleteBounces(
+    public function viewKeyword(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['responseType'], $options['email'])) {
+        if (!isset($options['keywordid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -558,7 +518,7 @@ class EmailController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/email/deletebouncesemail.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/keyword/view.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -575,7 +535,7 @@ class EmailController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'email'        => $this->val($options, 'email')
+            'Keywordid'    => $this->val($options, 'keywordid')
         );
 
         //set HTTP basic auth parameters
@@ -605,16 +565,20 @@ class EmailController extends BaseController
     }
 
     /**
-     * List out all email addresses that have bounced
+     * Retrieve a list of keywords associated with your message360 account.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['responseType'] Response type format xml or json
-     * @param string $options['offset']       (optional) The record to start the list at
-     * @param string $options['limit']        (optional) The maximum number of records to return
+     * @param string  $options['responseType'] Response type format xml or json
+     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
+     *                                         indexed
+     * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
+     *                                         page
+     * @param string  $options['keyword']      (optional) Only list keywords of keyword
+     * @param integer $options['shortcode']    (optional) Only list keywords of shortcode
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function listBounces(
+    public function listKeyword(
         $options
     ) {
         //check that all required arguments are provided
@@ -627,7 +591,7 @@ class EmailController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/email/listbounceemail.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/keyword/lists.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -644,8 +608,10 @@ class EmailController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'offset'       => $this->val($options, 'offset'),
-            'limit'        => $this->val($options, 'limit')
+            'Page'         => $this->val($options, 'page', 1),
+            'PageSize'     => $this->val($options, 'pageSize', 10),
+            'Keyword'      => $this->val($options, 'keyword'),
+            'Shortcode'    => $this->val($options, 'shortcode')
         );
 
         //set HTTP basic auth parameters
@@ -675,16 +641,87 @@ class EmailController extends BaseController
     }
 
     /**
-     * List out all email addresses marked as spam
+     * The response returned here contains all resource properties associated with the given Shortcode.
      *
      * @param  array  $options    Array with all options for search
+     * @param string $options['shortcode']    List of valid Shortcode to your message360 account
      * @param string $options['responseType'] Response type format xml or json
-     * @param string $options['offset']       (optional) The record number to start the list at
-     * @param string $options['limit']        (optional) Maximum number of records to return
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function listSpam(
+    public function viewAssignement(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['shortcode'], $options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/shortcode/viewshortcode.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'Shortcode'    => $this->val($options, 'shortcode')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Retrieve a list of shortcode assignment associated with your message360 account.
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string  $options['responseType'] Response type format xml or json
+     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
+     *                                         indexed
+     * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
+     *                                         page
+     * @param string  $options['shortcode']    (optional) Only list keywords of shortcode
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function listAssignment(
         $options
     ) {
         //check that all required arguments are provided
@@ -697,12 +734,17 @@ class EmailController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/email/listspamemail.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/shortcode/listshortcode.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType' => $this->val($options, 'responseType'),
             ));
+
+        //process optional query parameters
+        APIHelper::appendUrlWithQueryParameters($_queryBuilder, array (
+            'Shortcode'    => $this->val($options, 'shortcode'),
+        ));
 
         //validate and preprocess url
         $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
@@ -714,8 +756,8 @@ class EmailController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'offset'       => $this->val($options, 'offset'),
-            'limit'        => $this->val($options, 'limit')
+            'Page'         => $this->val($options, 'page', 1),
+            'PageSize'     => $this->val($options, 'pageSize', 10)
         );
 
         //set HTTP basic auth parameters
@@ -745,20 +787,30 @@ class EmailController extends BaseController
     }
 
     /**
-     * Outputs email addresses on your blocklist
+     * @todo Add general description for this endpoint
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['responseType'] Response type format xml or json
-     * @param string $options['offset']       (optional) Where to start in the output list
-     * @param string $options['limit']        (optional) Maximum number of records to return
+     * @param string $options['shortcode']         List of valid shortcode to your message360 account
+     * @param string $options['responseType']      Response type format xml or json
+     * @param string $options['friendlyName']      (optional) User generated name of the shortcode
+     * @param string $options['callbackUrl']       (optional) URL that can be requested to receive notification when
+     *                                             call has ended. A set of default parameters will be sent here once
+     *                                             the call is finished.
+     * @param string $options['callbackMethod']    (optional) Specifies the HTTP method used to request the required
+     *                                             StatusCallBackUrl once call connects.
+     * @param string $options['fallbackUrl']       (optional) URL used if any errors occur during execution of
+     *                                             InboundXML or at initial request of the required Url provided with
+     *                                             the POST.
+     * @param string $options['fallbackUrlMethod'] (optional) Specifies the HTTP method used to request the required
+     *                                             FallbackUrl once call connects.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function listBlocks(
+    public function updateAssignment(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['responseType'])) {
+        if (!isset($options['shortcode'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -767,11 +819,11 @@ class EmailController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/email/listblockemail.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/shortcode/updateshortcode.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType'),
+            'ResponseType'      => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -779,81 +831,17 @@ class EmailController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'      => 'message360-api'
         );
 
         //prepare parameters
         $_parameters = array (
-            'offset'       => $this->val($options, 'offset'),
-            'limit'        => $this->val($options, 'limit')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
-     * This endpoint allows you to delete entries in the Invalid Emails list.
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string $options['email']        Email that was marked invalid
-     * @param string $options['responseType'] Json or xml
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function deleteInvalid(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['email'], $options['responseType'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/email/deleteinvalidemail.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'email'        => $this->val($options, 'email')
+            'Shortcode'         => $this->val($options, 'shortcode'),
+            'FriendlyName'      => $this->val($options, 'friendlyName'),
+            'CallbackUrl'       => $this->val($options, 'callbackUrl'),
+            'CallbackMethod'    => $this->val($options, 'callbackMethod'),
+            'FallbackUrl'       => $this->val($options, 'fallbackUrl'),
+            'FallbackUrlMethod' => $this->val($options, 'fallbackUrlMethod')
         );
 
         //set HTTP basic auth parameters

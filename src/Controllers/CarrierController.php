@@ -52,7 +52,7 @@ class CarrierController extends BaseController
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createCarrierLookupList(
+    public function carrierLookupList(
         $options
     ) {
         //check that all required arguments are provided
@@ -82,8 +82,8 @@ class CarrierController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'page'         => $this->val($options, 'page'),
-            'pagesize'     => $this->val($options, 'pagesize')
+            'page'         => $this->val($options, 'page', 1),
+            'pagesize'     => $this->val($options, 'pagesize', 10)
         );
 
         //set HTTP basic auth parameters
@@ -121,7 +121,7 @@ class CarrierController extends BaseController
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createCarrierLookup(
+    public function carrierLookup(
         $options
     ) {
         //check that all required arguments are provided
