@@ -23,19 +23,14 @@ class Configuration
      * The username to use with basic authentication
      * @var string
      */
-    /**
-     * @todo Replace the $basicAuthUserName with an appropriate value
-     */
     public static $basicAuthUserName = 'TODO: Replace';
 
     /**
      * The password to use with basic authentication
      * @var string
      */
-    /**
-     * @todo Replace the $basicAuthPassword with an appropriate value
-     */
     public static $basicAuthPassword = 'TODO: Replace';
+
     /**
      * Get the base uri for a given server in the current environment
      * @param  string $server Server name
@@ -60,9 +55,6 @@ class Configuration
         ),
         Environments::PREPRODUCTION => array(
             Servers::DEFAULT_ => 'https://api-preprod.message360.com/api/v2',
-        ),
-        Environments::DEVELOPMENT => array(
-            Servers::DEFAULT_ => 'https://lara-dev.message360.com/api/v2',
         ),
     );
 }

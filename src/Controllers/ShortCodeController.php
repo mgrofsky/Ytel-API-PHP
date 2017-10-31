@@ -43,19 +43,23 @@ class ShortCodeController extends BaseController
     }
 
     /**
-     * View a Shared ShortCode Template
+     * @todo Add general description for this endpoint
      *
      * @param  array  $options    Array with all options for search
-     * @param uuid|string $options['templateid']   The unique identifier for a template object
-     * @param string      $options['responseType'] Response type format xml or json
+     * @param integer $options['shortcode']             Your dedicated shortcode
+     * @param double  $options['to']                    The number to send your SMS to
+     * @param string  $options['body']                  The body of your message
+     * @param string  $options['responseType']          Response type format xml or json
+     * @param string  $options['method']                (optional) Callback status method, POST or GET
+     * @param string  $options['messagestatuscallback'] (optional) Callback url for SMS status
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createViewTemplate(
+    public function sendDedicatedShortcode(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['templateid'], $options['responseType'])) {
+        if (!isset($options['shortcode'], $options['to'], $options['body'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -64,85 +68,7 @@ class ShortCodeController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/template/view.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'templateid'   => $this->val($options, 'templateid')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
-     * Send an SMS from a message360 ShortCode
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string      $options['shortcode']             The Short Code number that is the sender of this message
-     * @param string      $options['tocountrycode']         The country code for sending this message
-     * @param string      $options['to']                    A valid 10-digit number that should receive the message+
-     * @param uuid|string $options['templateid']            The unique identifier for the template used for the
-     *                                                      message
-     * @param string      $options['responseType']          Response type format xml or json
-     * @param string      $options['data']                  format of your data, example: {companyname}:test,{otpcode}:
-     *                                                      1234
-     * @param string      $options['method']                (optional) Specifies the HTTP method used to request the
-     *                                                      required URL once the Short Code message is sent.
-     * @param string      $options['messageStatusCallback'] (optional) URL that can be requested to receive
-     *                                                      notification when Short Code message was sent.
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function createSendShortCode(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['shortcode'], $options['tocountrycode'], $options['to'], $options['templateid'], $options['responseType'], $options['data'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/shortcode/sendsms.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/shortcode/senddedicatedsms.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -160,12 +86,10 @@ class ShortCodeController extends BaseController
         //prepare parameters
         $_parameters = array (
             'shortcode'             => $this->val($options, 'shortcode'),
-            'tocountrycode'         => $this->val($options, 'tocountrycode'),
             'to'                    => $this->val($options, 'to'),
-            'templateid'            => $this->val($options, 'templateid'),
-            'data'                  => $this->val($options, 'data'),
-            'Method'                => $this->val($options, 'method', 'GET'),
-            'MessageStatusCallback' => $this->val($options, 'messageStatusCallback')
+            'body'                  => $this->val($options, 'body'),
+            'method'                => $this->val($options, 'method'),
+            'messagestatuscallback' => $this->val($options, 'messagestatuscallback')
         );
 
         //set HTTP basic auth parameters
@@ -195,25 +119,19 @@ class ShortCodeController extends BaseController
     }
 
     /**
-     * List All Inbound ShortCode
+     * View a single Sms Short Code message.
      *
      * @param  array  $options    Array with all options for search
-     * @param string  $options['responseType'] Response type format xml or json
-     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
-     *                                         indexed
-     * @param integer $options['pagesize']     (optional) Number of individual resources listed in the response per
-     *                                         page
-     * @param string  $options['from']         (optional) From Number to Inbound ShortCode
-     * @param string  $options['shortcode']    (optional) Only list messages sent to this Short Code
-     * @param string  $options['dateReceived'] (optional) Only list messages sent with the specified date
+     * @param string $options['messageSid']   The unique identifier for the sms resource
+     * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createListInboundShortCode(
+    public function viewShortcode(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['responseType'])) {
+        if (!isset($options['messageSid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -222,17 +140,12 @@ class ShortCodeController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/shortcode/getinboundsms.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/shortcode/viewsms..{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
             'ResponseType' => $this->val($options, 'responseType'),
             ));
-
-        //process optional query parameters
-        APIHelper::appendUrlWithQueryParameters($_queryBuilder, array (
-            'DateReceived' => $this->val($options, 'dateReceived'),
-        ));
 
         //validate and preprocess url
         $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
@@ -244,10 +157,7 @@ class ShortCodeController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'page'         => $this->val($options, 'page'),
-            'pagesize'     => $this->val($options, 'pagesize', 10),
-            'from'         => $this->val($options, 'from'),
-            'Shortcode'    => $this->val($options, 'shortcode')
+            'MessageSid'   => $this->val($options, 'messageSid')
         );
 
         //set HTTP basic auth parameters
@@ -277,21 +187,20 @@ class ShortCodeController extends BaseController
     }
 
     /**
-     * List ShortCode Messages
+     * Retrieve a list of Short Code message objects.
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['responseType'] Response type format xml or json
-     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
-     *                                         indexed
-     * @param integer $options['pagesize']     (optional) Number of individual resources listed in the response per
-     *                                         page
-     * @param string  $options['from']         (optional) Messages sent from this number
-     * @param string  $options['to']           (optional) Messages sent to this number
-     * @param string  $options['datesent']     (optional) Only list SMS messages sent in the specified date range
+     * @param string  $options['shortcode']    (optional) Only list messages sent from this Short Code
+     * @param string  $options['to']           (optional) Only list messages sent to this number
+     * @param string  $options['dateSent']     (optional) Only list messages sent with the specified date
+     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
+     *                                         collection. Page indexing starts at 1.
+     * @param integer $options['pageSize']     (optional) The count of objects to return per page.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createListShortCode(
+    public function listShortcode(
         $options
     ) {
         //check that all required arguments are provided
@@ -321,11 +230,11 @@ class ShortCodeController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'page'         => $this->val($options, 'page'),
-            'pagesize'     => $this->val($options, 'pagesize', 10),
-            'from'         => $this->val($options, 'from'),
-            'to'           => $this->val($options, 'to'),
-            'datesent'     => $this->val($options, 'datesent')
+            'Shortcode'    => $this->val($options, 'shortcode'),
+            'To'           => $this->val($options, 'to'),
+            'DateSent'     => $this->val($options, 'dateSent'),
+            'Page'         => $this->val($options, 'page', 1),
+            'PageSize'     => $this->val($options, 'pageSize', 10)
         );
 
         //set HTTP basic auth parameters
@@ -355,19 +264,22 @@ class ShortCodeController extends BaseController
     }
 
     /**
-     * List Shortcode Templates by Type
+     * Retrive a list of inbound Sms Short Code messages associated with your message360 account.
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['responseType'] Response type format xml or json
-     * @param string  $options['type']         (optional) The type (category) of template Valid values: marketing,
-     *                                         authorization
-     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
-     *                                         collection. Page indexing starts at 1.
-     * @param integer $options['pagesize']     (optional) The count of objects to return per page.
+     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
+     *                                         indexed
+     * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
+     *                                         page
+     * @param string  $options['from']         (optional) Only list SMS messages sent from this number
+     * @param string  $options['shortcode']    (optional) Only list SMS messages sent to Shortcode
+     * @param string  $options['dateReceived'] (optional) Only list SMS messages sent in the specified date MAKE
+     *                                         REQUEST
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createListTemplates(
+    public function listInboundShortcode(
         $options
     ) {
         //check that all required arguments are provided
@@ -380,7 +292,7 @@ class ShortCodeController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/template/lists.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/shortcode/getinboundsms.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -397,77 +309,11 @@ class ShortCodeController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'type'         => $this->val($options, 'type', 'authorization'),
-            'page'         => $this->val($options, 'page'),
-            'pagesize'     => $this->val($options, 'pagesize', 10)
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
-     * View a ShortCode Message
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string $options['messagesid']   Message sid
-     * @param string $options['responseType'] Response type format xml or json
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function createViewShortCode(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['messagesid'], $options['responseType'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/shortcode/viewsms.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'messagesid'   => $this->val($options, 'messagesid')
+            'Page'         => $this->val($options, 'page', 1),
+            'PageSize'     => $this->val($options, 'pageSize', 10),
+            'From'         => $this->val($options, 'from'),
+            'Shortcode'    => $this->val($options, 'shortcode'),
+            'DateReceived' => $this->val($options, 'dateReceived')
         );
 
         //set HTTP basic auth parameters

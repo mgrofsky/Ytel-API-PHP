@@ -18,12 +18,8 @@ class Environments
     const PRODUCTION = "production";
 
     /**
-     * Pre-Production environment used to test your code in our beta systems.  There is a good chance nothing will work here.  Don't use it unless instructed by our staff.
+     * Pre-Production environment used to test your code in our beta systems.  There is a good chance
+     * nothing will work here.  Don't use it unless instructed by our staff.
      */
     const PREPRODUCTION = "preproduction";
-
-    /**
-     * Internal development testing.  This configuration of the API is not available to the public.
-     */
-    const DEVELOPMENT = "development";
 }
