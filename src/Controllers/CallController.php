@@ -781,7 +781,7 @@ class CallController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/calls/makeringlessvoicemailcall.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/calls/makervm.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (

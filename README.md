@@ -489,7 +489,7 @@ $collect['pageSize'] = $pageSize;
 $keyword = 'Keyword';
 $collect['keyword'] = $keyword;
 
-$shortcode = 125;
+$shortcode = 112;
 $collect['shortcode'] = $shortcode;
 
 
@@ -869,7 +869,7 @@ $collect['recordCallbackMethod'] = $recordCallbackMethod;
 $schdeuleTime = 'SchdeuleTime';
 $collect['schdeuleTime'] = $schdeuleTime;
 
-$timeout = 125;
+$timeout = 112;
 $collect['timeout'] = $timeout;
 
 
@@ -993,10 +993,10 @@ $collect['page'] = $page;
 $pagesize = 10;
 $collect['pagesize'] = $pagesize;
 
-$muted = true;
+$muted = false;
 $collect['muted'] = $muted;
 
-$deaf = true;
+$deaf = false;
 $collect['deaf'] = $deaf;
 
 
@@ -2490,16 +2490,16 @@ $collect['heartBeatUrl'] = $heartBeatUrl;
 $heartBeatMethod = string::GET;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 175;
+$timeout = 40;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
 $collect['playDtmf'] = $playDtmf;
 
-$hideCallerId = true;
+$hideCallerId = false;
 $collect['hideCallerId'] = $hideCallerId;
 
-$record = true;
+$record = false;
 $collect['record'] = $record;
 
 $recordCallBackUrl = 'RecordCallBackUrl';
@@ -2508,7 +2508,7 @@ $collect['recordCallBackUrl'] = $recordCallBackUrl;
 $recordCallBackMethod = string::GET;
 $collect['recordCallBackMethod'] = $recordCallBackMethod;
 
-$transcribe = true;
+$transcribe = false;
 $collect['transcribe'] = $transcribe;
 
 $transcribeCallBackUrl = 'TranscribeCallBackUrl';
@@ -2523,7 +2523,7 @@ $collect['ifMachineUrl'] = $ifMachineUrl;
 $ifMachineMethod = string::GET;
 $collect['ifMachineMethod'] = $ifMachineMethod;
 
-$feedback = true;
+$feedback = false;
 $collect['feedback'] = $feedback;
 
 $surveyId = 'SurveyId';
@@ -2573,13 +2573,13 @@ $collect['sayText'] = $sayText;
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
-$length = 175;
+$length = 40;
 $collect['length'] = $length;
 
 $direction = string::IN;
 $collect['direction'] = $direction;
 
-$mix = true;
+$mix = false;
 $collect['mix'] = $mix;
 
 
@@ -2617,7 +2617,7 @@ function recordCall($options)
 $callSid = 'CallSid';
 $collect['callSid'] = $callSid;
 
-$record = true;
+$record = false;
 $collect['record'] = $record;
 
 $responseType = 'json';
@@ -2626,7 +2626,7 @@ $collect['responseType'] = $responseType;
 $direction = string::IN;
 $collect['direction'] = $direction;
 
-$timeLimit = 175;
+$timeLimit = 40;
 $collect['timeLimit'] = $timeLimit;
 
 $callBackUrl = 'CallBackUrl';
@@ -2677,19 +2677,19 @@ $collect['responseType'] = $responseType;
 $audioDirection = string::IN;
 $collect['audioDirection'] = $audioDirection;
 
-$pitchSemiTones = 175.218268106793;
+$pitchSemiTones = 40.0675652525702;
 $collect['pitchSemiTones'] = $pitchSemiTones;
 
-$pitchOctaves = 175.218268106793;
+$pitchOctaves = 40.0675652525702;
 $collect['pitchOctaves'] = $pitchOctaves;
 
-$pitch = 175.218268106793;
+$pitch = 40.0675652525702;
 $collect['pitch'] = $pitch;
 
-$rate = 175.218268106793;
+$rate = 40.0675652525702;
 $collect['rate'] = $rate;
 
-$tempo = 175.218268106793;
+$tempo = 40.0675652525702;
 $collect['tempo'] = $tempo;
 
 
@@ -2863,7 +2863,7 @@ $collect['heartBeatUrl'] = $heartBeatUrl;
 $heartBeatMethod = string::GET;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 175;
+$timeout = 40;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
@@ -2872,7 +2872,7 @@ $collect['playDtmf'] = $playDtmf;
 $hideCallerId = 'HideCallerId';
 $collect['hideCallerId'] = $hideCallerId;
 
-$record = true;
+$record = false;
 $collect['record'] = $record;
 
 $recordCallBackUrl = 'RecordCallBackUrl';
@@ -2881,7 +2881,7 @@ $collect['recordCallBackUrl'] = $recordCallBackUrl;
 $recordCallBackMethod = string::GET;
 $collect['recordCallBackMethod'] = $recordCallBackMethod;
 
-$transcribe = true;
+$transcribe = false;
 $collect['transcribe'] = $transcribe;
 
 $transcribeCallBackUrl = 'TranscribeCallBackUrl';
@@ -3544,10 +3544,10 @@ function sendDedicatedShortcode($options)
 #### Example Usage
 
 ```php
-$shortcode = 11;
+$shortcode = 253;
 $collect['shortcode'] = $shortcode;
 
-$to = 11.7135499984555;
+$to = 253.344392026004;
 $collect['to'] = $to;
 
 $body = 'body';
@@ -3635,7 +3635,7 @@ $collect['shortcode'] = $shortcode;
 $to = 'To';
 $collect['to'] = $to;
 
-$dateSent = date("D M d, Y G:i");
+$dateSent = 'DateSent';
 $collect['dateSent'] = $dateSent;
 
 $page = 1;
