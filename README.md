@@ -489,7 +489,7 @@ $collect['pageSize'] = $pageSize;
 $keyword = 'Keyword';
 $collect['keyword'] = $keyword;
 
-$shortcode = 112;
+$shortcode = 94;
 $collect['shortcode'] = $shortcode;
 
 
@@ -869,7 +869,7 @@ $collect['recordCallbackMethod'] = $recordCallbackMethod;
 $schdeuleTime = 'SchdeuleTime';
 $collect['schdeuleTime'] = $schdeuleTime;
 
-$timeout = 112;
+$timeout = 94;
 $collect['timeout'] = $timeout;
 
 
@@ -2490,16 +2490,16 @@ $collect['heartBeatUrl'] = $heartBeatUrl;
 $heartBeatMethod = string::GET;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 40;
+$timeout = 186;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
 $collect['playDtmf'] = $playDtmf;
 
-$hideCallerId = false;
+$hideCallerId = true;
 $collect['hideCallerId'] = $hideCallerId;
 
-$record = false;
+$record = true;
 $collect['record'] = $record;
 
 $recordCallBackUrl = 'RecordCallBackUrl';
@@ -2508,7 +2508,7 @@ $collect['recordCallBackUrl'] = $recordCallBackUrl;
 $recordCallBackMethod = string::GET;
 $collect['recordCallBackMethod'] = $recordCallBackMethod;
 
-$transcribe = false;
+$transcribe = true;
 $collect['transcribe'] = $transcribe;
 
 $transcribeCallBackUrl = 'TranscribeCallBackUrl';
@@ -2523,7 +2523,7 @@ $collect['ifMachineUrl'] = $ifMachineUrl;
 $ifMachineMethod = string::GET;
 $collect['ifMachineMethod'] = $ifMachineMethod;
 
-$feedback = false;
+$feedback = true;
 $collect['feedback'] = $feedback;
 
 $surveyId = 'SurveyId';
@@ -2573,13 +2573,13 @@ $collect['sayText'] = $sayText;
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
-$length = 40;
+$length = 144;
 $collect['length'] = $length;
 
 $direction = string::IN;
 $collect['direction'] = $direction;
 
-$mix = false;
+$mix = true;
 $collect['mix'] = $mix;
 
 
@@ -2617,7 +2617,7 @@ function recordCall($options)
 $callSid = 'CallSid';
 $collect['callSid'] = $callSid;
 
-$record = false;
+$record = true;
 $collect['record'] = $record;
 
 $responseType = 'json';
@@ -2626,7 +2626,7 @@ $collect['responseType'] = $responseType;
 $direction = string::IN;
 $collect['direction'] = $direction;
 
-$timeLimit = 40;
+$timeLimit = 144;
 $collect['timeLimit'] = $timeLimit;
 
 $callBackUrl = 'CallBackUrl';
@@ -2677,19 +2677,19 @@ $collect['responseType'] = $responseType;
 $audioDirection = string::IN;
 $collect['audioDirection'] = $audioDirection;
 
-$pitchSemiTones = 40.0675652525702;
+$pitchSemiTones = 144.736672679305;
 $collect['pitchSemiTones'] = $pitchSemiTones;
 
-$pitchOctaves = 40.0675652525702;
+$pitchOctaves = 144.736672679305;
 $collect['pitchOctaves'] = $pitchOctaves;
 
-$pitch = 40.0675652525702;
+$pitch = 144.736672679305;
 $collect['pitch'] = $pitch;
 
-$rate = 40.0675652525702;
+$rate = 144.736672679305;
 $collect['rate'] = $rate;
 
-$tempo = 40.0675652525702;
+$tempo = 144.736672679305;
 $collect['tempo'] = $tempo;
 
 
@@ -2863,7 +2863,7 @@ $collect['heartBeatUrl'] = $heartBeatUrl;
 $heartBeatMethod = string::GET;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 40;
+$timeout = 144;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
@@ -2872,7 +2872,7 @@ $collect['playDtmf'] = $playDtmf;
 $hideCallerId = 'HideCallerId';
 $collect['hideCallerId'] = $hideCallerId;
 
-$record = false;
+$record = true;
 $collect['record'] = $record;
 
 $recordCallBackUrl = 'RecordCallBackUrl';
@@ -2881,7 +2881,7 @@ $collect['recordCallBackUrl'] = $recordCallBackUrl;
 $recordCallBackMethod = string::GET;
 $collect['recordCallBackMethod'] = $recordCallBackMethod;
 
-$transcribe = false;
+$transcribe = true;
 $collect['transcribe'] = $transcribe;
 
 $transcribeCallBackUrl = 'TranscribeCallBackUrl';
@@ -3437,6 +3437,8 @@ function createSubAccount($options)
 | firstName |  ``` Required ```  | Sub account user first name |
 | lastName |  ``` Required ```  | sub account user last name |
 | email |  ``` Required ```  | Sub account email address |
+| friendlyName |  ``` Required ```  | Descriptive name of the sub account |
+| password |  ``` Required ```  | The password of the sub account.  Please make sure to make as password that is at least 8 characters long, contain a symbol, uppercase and a number. |
 | responseType |  ``` Required ```  ``` DefaultValue ```  | Response type format xml or json |
 
 
@@ -3452,6 +3454,12 @@ $collect['lastName'] = $lastName;
 
 $email = 'Email';
 $collect['email'] = $email;
+
+$friendlyName = 'FriendlyName';
+$collect['friendlyName'] = $friendlyName;
+
+$password = 'Password';
+$collect['password'] = $password;
 
 $responseType = 'json';
 $collect['responseType'] = $responseType;
@@ -3544,10 +3552,10 @@ function sendDedicatedShortcode($options)
 #### Example Usage
 
 ```php
-$shortcode = 253;
+$shortcode = 144;
 $collect['shortcode'] = $shortcode;
 
-$to = 253.344392026004;
+$to = 144.736672679305;
 $collect['to'] = $to;
 
 $body = 'body';
