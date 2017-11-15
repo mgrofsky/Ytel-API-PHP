@@ -489,7 +489,7 @@ $collect['pageSize'] = $pageSize;
 $keyword = 'Keyword';
 $collect['keyword'] = $keyword;
 
-$shortcode = 125;
+$shortcode = 94;
 $collect['shortcode'] = $shortcode;
 
 
@@ -869,7 +869,7 @@ $collect['recordCallbackMethod'] = $recordCallbackMethod;
 $schdeuleTime = 'SchdeuleTime';
 $collect['schdeuleTime'] = $schdeuleTime;
 
-$timeout = 125;
+$timeout = 94;
 $collect['timeout'] = $timeout;
 
 
@@ -993,10 +993,10 @@ $collect['page'] = $page;
 $pagesize = 10;
 $collect['pagesize'] = $pagesize;
 
-$muted = true;
+$muted = false;
 $collect['muted'] = $muted;
 
-$deaf = true;
+$deaf = false;
 $collect['deaf'] = $deaf;
 
 
@@ -2490,7 +2490,7 @@ $collect['heartBeatUrl'] = $heartBeatUrl;
 $heartBeatMethod = string::GET;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 175;
+$timeout = 186;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
@@ -2573,7 +2573,7 @@ $collect['sayText'] = $sayText;
 $responseType = 'json';
 $collect['responseType'] = $responseType;
 
-$length = 175;
+$length = 144;
 $collect['length'] = $length;
 
 $direction = string::IN;
@@ -2626,7 +2626,7 @@ $collect['responseType'] = $responseType;
 $direction = string::IN;
 $collect['direction'] = $direction;
 
-$timeLimit = 175;
+$timeLimit = 144;
 $collect['timeLimit'] = $timeLimit;
 
 $callBackUrl = 'CallBackUrl';
@@ -2677,19 +2677,19 @@ $collect['responseType'] = $responseType;
 $audioDirection = string::IN;
 $collect['audioDirection'] = $audioDirection;
 
-$pitchSemiTones = 175.218268106793;
+$pitchSemiTones = 144.736672679305;
 $collect['pitchSemiTones'] = $pitchSemiTones;
 
-$pitchOctaves = 175.218268106793;
+$pitchOctaves = 144.736672679305;
 $collect['pitchOctaves'] = $pitchOctaves;
 
-$pitch = 175.218268106793;
+$pitch = 144.736672679305;
 $collect['pitch'] = $pitch;
 
-$rate = 175.218268106793;
+$rate = 144.736672679305;
 $collect['rate'] = $rate;
 
-$tempo = 175.218268106793;
+$tempo = 144.736672679305;
 $collect['tempo'] = $tempo;
 
 
@@ -2863,7 +2863,7 @@ $collect['heartBeatUrl'] = $heartBeatUrl;
 $heartBeatMethod = string::GET;
 $collect['heartBeatMethod'] = $heartBeatMethod;
 
-$timeout = 175;
+$timeout = 144;
 $collect['timeout'] = $timeout;
 
 $playDtmf = 'PlayDtmf';
@@ -3437,6 +3437,8 @@ function createSubAccount($options)
 | firstName |  ``` Required ```  | Sub account user first name |
 | lastName |  ``` Required ```  | sub account user last name |
 | email |  ``` Required ```  | Sub account email address |
+| friendlyName |  ``` Required ```  | Descriptive name of the sub account |
+| password |  ``` Required ```  | The password of the sub account.  Please make sure to make as password that is at least 8 characters long, contain a symbol, uppercase and a number. |
 | responseType |  ``` Required ```  ``` DefaultValue ```  | Response type format xml or json |
 
 
@@ -3452,6 +3454,12 @@ $collect['lastName'] = $lastName;
 
 $email = 'Email';
 $collect['email'] = $email;
+
+$friendlyName = 'FriendlyName';
+$collect['friendlyName'] = $friendlyName;
+
+$password = 'Password';
+$collect['password'] = $password;
 
 $responseType = 'json';
 $collect['responseType'] = $responseType;
@@ -3544,10 +3552,10 @@ function sendDedicatedShortcode($options)
 #### Example Usage
 
 ```php
-$shortcode = 11;
+$shortcode = 144;
 $collect['shortcode'] = $shortcode;
 
-$to = 11.7135499984555;
+$to = 144.736672679305;
 $collect['to'] = $to;
 
 $body = 'body';
@@ -3635,7 +3643,7 @@ $collect['shortcode'] = $shortcode;
 $to = 'To';
 $collect['to'] = $to;
 
-$dateSent = date("D M d, Y G:i");
+$dateSent = 'DateSent';
 $collect['dateSent'] = $dateSent;
 
 $page = 1;

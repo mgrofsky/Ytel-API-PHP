@@ -189,6 +189,10 @@ class SubAccountController extends BaseController
      * @param string $options['firstName']    Sub account user first name
      * @param string $options['lastName']     sub account user last name
      * @param string $options['email']        Sub account email address
+     * @param string $options['friendlyName'] Descriptive name of the sub account
+     * @param string $options['password']     The password of the sub account.  Please make sure to make as password
+     *                                        that is at least 8 characters long, contain a symbol, uppercase and a
+     *                                        number.
      * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -197,7 +201,7 @@ class SubAccountController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['firstName'], $options['lastName'], $options['email'], $options['responseType'])) {
+        if (!isset($options['firstName'], $options['lastName'], $options['email'], $options['friendlyName'], $options['password'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -225,7 +229,9 @@ class SubAccountController extends BaseController
         $_parameters = array (
             'FirstName'    => $this->val($options, 'firstName'),
             'LastName'     => $this->val($options, 'lastName'),
-            'Email'        => $this->val($options, 'email')
+            'Email'        => $this->val($options, 'email'),
+            'FriendlyName' => $this->val($options, 'friendlyName'),
+            'Password'     => $this->val($options, 'password')
         );
 
         //set HTTP basic auth parameters
