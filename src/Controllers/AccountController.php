@@ -43,10 +43,11 @@ class AccountController extends BaseController
     }
 
     /**
-     * Display Account Description
+     * Retrieve information regarding your message360 account by a specific date. The response object will
+     * contain data such as account status, balance, and account usage totals.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['date']         TODO: type description here
+     * @param string $options['date']         Filter account information based on date.
      * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails

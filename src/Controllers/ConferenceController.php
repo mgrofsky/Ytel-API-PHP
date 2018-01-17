@@ -117,11 +117,11 @@ class ConferenceController extends BaseController
     }
 
     /**
-     * View Participant
+     * Retrieve information about a participant by its ParticipantSid.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['conferenceSid']  unique conference sid
-     * @param string $options['participantSid'] TODO: type description here
+     * @param string $options['conferenceSid']  The unique identifier for a conference object.
+     * @param string $options['participantSid'] The unique identifier for a participant object.
      * @param string $options['responseType']   Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -139,7 +139,7 @@ class ConferenceController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/conferences/viewparticipant.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/conferences/viewParticipant.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -187,22 +187,19 @@ class ConferenceController extends BaseController
     }
 
     /**
-     * Add Participant in conference
+     * Retrieve information about a conference by its ConferenceSid.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['conferencesid']     Unique Conference Sid
-     * @param string $options['participantnumber'] Particiant Number
-     * @param string $options['responseType']      Response type format xml or json
-     * @param bool   $options['muted']             (optional) add muted
-     * @param bool   $options['deaf']              (optional) add without volume
+     * @param string $options['conferenceSid'] The unique identifier of each conference resource
+     * @param string $options['responseType']  Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function addParticipant(
+    public function viewConference(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['conferencesid'], $options['participantnumber'], $options['responseType'])) {
+        if (!isset($options['conferenceSid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -211,11 +208,11 @@ class ConferenceController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/conferences/addParticipant.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/conferences/viewconference.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'      => $this->val($options, 'responseType'),
+            'ResponseType'  => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -223,15 +220,12 @@ class ConferenceController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'      => 'message360-api'
+            'user-agent'    => 'message360-api'
         );
 
         //prepare parameters
         $_parameters = array (
-            'conferencesid'     => $this->val($options, 'conferencesid'),
-            'participantnumber' => $this->val($options, 'participantnumber'),
-            'muted'             => $this->val($options, 'muted'),
-            'deaf'              => $this->val($options, 'deaf')
+            'ConferenceSid' => $this->val($options, 'conferenceSid')
         );
 
         //set HTTP basic auth parameters
@@ -261,19 +255,23 @@ class ConferenceController extends BaseController
     }
 
     /**
-     * View Conference
+     * Add Participant in conference
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['conferencesid'] The unique identifier of each conference resource
-     * @param string $options['responseType']  Response type format xml or json
+     * @param string $options['conferenceSid']     The unique identifier for a conference object.
+     * @param string $options['participantNumber'] The phone number of the participant to be added.
+     * @param string $options['responseType']      Response type format xml or json
+     * @param bool   $options['muted']             (optional) Specifies if participant should be muted.
+     * @param bool   $options['deaf']              (optional) Specifies if the participant should hear audio in the
+     *                                             conference.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function viewConference(
+    public function addParticipant(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['conferencesid'], $options['responseType'])) {
+        if (!isset($options['conferenceSid'], $options['participantNumber'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -282,11 +280,11 @@ class ConferenceController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/conferences/viewconference.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/conferences/addParticipant.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'  => $this->val($options, 'responseType'),
+            'ResponseType'      => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -294,12 +292,15 @@ class ConferenceController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'      => 'message360-api'
         );
 
         //prepare parameters
         $_parameters = array (
-            'conferencesid' => $this->val($options, 'conferencesid')
+            'ConferenceSid'     => $this->val($options, 'conferenceSid'),
+            'ParticipantNumber' => $this->val($options, 'participantNumber'),
+            'Muted'             => $this->val($options, 'muted'),
+            'Deaf'              => $this->val($options, 'deaf')
         );
 
         //set HTTP basic auth parameters
@@ -333,26 +334,29 @@ class ConferenceController extends BaseController
      * response generated when doing so.
      *
      * @param  array  $options    Array with all options for search
-     * @param string  $options['from']                 This number to display on Caller ID as calling
-     * @param string  $options['to']                   To number
-     * @param string  $options['url']                  URL requested once the call connects
-     * @param string  $options['method']               Specifies the HTTP method used to request the required URL once
-     *                                                 call connects.
-     * @param string  $options['recordCallbackUrl']    Recording parameters will be sent here upon completion.
+     * @param string  $options['from']                 A valid 10-digit number (E.164 format) that will be initiating
+     *                                                 the conference call.
+     * @param string  $options['to']                   A valid 10-digit number (E.164 format) that is to receive the
+     *                                                 conference call.
+     * @param string  $options['url']                  URL requested once the conference connects
      * @param string  $options['responseType']         Response type format xml or json
+     * @param string  $options['method']               (optional) Specifies the HTTP method used to request the
+     *                                                 required URL once call connects.
      * @param string  $options['statusCallBackUrl']    (optional) URL that can be requested to receive notification
      *                                                 when call has ended. A set of default parameters will be sent
      *                                                 here once the conference is finished.
      * @param string  $options['statusCallBackMethod'] (optional) Specifies the HTTP methodlinkclass used to request
      *                                                 StatusCallbackUrl.
-     * @param string  $options['fallBackUrl']          (optional) URL requested if the initial Url parameter fails or
+     * @param string  $options['fallbackUrl']          (optional) URL requested if the initial Url parameter fails or
      *                                                 encounters an error
-     * @param string  $options['fallBackMethod']       (optional) Specifies the HTTP method used to request the
+     * @param string  $options['fallbackMethod']       (optional) Specifies the HTTP method used to request the
      *                                                 required FallbackUrl once call connects.
      * @param bool    $options['record']               (optional) Specifies if the conference should be recorded.
-     * @param string  $options['recordCallbackMethod'] (optional) Specifies the HTTP method used to request the
+     * @param string  $options['recordCallBackUrl']    (optional) Recording parameters will be sent here upon
+     *                                                 completion.
+     * @param string  $options['recordCallBackMethod'] (optional) Specifies the HTTP method used to request the
      *                                                 required URL once conference connects.
-     * @param string  $options['schdeuleTime']         (optional) Schedule conference in future. Schedule time must be
+     * @param string  $options['scheduleTime']         (optional) Schedule conference in future. Schedule time must be
      *                                                 greater than current time
      * @param integer $options['timeout']              (optional) The number of seconds the call stays on the line
      *                                                 while waiting for an answer. The max time limit is 999 and the
@@ -364,7 +368,7 @@ class ConferenceController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['from'], $options['to'], $options['url'], $options['method'], $options['recordCallbackUrl'], $options['responseType'])) {
+        if (!isset($options['from'], $options['to'], $options['url'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -397,15 +401,15 @@ class ConferenceController extends BaseController
         $_parameters = array (
             'From'                 => $this->val($options, 'from'),
             'To'                   => $this->val($options, 'to'),
-            'Method'               => $this->val($options, 'method'),
-            'RecordCallbackUrl'    => $this->val($options, 'recordCallbackUrl'),
+            'Method'             => APIHelper::prepareFormFields($this->val($options, 'method')),
             'StatusCallBackUrl'    => $this->val($options, 'statusCallBackUrl'),
-            'StatusCallBackMethod' => $this->val($options, 'statusCallBackMethod'),
-            'FallBackUrl'          => $this->val($options, 'fallBackUrl'),
-            'FallBackMethod'       => $this->val($options, 'fallBackMethod'),
+            'StatusCallBackMethod' => APIHelper::prepareFormFields($this->val($options, 'statusCallBackMethod')),
+            'FallbackUrl'          => $this->val($options, 'fallbackUrl'),
+            'FallbackMethod'     => APIHelper::prepareFormFields($this->val($options, 'fallbackMethod')),
             'Record'               => $this->val($options, 'record'),
-            'RecordCallbackMethod' => $this->val($options, 'recordCallbackMethod'),
-            'SchdeuleTime'         => $this->val($options, 'schdeuleTime'),
+            'RecordCallBackUrl'    => $this->val($options, 'recordCallBackUrl'),
+            'RecordCallBackMethod' => APIHelper::prepareFormFields($this->val($options, 'recordCallBackMethod')),
+            'ScheduleTime'         => $this->val($options, 'scheduleTime'),
             'Timeout'              => $this->val($options, 'timeout')
         );
 
@@ -458,7 +462,7 @@ class ConferenceController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/conferences/hangupparticipant.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/conferences/hangupParticipant.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -534,7 +538,7 @@ class ConferenceController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/conferences/playaudio.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/conferences/playAudio.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -553,7 +557,7 @@ class ConferenceController extends BaseController
         $_parameters = array (
             'ConferenceSid'  => $this->val($options, 'conferenceSid'),
             'ParticipantSid' => $this->val($options, 'participantSid'),
-            'AudioUrl'       => $this->val($options, 'audioUrl')
+            'AudioUrl'     => APIHelper::prepareFormFields($this->val($options, 'audioUrl'))
         );
 
         //set HTTP basic auth parameters
@@ -583,15 +587,17 @@ class ConferenceController extends BaseController
     }
 
     /**
-     * List Participant
+     * Retrieve a list of participants for an in-progress conference.
      *
      * @param  array  $options    Array with all options for search
-     * @param string  $options['conferenceSid'] unique conference sid
+     * @param string  $options['conferenceSid'] The unique identifier for a conference.
      * @param string  $options['responseType']  Response format, xml or json
-     * @param integer $options['page']          (optional) page number
-     * @param integer $options['pagesize']      (optional) Amount of records to return per page
-     * @param bool    $options['muted']         (optional) Participants that are muted
-     * @param bool    $options['deaf']          (optional) Participants cant hear
+     * @param integer $options['page']          (optional) The page count to retrieve from the total results in the
+     *                                          collection. Page indexing starts at 1.
+     * @param integer $options['pagesize']      (optional) The count of objects to return per page.
+     * @param bool    $options['muted']         (optional) Specifies if participant should be muted.
+     * @param bool    $options['deaf']          (optional) Specifies if the participant should hear audio in the
+     *                                          conference.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -608,7 +614,7 @@ class ConferenceController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/conferences/listparticipant.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/conferences/listParticipant.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -659,13 +665,13 @@ class ConferenceController extends BaseController
     }
 
     /**
-     * List Conference
+     * Retrieve a list of conference objects.
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['responseType'] Response type format xml or json
-     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
-     *                                         indexed
-     * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
+     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
+     *                                         collection. Page indexing starts at 1.
+     * @param integer $options['pagesize']     (optional) Number of individual resources listed in the response per
      *                                         page
      * @param string  $options['friendlyName'] (optional) Only return conferences with the specified FriendlyName
      * @param string  $options['dateCreated']  (optional) Conference created date
@@ -702,8 +708,8 @@ class ConferenceController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'Page'         => $this->val($options, 'page', 1),
-            'PageSize'     => $this->val($options, 'pageSize', 10),
+            'page'         => $this->val($options, 'page', 1),
+            'pagesize'     => $this->val($options, 'pagesize', 10),
             'FriendlyName' => $this->val($options, 'friendlyName'),
             'DateCreated'  => $this->val($options, 'dateCreated')
         );

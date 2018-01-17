@@ -83,7 +83,7 @@ class SubAccountController extends BaseController
         //prepare parameters
         $_parameters = array (
             'SubAccountSID' => $this->val($options, 'subAccountSID'),
-            'MergeNumber'   => $this->val($options, 'mergeNumber')
+            'MergeNumber' => APIHelper::prepareFormFields($this->val($options, 'mergeNumber'))
         );
 
         //set HTTP basic auth parameters
@@ -153,7 +153,7 @@ class SubAccountController extends BaseController
         //prepare parameters
         $_parameters = array (
             'SubAccountSID' => $this->val($options, 'subAccountSID'),
-            'Activate'      => $this->val($options, 'activate')
+            'Activate'    => APIHelper::prepareFormFields($this->val($options, 'activate'))
         );
 
         //set HTTP basic auth parameters

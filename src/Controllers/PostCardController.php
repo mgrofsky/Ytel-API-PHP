@@ -22,16 +22,16 @@ use Unirest\Request;
 /**
  * @todo Add a general description for this controller.
  */
-class SMSController extends BaseController
+class PostCardController extends BaseController
 {
     /**
-     * @var SMSController The reference to *Singleton* instance of this class
+     * @var PostCardController The reference to *Singleton* instance of this class
      */
     private static $instance;
 
     /**
      * Returns the *Singleton* instance of this class.
-     * @return SMSController The *Singleton* instance.
+     * @return PostCardController The *Singleton* instance.
      */
     public static function getInstance()
     {
@@ -43,34 +43,19 @@ class SMSController extends BaseController
     }
 
     /**
-     * Send an SMS from a message360 number
+     * Retrieve a postcard object by its PostcardId.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['from']                  The 10-digit SMS-enabled message360 number (E.164 format) in
-     *                                                 which the message is sent.
-     * @param string $options['to']                    The 10-digit phone number (E.164 format) that will receive the
-     *                                                 message.
-     * @param string $options['body']                  The body message that is to be sent in the text.
-     * @param string $options['responseType']          Response type format xml or json
-     * @param string $options['method']                (optional) Specifies the HTTP method used to request the
-     *                                                 required URL once SMS sent.
-     * @param string $options['messageStatusCallback'] (optional) URL that can be requested to receive notification
-     *                                                 when SMS has Sent. A set of default parameters will be sent here
-     *                                                 once the SMS is finished.
-     * @param bool   $options['smartsms']              (optional) Check's 'to' number can receive sms or not using
-     *                                                 Carrier API, if wireless = true then text sms is sent, else
-     *                                                 wireless = false then call is recieved to end user with audible
-     *                                                 message.
-     * @param bool   $options['deliveryStatus']        (optional) Delivery reports are a method to tell your system if
-     *                                                 the message has arrived on the destination phone.
+     * @param string $options['postcardid']   The unique identifier for a postcard object.
+     * @param string $options['responseType'] Response Type either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function sendSMS(
+    public function viewPostcard(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['from'], $options['to'], $options['body'], $options['responseType'])) {
+        if (!isset($options['postcardid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -79,81 +64,7 @@ class SMSController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/sms/sendsms.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'          => $this->val($options, 'responseType'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'          => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'From'                  => $this->val($options, 'from'),
-            'To'                    => $this->val($options, 'to'),
-            'Body'                  => $this->val($options, 'body'),
-            'Method'              => APIHelper::prepareFormFields($this->val($options, 'method')),
-            'MessageStatusCallback' => $this->val($options, 'messageStatusCallback'),
-            'Smartsms'              => $this->val($options, 'smartsms', false),
-            'DeliveryStatus'        => $this->val($options, 'deliveryStatus', false)
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
-     * Retrieve a single SMS message object by its SmsSid.
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string $options['messageSid']   The unique identifier for a sms message.
-     * @param string $options['responseType'] Response type format xml or json
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function viewSMS(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['messageSid'], $options['responseType'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/sms/viewsms.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/Postcard/viewpostcard.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -170,7 +81,7 @@ class SMSController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'MessageSid'   => $this->val($options, 'messageSid')
+            'postcardid'   => $this->val($options, 'postcardid')
         );
 
         //set HTTP basic auth parameters
@@ -200,23 +111,113 @@ class SMSController extends BaseController
     }
 
     /**
-     * Retrieve a list of Outbound SMS message objects.
+     * Create, print, and mail a postcard to an address. The postcard front must be supplied as a PDF,
+     * image, or an HTML string. The back can be a PDF, image, HTML string, or it can be automatically
+     * generated by supplying a custom message.
      *
      * @param  array  $options    Array with all options for search
-     * @param string  $options['responseType'] Response type format xml or json
-     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
-     *                                         collection. Page indexing starts at 1.
-     * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
-     *                                         page
-     * @param string  $options['from']         (optional) Filter SMS message objects from this valid 10-digit phone
-     *                                         number (E.164 format).
-     * @param string  $options['to']           (optional) Filter SMS message objects to this valid 10-digit phone
-     *                                         number (E.164 format).
-     * @param string  $options['dateSent']     (optional) Only list SMS messages sent in the specified date range
+     * @param string $options['to']           The AddressId or an object structured when creating an address by
+     *                                        addresses/Create.
+     * @param string $options['from']         The AddressId or an object structured when creating an address by
+     *                                        addresses/Create.
+     * @param string $options['attachbyid']   Set an existing postcard by attaching its PostcardId.
+     * @param string $options['front']        A 4.25"x6.25" or 6.25"x11.25" image to use as the front of the postcard.
+     *                                        This can be a URL, local file, or an HTML string. Supported file types
+     *                                        are PDF, PNG, and JPEG.
+     * @param string $options['back']         A 4.25"x6.25" or 6.25"x11.25" image to use as the back of the postcard,
+     *                                        supplied as a URL, local file, or HTML string.  This allows you to
+     *                                        customize your back design, but we will still insert the recipient
+     *                                        address for you.
+     * @param string $options['message']      The message for the back of the postcard with a maximum of 350 characters.
+     * @param string $options['setting']      Code for the dimensions of the media to be printed.
+     * @param string $options['responseType'] Response Type either json or xml
+     * @param string $options['description']  (optional) A description for the postcard.
+     * @param string $options['htmldata']     (optional) A string value that contains HTML markup.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function listSMS(
+    public function createPostcard(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['to'], $options['from'], $options['attachbyid'], $options['front'], $options['back'], $options['message'], $options['setting'], $options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/Postcard/createpostcard.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'to'           => $this->val($options, 'to'),
+            'from'         => $this->val($options, 'from'),
+            'attachbyid'   => $this->val($options, 'attachbyid'),
+            'front'        => $this->val($options, 'front'),
+            'back'         => $this->val($options, 'back'),
+            'message'      => $this->val($options, 'message'),
+            'setting'      => $this->val($options, 'setting'),
+            'description'  => $this->val($options, 'description'),
+            'htmldata'     => $this->val($options, 'htmldata')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Retrieve a list of postcard objects. The postcards objects are sorted by creation date, with the
+     * most recently created postcards appearing first.
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string  $options['responseType'] Response Type either json or xml
+     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
+     *                                         collection. Page indexing starts at 1.
+     * @param integer $options['pagesize']     (optional) The count of objects to return per page.
+     * @param string  $options['postcardid']   (optional) The unique identifier for a postcard object.
+     * @param string  $options['dateCreated']  (optional) The date the postcard was created.
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function listPostcards(
         $options
     ) {
         //check that all required arguments are provided
@@ -229,7 +230,7 @@ class SMSController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/sms/listsms.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/Postcard/listpostcard.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -246,11 +247,10 @@ class SMSController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'Page'         => $this->val($options, 'page', 1),
-            'PageSize'     => $this->val($options, 'pageSize', 10),
-            'From'         => $this->val($options, 'from'),
-            'To'           => $this->val($options, 'to'),
-            'DateSent'     => $this->val($options, 'dateSent')
+            'page'         => $this->val($options, 'page', 1),
+            'pagesize'     => $this->val($options, 'pagesize', 10),
+            'postcardid'   => $this->val($options, 'postcardid'),
+            'dateCreated'  => $this->val($options, 'dateCreated')
         );
 
         //set HTTP basic auth parameters
@@ -280,26 +280,19 @@ class SMSController extends BaseController
     }
 
     /**
-     * Retrieve a list of Inbound SMS message objects.
+     * Remove a postcard object.
      *
      * @param  array  $options    Array with all options for search
-     * @param string  $options['responseType'] Response type format xml or json
-     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
-     *                                         collection. Page indexing starts at 1.
-     * @param integer $options['pageSize']     (optional) The count of objects to return per page.
-     * @param string  $options['from']         (optional) Filter SMS message objects from this valid 10-digit phone
-     *                                         number (E.164 format).
-     * @param string  $options['to']           (optional) Filter SMS message objects to this valid 10-digit phone
-     *                                         number (E.164 format).
-     * @param string  $options['dateSent']     (optional) Filter sms message objects by this date.
+     * @param string $options['postcardid']   The unique identifier of a postcard object.
+     * @param string $options['responseType'] Response Type either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function listInboundSMS(
+    public function deletePostcard(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['responseType'])) {
+        if (!isset($options['postcardid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -308,7 +301,7 @@ class SMSController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/sms/getinboundsms.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/Postcard/deletepostcard.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -325,79 +318,7 @@ class SMSController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'Page'         => $this->val($options, 'page', 1),
-            'PageSize'     => $this->val($options, 'pageSize', 10),
-            'From'         => $this->val($options, 'from'),
-            'To'           => $this->val($options, 'to'),
-            'DateSent'     => $this->val($options, 'dateSent')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
-     * Retrieve a single SMS message object with details by its SmsSid.
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string $options['messageSid']   The unique identifier for a sms message.
-     * @param string $options['responseType'] Response type format xml or json
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function viewDetailSMS(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['messageSid'], $options['responseType'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/sms/viewdetailsms.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'MessageSid'   => $this->val($options, 'messageSid')
+            'postcardid'   => $this->val($options, 'postcardid')
         );
 
         //set HTTP basic auth parameters

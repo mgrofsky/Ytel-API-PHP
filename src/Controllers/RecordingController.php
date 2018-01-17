@@ -43,10 +43,11 @@ class RecordingController extends BaseController
     }
 
     /**
-     * View a specific Recording
+     * Retrieve the recording of a call by its RecordingSid. This resource will return information
+     * regarding the call such as start time, end time, duration, and so forth.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['recordingSid'] Search Recording sid
+     * @param string $options['recordingsid'] The unique identifier for the recording.
      * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -55,7 +56,7 @@ class RecordingController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['recordingSid'], $options['responseType'])) {
+        if (!isset($options['recordingsid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -81,7 +82,7 @@ class RecordingController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'RecordingSid' => $this->val($options, 'recordingSid')
+            'recordingsid' => $this->val($options, 'recordingsid')
         );
 
         //set HTTP basic auth parameters
@@ -111,10 +112,10 @@ class RecordingController extends BaseController
     }
 
     /**
-     * Delete Recording Record
+     * Remove a recording from your message360 account.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['recordingSid'] Unique Recording Sid to be delete
+     * @param string $options['recordingsid'] The unique identifier for a recording.
      * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -123,7 +124,7 @@ class RecordingController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['recordingSid'], $options['responseType'])) {
+        if (!isset($options['recordingsid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -149,7 +150,7 @@ class RecordingController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'RecordingSid' => $this->val($options, 'recordingSid')
+            'recordingsid' => $this->val($options, 'recordingsid')
         );
 
         //set HTTP basic auth parameters
@@ -179,16 +180,15 @@ class RecordingController extends BaseController
     }
 
     /**
-     * List out Recordings
+     * Retrieve a list of recording objects.
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['responseType'] Response type format xml or json
-     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
-     *                                         indexed
-     * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
-     *                                         page
-     * @param string  $options['dateCreated']  (optional) Recording date
-     * @param string  $options['callSid']      (optional) Call ID
+     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
+     *                                         collection. Page indexing starts at 1.
+     * @param integer $options['pagesize']     (optional) The count of objects to return per page.
+     * @param string  $options['datecreated']  (optional) Filter results by creation date
+     * @param string  $options['callsid']      (optional) The unique identifier for a call.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -222,10 +222,10 @@ class RecordingController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'Page'         => $this->val($options, 'page', 1),
-            'PageSize'     => $this->val($options, 'pageSize', 10),
-            'DateCreated'  => $this->val($options, 'dateCreated'),
-            'CallSid'      => $this->val($options, 'callSid')
+            'page'         => $this->val($options, 'page', 1),
+            'pagesize'     => $this->val($options, 'pagesize', 10),
+            'Datecreated'  => $this->val($options, 'datecreated'),
+            'callsid'      => $this->val($options, 'callsid')
         );
 
         //set HTTP basic auth parameters

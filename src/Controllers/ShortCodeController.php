@@ -50,8 +50,10 @@ class ShortCodeController extends BaseController
      * @param double  $options['to']                    The number to send your SMS to
      * @param string  $options['body']                  The body of your message
      * @param string  $options['responseType']          Response type format xml or json
-     * @param string  $options['method']                (optional) Callback status method, POST or GET
-     * @param string  $options['messagestatuscallback'] (optional) Callback url for SMS status
+     * @param string  $options['method']                (optional) Specifies the HTTP method used to request the
+     *                                                  required URL once the Short Code message is sent.GET or POST
+     * @param string  $options['messagestatuscallback'] (optional) URL that can be requested to receive notification
+     *                                                  when Short Code message was sent.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -68,7 +70,7 @@ class ShortCodeController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/shortcode/senddedicatedsms.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/dedicatedshortcode/sendsms.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -88,7 +90,7 @@ class ShortCodeController extends BaseController
             'shortcode'             => $this->val($options, 'shortcode'),
             'to'                    => $this->val($options, 'to'),
             'body'                  => $this->val($options, 'body'),
-            'method'                => $this->val($options, 'method'),
+            'method'              => APIHelper::prepareFormFields($this->val($options, 'method')),
             'messagestatuscallback' => $this->val($options, 'messagestatuscallback')
         );
 
@@ -268,13 +270,13 @@ class ShortCodeController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['responseType'] Response type format xml or json
-     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
-     *                                         indexed
-     * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
+     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
+     *                                         collection. Page indexing starts at 1.
+     * @param integer $options['pagesize']     (optional) Number of individual resources listed in the response per
      *                                         page
      * @param string  $options['from']         (optional) Only list SMS messages sent from this number
      * @param string  $options['shortcode']    (optional) Only list SMS messages sent to Shortcode
-     * @param string  $options['dateReceived'] (optional) Only list SMS messages sent in the specified date MAKE
+     * @param string  $options['datecreated']  (optional) Only list SMS messages sent in the specified date MAKE
      *                                         REQUEST
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -292,7 +294,7 @@ class ShortCodeController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/shortcode/getinboundsms.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/dedicatedshortcode/getinboundsms.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -309,11 +311,235 @@ class ShortCodeController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'Page'         => $this->val($options, 'page', 1),
-            'PageSize'     => $this->val($options, 'pageSize', 10),
+            'page'         => $this->val($options, 'page', 1),
+            'pagesize'     => $this->val($options, 'pagesize', 10),
             'From'         => $this->val($options, 'from'),
             'Shortcode'    => $this->val($options, 'shortcode'),
-            'DateReceived' => $this->val($options, 'dateReceived')
+            'Datecreated'  => $this->val($options, 'datecreated')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Retrieve a single Short Code object by its shortcode assignment.
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string $options['shortcode']    List of valid Dedicated Short Code to your message360 account
+     * @param string $options['responseType'] Response type format xml or json
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function viewDedicatedShortcodeAssignment(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['shortcode'], $options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/dedicatedshortcode/viewshortcode.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'Shortcode'    => $this->val($options, 'shortcode')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Update a dedicated shortcode.
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string $options['shortcode']      List of valid dedicated shortcode to your message360 account.
+     * @param string $options['responseType']   Response type format xml or json
+     * @param string $options['friendlyName']   (optional) User generated name of the dedicated shortcode.
+     * @param string $options['callbackMethod'] (optional) Specifies the HTTP method used to request the required
+     *                                          StatusCallBackUrl once call connects.
+     * @param string $options['callbackUrl']    (optional) URL that can be requested to receive notification when call
+     *                                          has ended. A set of default parameters will be sent here once the call
+     *                                          is finished.
+     * @param string $options['fallbackMethod'] (optional) Specifies the HTTP method used to request the required
+     *                                          FallbackUrl once call connects.
+     * @param string $options['fallbackUrl']    (optional) URL used if any errors occur during execution of InboundXML
+     *                                          or at initial request of the required Url provided with the POST.
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function updateDedicatedShortCodeAssignment(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['shortcode'], $options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/dedicatedshortcode/updateshortcode.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType'   => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'Shortcode'      => $this->val($options, 'shortcode'),
+            'FriendlyName'   => $this->val($options, 'friendlyName'),
+            'CallbackMethod' => $this->val($options, 'callbackMethod'),
+            'CallbackUrl'    => $this->val($options, 'callbackUrl'),
+            'FallbackMethod' => $this->val($options, 'fallbackMethod'),
+            'FallbackUrl'    => $this->val($options, 'fallbackUrl')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Retrieve a list of Short Code assignment associated with your message360 account.
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string $options['responseType'] Response type format xml or json
+     * @param string $options['shortcode']    (optional) Only list Short Code Assignment sent from this Short Code
+     * @param string $options['page']         (optional) The page count to retrieve from the total results in the
+     *                                        collection. Page indexing starts at 1.
+     * @param string $options['pagesize']     (optional) The count of objects to return per page.
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function listShortCodeAssignment(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/dedicatedshortcode/listshortcode.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'Shortcode'    => $this->val($options, 'shortcode'),
+            'page'         => $this->val($options, 'page'),
+            'pagesize'     => $this->val($options, 'pagesize')
         );
 
         //set HTTP basic auth parameters
