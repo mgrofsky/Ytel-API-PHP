@@ -41,14 +41,6 @@ class Message360Client
         return Controllers\ConferenceController::getInstance();
     }
     /**
-     * Singleton access to Transcription controller
-     * @return Controllers\TranscriptionController The *Singleton* instance
-     */
-    public function getTranscription()
-    {
-        return Controllers\TranscriptionController::getInstance();
-    }
-    /**
      * Singleton access to PhoneNumber controller
      * @return Controllers\PhoneNumberController The *Singleton* instance
      */
@@ -57,20 +49,20 @@ class Message360Client
         return Controllers\PhoneNumberController::getInstance();
     }
     /**
-     * Singleton access to Usage controller
-     * @return Controllers\UsageController The *Singleton* instance
-     */
-    public function getUsage()
-    {
-        return Controllers\UsageController::getInstance();
-    }
-    /**
      * Singleton access to WebRTC controller
      * @return Controllers\WebRTCController The *Singleton* instance
      */
     public function getWebRTC()
     {
         return Controllers\WebRTCController::getInstance();
+    }
+    /**
+     * Singleton access to Transcription controller
+     * @return Controllers\TranscriptionController The *Singleton* instance
+     */
+    public function getTranscription()
+    {
+        return Controllers\TranscriptionController::getInstance();
     }
     /**
      * Singleton access to Recording controller
@@ -137,11 +129,43 @@ class Message360Client
         return Controllers\AccountController::getInstance();
     }
     /**
+     * Singleton access to Usage controller
+     * @return Controllers\UsageController The *Singleton* instance
+     */
+    public function getUsage()
+    {
+        return Controllers\UsageController::getInstance();
+    }
+    /**
      * Singleton access to ShortCode controller
      * @return Controllers\ShortCodeController The *Singleton* instance
      */
     public function getShortCode()
     {
         return Controllers\ShortCodeController::getInstance();
+    }
+    /**
+     * Singleton access to PostCard controller
+     * @return Controllers\PostCardController The *Singleton* instance
+     */
+    public function getPostCard()
+    {
+        return Controllers\PostCardController::getInstance();
+    }
+    /**
+     * Singleton access to Letter controller
+     * @return Controllers\LetterController The *Singleton* instance
+     */
+    public function getLetter()
+    {
+        return Controllers\LetterController::getInstance();
+    }
+    /**
+     * Singleton access to AreaMail controller
+     * @return Controllers\AreaMailController The *Singleton* instance
+     */
+    public function getAreaMail()
+    {
+        return Controllers\AreaMailController::getInstance();
     }
 }

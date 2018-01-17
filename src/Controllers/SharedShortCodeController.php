@@ -46,7 +46,7 @@ class SharedShortCodeController extends BaseController
      * View a Shared ShortCode Template
      *
      * @param  array  $options    Array with all options for search
-     * @param uuid|string $options['templateid']   The unique identifier for a template object
+     * @param uuid|string $options['templateId']   The unique identifier for a template object
      * @param string      $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -55,7 +55,7 @@ class SharedShortCodeController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['templateid'], $options['responseType'])) {
+        if (!isset($options['templateId'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -81,7 +81,7 @@ class SharedShortCodeController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'templateid'   => $this->val($options, 'templateid')
+            'TemplateId'   => $this->val($options, 'templateId')
         );
 
         //set HTTP basic auth parameters
@@ -183,12 +183,12 @@ class SharedShortCodeController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['responseType'] Response type format xml or json
-     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
-     *                                         indexed
+     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
+     *                                         collection. Page indexing starts at 1.
      * @param integer $options['pagesize']     (optional) Number of individual resources listed in the response per
      *                                         page
-     * @param string  $options['from']         (optional) Messages sent from this number
-     * @param string  $options['to']           (optional) Messages sent to this number
+     * @param string  $options['shortcode']    (optional) Only list messages sent from this Short Code
+     * @param string  $options['to']           (optional) Only list messages sent to this number
      * @param string  $options['datesent']     (optional) Only list SMS messages sent in the specified date range
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -225,7 +225,7 @@ class SharedShortCodeController extends BaseController
         $_parameters = array (
             'page'         => $this->val($options, 'page', 1),
             'pagesize'     => $this->val($options, 'pagesize', 10),
-            'from'         => $this->val($options, 'from'),
+            'Shortcode'    => $this->val($options, 'shortcode'),
             'to'           => $this->val($options, 'to'),
             'datesent'     => $this->val($options, 'datesent')
         );
@@ -261,13 +261,13 @@ class SharedShortCodeController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['responseType'] Response type format xml or json
-     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
-     *                                         indexed
+     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
+     *                                         collection. Page indexing starts at 1.
      * @param integer $options['pagesize']     (optional) Number of individual resources listed in the response per
      *                                         page
      * @param string  $options['from']         (optional) From Number to Inbound ShortCode
      * @param string  $options['shortcode']    (optional) Only list messages sent to this Short Code
-     * @param string  $options['dateReceived'] (optional) Only list messages sent with the specified date
+     * @param string  $options['datecreated']  (optional) Only list messages sent with the specified date
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -293,7 +293,7 @@ class SharedShortCodeController extends BaseController
 
         //process optional query parameters
         APIHelper::appendUrlWithQueryParameters($_queryBuilder, array (
-            'DateReceived' => $this->val($options, 'dateReceived'),
+            'Datecreated'  => $this->val($options, 'datecreated'),
         ));
 
         //validate and preprocess url
@@ -390,7 +390,7 @@ class SharedShortCodeController extends BaseController
             'to'                    => $this->val($options, 'to'),
             'templateid'            => $this->val($options, 'templateid'),
             'data'                  => $this->val($options, 'data'),
-            'Method'                => $this->val($options, 'method', Models\HttpActionEnum::GET),
+            'Method'              => APIHelper::prepareFormFields($this->val($options, 'method')),
             'MessageStatusCallback' => $this->val($options, 'messageStatusCallback')
         );
 
@@ -569,9 +569,9 @@ class SharedShortCodeController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['responseType'] Response type format xml or json
-     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
-     *                                         indexed
-     * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
+     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
+     *                                         collection. Page indexing starts at 1.
+     * @param integer $options['pagesize']     (optional) Number of individual resources listed in the response per
      *                                         page
      * @param string  $options['keyword']      (optional) Only list keywords of keyword
      * @param integer $options['shortcode']    (optional) Only list keywords of shortcode
@@ -608,8 +608,8 @@ class SharedShortCodeController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'Page'         => $this->val($options, 'page', 1),
-            'PageSize'     => $this->val($options, 'pageSize', 10),
+            'page'         => $this->val($options, 'page', 1),
+            'pagesize'     => $this->val($options, 'pagesize', 10),
             'Keyword'      => $this->val($options, 'keyword'),
             'Shortcode'    => $this->val($options, 'shortcode')
         );
@@ -713,9 +713,9 @@ class SharedShortCodeController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['responseType'] Response type format xml or json
-     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
-     *                                         indexed
-     * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
+     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
+     *                                         collection. Page indexing starts at 1.
+     * @param integer $options['pagesize']     (optional) Number of individual resources listed in the response per
      *                                         page
      * @param string  $options['shortcode']    (optional) Only list keywords of shortcode
      * @return string response from the API call
@@ -756,8 +756,8 @@ class SharedShortCodeController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'Page'         => $this->val($options, 'page', 1),
-            'PageSize'     => $this->val($options, 'pageSize', 10)
+            'page'         => $this->val($options, 'page', 1),
+            'pagesize'     => $this->val($options, 'pagesize', 10)
         );
 
         //set HTTP basic auth parameters
@@ -839,9 +839,9 @@ class SharedShortCodeController extends BaseController
             'Shortcode'         => $this->val($options, 'shortcode'),
             'FriendlyName'      => $this->val($options, 'friendlyName'),
             'CallbackUrl'       => $this->val($options, 'callbackUrl'),
-            'CallbackMethod'    => $this->val($options, 'callbackMethod'),
+            'CallbackMethod'  => APIHelper::prepareFormFields($this->val($options, 'callbackMethod')),
             'FallbackUrl'       => $this->val($options, 'fallbackUrl'),
-            'FallbackUrlMethod' => $this->val($options, 'fallbackUrlMethod')
+            'FallbackUrlMethod' => APIHelper::prepareFormFields($this->val($options, 'fallbackUrlMethod'))
         );
 
         //set HTTP basic auth parameters

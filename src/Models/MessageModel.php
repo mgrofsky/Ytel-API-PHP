@@ -90,7 +90,7 @@ class MessageModel implements JsonSerializable
      * @todo Write general description for this property
      * @required
      * @maps TemplateData
-     * @var TemplateDataModel $templateData public property
+     * @var \Message360Lib\Models\TemplateDataModel $templateData public property
      */
     public $templateData;
 

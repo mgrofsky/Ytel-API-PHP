@@ -22,16 +22,16 @@ use Unirest\Request;
 /**
  * @todo Add a general description for this controller.
  */
-class SMSController extends BaseController
+class AreaMailController extends BaseController
 {
     /**
-     * @var SMSController The reference to *Singleton* instance of this class
+     * @var AreaMailController The reference to *Singleton* instance of this class
      */
     private static $instance;
 
     /**
      * Returns the *Singleton* instance of this class.
-     * @return SMSController The *Singleton* instance.
+     * @return AreaMailController The *Singleton* instance.
      */
     public static function getInstance()
     {
@@ -43,34 +43,35 @@ class SMSController extends BaseController
     }
 
     /**
-     * Send an SMS from a message360 number
+     * Create a new AreaMail object.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['from']                  The 10-digit SMS-enabled message360 number (E.164 format) in
-     *                                                 which the message is sent.
-     * @param string $options['to']                    The 10-digit phone number (E.164 format) that will receive the
-     *                                                 message.
-     * @param string $options['body']                  The body message that is to be sent in the text.
-     * @param string $options['responseType']          Response type format xml or json
-     * @param string $options['method']                (optional) Specifies the HTTP method used to request the
-     *                                                 required URL once SMS sent.
-     * @param string $options['messageStatusCallback'] (optional) URL that can be requested to receive notification
-     *                                                 when SMS has Sent. A set of default parameters will be sent here
-     *                                                 once the SMS is finished.
-     * @param bool   $options['smartsms']              (optional) Check's 'to' number can receive sms or not using
-     *                                                 Carrier API, if wireless = true then text sms is sent, else
-     *                                                 wireless = false then call is recieved to end user with audible
-     *                                                 message.
-     * @param bool   $options['deliveryStatus']        (optional) Delivery reports are a method to tell your system if
-     *                                                 the message has arrived on the destination phone.
+     * @param string $options['routes']       List of routes that AreaMail should be delivered to.  A single route can
+     *                                        be either a zipcode or a carrier route.List of routes that AreaMail
+     *                                        should be delivered to.  A single route can be either a zipcode or a
+     *                                        carrier route. A carrier route is in the form of 92610-C043 where the
+     *                                        carrier route is composed of 5 numbers for zipcode, 1 letter for carrier
+     *                                        route type, and 3 numbers for carrier route code. Delivery can be sent to
+     *                                        mutliple routes by separating them with a commas. Valid Values: 92656,
+     *                                        92610-C043
+     * @param string $options['attachbyid']   Set an existing areamail by attaching its AreamailId.
+     * @param string $options['front']        The front of the AreaMail item to be created. This can be a URL, local
+     *                                        file, or an HTML string. Supported file types are PDF, PNG, and JPEG.
+     *                                        Back required
+     * @param string $options['back']         The back of the AreaMail item to be created. This can be a URL, local
+     *                                        file, or an HTML string. Supported file types are PDF, PNG, and JPEG.
+     * @param string $options['responseType'] Response Type either json or xml
+     * @param string $options['description']  (optional) A string value to use as a description for this AreaMail item.
+     * @param string $options['targettype']   (optional) The delivery location type.
+     * @param string $options['htmldata']     (optional) A string value that contains HTML markup.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function sendSMS(
+    public function createAreaMail(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['from'], $options['to'], $options['body'], $options['responseType'])) {
+        if (!isset($options['routes'], $options['attachbyid'], $options['front'], $options['back'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -79,81 +80,7 @@ class SMSController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/sms/sendsms.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'          => $this->val($options, 'responseType'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'          => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'From'                  => $this->val($options, 'from'),
-            'To'                    => $this->val($options, 'to'),
-            'Body'                  => $this->val($options, 'body'),
-            'Method'              => APIHelper::prepareFormFields($this->val($options, 'method')),
-            'MessageStatusCallback' => $this->val($options, 'messageStatusCallback'),
-            'Smartsms'              => $this->val($options, 'smartsms', false),
-            'DeliveryStatus'        => $this->val($options, 'deliveryStatus', false)
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
-     * Retrieve a single SMS message object by its SmsSid.
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string $options['messageSid']   The unique identifier for a sms message.
-     * @param string $options['responseType'] Response type format xml or json
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function viewSMS(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['messageSid'], $options['responseType'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/sms/viewsms.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/areamail/create.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -170,7 +97,13 @@ class SMSController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'MessageSid'   => $this->val($options, 'messageSid')
+            'routes'       => $this->val($options, 'routes'),
+            'attachbyid'   => $this->val($options, 'attachbyid'),
+            'front'        => $this->val($options, 'front'),
+            'back'         => $this->val($options, 'back'),
+            'description'  => $this->val($options, 'description'),
+            'targettype'   => $this->val($options, 'targettype'),
+            'htmldata'     => $this->val($options, 'htmldata')
         );
 
         //set HTTP basic auth parameters
@@ -200,23 +133,87 @@ class SMSController extends BaseController
     }
 
     /**
-     * Retrieve a list of Outbound SMS message objects.
+     * Retrieve an AreaMail object by its AreaMailId.
      *
      * @param  array  $options    Array with all options for search
-     * @param string  $options['responseType'] Response type format xml or json
-     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
-     *                                         collection. Page indexing starts at 1.
-     * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
-     *                                         page
-     * @param string  $options['from']         (optional) Filter SMS message objects from this valid 10-digit phone
-     *                                         number (E.164 format).
-     * @param string  $options['to']           (optional) Filter SMS message objects to this valid 10-digit phone
-     *                                         number (E.164 format).
-     * @param string  $options['dateSent']     (optional) Only list SMS messages sent in the specified date range
+     * @param string $options['areamailid']   The unique identifier for an AreaMail object.
+     * @param string $options['responseType'] Response Type either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function listSMS(
+    public function viewAreaMail(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['areamailid'], $options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/areamail/view.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'areamailid'   => $this->val($options, 'areamailid')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Retrieve a list of AreaMail objects.
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string  $options['responseType'] Response Type either json or xml
+     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
+     *                                         collection. Page indexing starts at 1.
+     * @param integer $options['pagesize']     (optional) The count of objects to return per page.
+     * @param string  $options['areamailsid']  (optional) The unique identifier for an AreaMail object.
+     * @param string  $options['dateCreated']  (optional) The date the AreaMail was created.
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function listAreaMail(
         $options
     ) {
         //check that all required arguments are provided
@@ -229,7 +226,7 @@ class SMSController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/sms/listsms.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/areamail/lists.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -246,11 +243,10 @@ class SMSController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'Page'         => $this->val($options, 'page', 1),
-            'PageSize'     => $this->val($options, 'pageSize', 10),
-            'From'         => $this->val($options, 'from'),
-            'To'           => $this->val($options, 'to'),
-            'DateSent'     => $this->val($options, 'dateSent')
+            'page'         => $this->val($options, 'page', 1),
+            'pagesize'     => $this->val($options, 'pagesize', 10),
+            'areamailsid'  => $this->val($options, 'areamailsid'),
+            'dateCreated'  => $this->val($options, 'dateCreated')
         );
 
         //set HTTP basic auth parameters
@@ -280,26 +276,19 @@ class SMSController extends BaseController
     }
 
     /**
-     * Retrieve a list of Inbound SMS message objects.
+     * Remove an AreaMail object by its AreaMailId.
      *
      * @param  array  $options    Array with all options for search
-     * @param string  $options['responseType'] Response type format xml or json
-     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
-     *                                         collection. Page indexing starts at 1.
-     * @param integer $options['pageSize']     (optional) The count of objects to return per page.
-     * @param string  $options['from']         (optional) Filter SMS message objects from this valid 10-digit phone
-     *                                         number (E.164 format).
-     * @param string  $options['to']           (optional) Filter SMS message objects to this valid 10-digit phone
-     *                                         number (E.164 format).
-     * @param string  $options['dateSent']     (optional) Filter sms message objects by this date.
+     * @param string $options['areamailid']   The unique identifier for an AreaMail object.
+     * @param string $options['responseType'] Response Type either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function listInboundSMS(
+    public function deleteAreaMail(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['responseType'])) {
+        if (!isset($options['areamailid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -308,7 +297,7 @@ class SMSController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/sms/getinboundsms.{ResponseType}';
+        $_queryBuilder = $_queryBuilder.'/areamail/delete.{ResponseType}';
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
@@ -325,79 +314,7 @@ class SMSController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'Page'         => $this->val($options, 'page', 1),
-            'PageSize'     => $this->val($options, 'pageSize', 10),
-            'From'         => $this->val($options, 'from'),
-            'To'           => $this->val($options, 'to'),
-            'DateSent'     => $this->val($options, 'dateSent')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
-     * Retrieve a single SMS message object with details by its SmsSid.
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string $options['messageSid']   The unique identifier for a sms message.
-     * @param string $options['responseType'] Response type format xml or json
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function viewDetailSMS(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['messageSid'], $options['responseType'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/sms/viewdetailsms.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'MessageSid'   => $this->val($options, 'messageSid')
+            'areamailid'   => $this->val($options, 'areamailid')
         );
 
         //set HTTP basic auth parameters

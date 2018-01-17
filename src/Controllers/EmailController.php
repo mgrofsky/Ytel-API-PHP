@@ -43,11 +43,11 @@ class EmailController extends BaseController
     }
 
     /**
-     * Deletes a email address marked as spam from the spam list
+     * Remove an email from the spam email list.
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['responseType'] Response type format xml or json
-     * @param string $options['email']        Email address
+     * @param string $options['email']        A valid email address that is to be remove from the spam list.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -81,7 +81,7 @@ class EmailController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'email'        => $this->val($options, 'email')
+            'Email'        => $this->val($options, 'email')
         );
 
         //set HTTP basic auth parameters
@@ -111,10 +111,10 @@ class EmailController extends BaseController
     }
 
     /**
-     * Deletes a blocked email
+     * Remove an email from blocked emails list.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['email']        Email address to remove from block list
+     * @param string $options['email']        The email address to be remove from the blocked list.
      * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -149,7 +149,7 @@ class EmailController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'email'        => $this->val($options, 'email')
+            'Email'        => $this->val($options, 'email')
         );
 
         //set HTTP basic auth parameters
@@ -182,7 +182,7 @@ class EmailController extends BaseController
      * Add an email to the unsubscribe list
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['email']        The email to add to the unsubscribe list
+     * @param string $options['email']        A valid email address that is to be added to the unsubscribe list
      * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -247,18 +247,22 @@ class EmailController extends BaseController
     }
 
     /**
-     * Send out an email
+     * Create and submit an email message to one or more email addresses.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['to']           The to email address
-     * @param string $options['from']         The from email address
-     * @param string $options['type']         email format type, html or text
-     * @param string $options['subject']      Email subject
-     * @param string $options['message']      The body of the email message
+     * @param string $options['to']           A valid address that will receive the email. Multiple addresses can be
+     *                                        separated by using commas.
+     * @param string $options['type']         Specifies the type of email to be sent
+     * @param string $options['subject']      The subject of the mail. Must be a valid string.
+     * @param string $options['message']      The email message that is to be sent in the text.
      * @param string $options['responseType'] Response type format xml or json
-     * @param string $options['cc']           (optional) CC Email address
-     * @param string $options['bcc']          (optional) BCC Email address
-     * @param string $options['attachment']   (optional) File to be attached.File must be less than 7MB.
+     * @param string $options['from']         (optional) A valid address that will send the email.
+     * @param string $options['cc']           (optional) Carbon copy. A valid address that will receive the email.
+     *                                        Multiple addresses can be separated by using commas.
+     * @param string $options['bcc']          (optional) Blind carbon copy. A valid address that will receive the email.
+     *                                        Multiple addresses can be separated by using commas.
+     * @param string $options['attachment']   (optional) A file that is attached to the email. Must be less than 7 MB
+     *                                        in size.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -266,7 +270,7 @@ class EmailController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['to'], $options['from'], $options['type'], $options['subject'], $options['message'], $options['responseType'])) {
+        if (!isset($options['to'], $options['type'], $options['subject'], $options['message'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -292,14 +296,14 @@ class EmailController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'to'           => $this->val($options, 'to'),
-            'from'         => $this->val($options, 'from'),
-            'type'         => $this->val($options, 'type'),
-            'subject'      => $this->val($options, 'subject'),
-            'message'      => $this->val($options, 'message'),
-            'cc'           => $this->val($options, 'cc'),
-            'bcc'          => $this->val($options, 'bcc'),
-            'attachment'   => $this->val($options, 'attachment')
+            'To'           => $this->val($options, 'to'),
+            'Type'       => APIHelper::prepareFormFields($this->val($options, 'type')),
+            'Subject'      => $this->val($options, 'subject'),
+            'Message'      => $this->val($options, 'message'),
+            'From'         => $this->val($options, 'from'),
+            'Cc'           => $this->val($options, 'cc'),
+            'Bcc'          => $this->val($options, 'bcc'),
+            'Attachment'   => $this->val($options, 'attachment')
         );
 
         //set HTTP basic auth parameters
@@ -329,10 +333,10 @@ class EmailController extends BaseController
     }
 
     /**
-     * Delete emails from the unsubscribe list
+     * Remove an email address from the list of unsubscribed emails.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['email']        The email to remove from the unsubscribe list
+     * @param string $options['email']        A valid email address that is to be remove from the unsubscribe list.
      * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -397,12 +401,13 @@ class EmailController extends BaseController
     }
 
     /**
-     * List all unsubscribed email addresses
+     * Retrieve a list of email addresses from the unsubscribe list.
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['responseType'] Response type format xml or json
-     * @param string $options['offset']       (optional) Starting record of the list
-     * @param string $options['limit']        (optional) Maximum number of records to be returned
+     * @param string $options['offset']       (optional) The starting point of the list of unsubscribed emails that
+     *                                        should be returned.
+     * @param string $options['limit']        (optional) The count of results that should be returned.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -436,8 +441,8 @@ class EmailController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'offset'       => $this->val($options, 'offset'),
-            'limit'        => $this->val($options, 'limit')
+            'Offset'       => $this->val($options, 'offset'),
+            'Limit'        => $this->val($options, 'limit')
         );
 
         //set HTTP basic auth parameters
@@ -467,12 +472,13 @@ class EmailController extends BaseController
     }
 
     /**
-     * List out all invalid email addresses
+     * Retrieve a list of invalid email addresses.
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['responseType'] Response type format xml or json
-     * @param string $options['offet']        (optional) Starting record for listing out emails
-     * @param string $options['limit']        (optional) Maximum number of records to return
+     * @param string $options['offset']       (optional) The starting point of the list of invalid emails that should
+     *                                        be returned.
+     * @param string $options['limit']        (optional) The count of results that should be returned.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -506,8 +512,8 @@ class EmailController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'offet'        => $this->val($options, 'offet'),
-            'limit'        => $this->val($options, 'limit')
+            'Offset'       => $this->val($options, 'offset'),
+            'Limit'        => $this->val($options, 'limit')
         );
 
         //set HTTP basic auth parameters
@@ -537,11 +543,11 @@ class EmailController extends BaseController
     }
 
     /**
-     * Delete an email address from the bounced address list
+     * Remove an email address from the bounced list.
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['responseType'] Response type format xml or json
-     * @param string $options['email']        The email address to remove from the bounce list
+     * @param string $options['email']        The email address to be remove from the bounced email list.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -575,7 +581,7 @@ class EmailController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'email'        => $this->val($options, 'email')
+            'Email'        => $this->val($options, 'email')
         );
 
         //set HTTP basic auth parameters
@@ -605,12 +611,13 @@ class EmailController extends BaseController
     }
 
     /**
-     * List out all email addresses that have bounced
+     * Retrieve a list of emails that have bounced.
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['responseType'] Response type format xml or json
-     * @param string $options['offset']       (optional) The record to start the list at
-     * @param string $options['limit']        (optional) The maximum number of records to return
+     * @param string $options['offset']       (optional) The starting point of the list of bounced emails that should
+     *                                        be returned.
+     * @param string $options['limit']        (optional) The count of results that should be returned.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -644,8 +651,8 @@ class EmailController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'offset'       => $this->val($options, 'offset'),
-            'limit'        => $this->val($options, 'limit')
+            'Offset'       => $this->val($options, 'offset'),
+            'Limit'        => $this->val($options, 'limit')
         );
 
         //set HTTP basic auth parameters
@@ -675,12 +682,13 @@ class EmailController extends BaseController
     }
 
     /**
-     * List out all email addresses marked as spam
+     * Retrieve a list of emails that are on the spam list.
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['responseType'] Response type format xml or json
-     * @param string $options['offset']       (optional) The record number to start the list at
-     * @param string $options['limit']        (optional) Maximum number of records to return
+     * @param string $options['offset']       (optional) The starting point of the list of spam emails that should be
+     *                                        returned.
+     * @param string $options['limit']        (optional) The count of results that should be returned.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -714,8 +722,8 @@ class EmailController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'offset'       => $this->val($options, 'offset'),
-            'limit'        => $this->val($options, 'limit')
+            'Offset'       => $this->val($options, 'offset'),
+            'Limit'        => $this->val($options, 'limit')
         );
 
         //set HTTP basic auth parameters
@@ -745,12 +753,13 @@ class EmailController extends BaseController
     }
 
     /**
-     * Outputs email addresses on your blocklist
+     * Retrieve a list of emails that have been blocked.
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['responseType'] Response type format xml or json
-     * @param string $options['offset']       (optional) Where to start in the output list
-     * @param string $options['limit']        (optional) Maximum number of records to return
+     * @param string $options['offset']       (optional) The starting point of the list of blocked emails that should
+     *                                        be returned.
+     * @param string $options['limit']        (optional) The count of results that should be returned.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -784,8 +793,8 @@ class EmailController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'offset'       => $this->val($options, 'offset'),
-            'limit'        => $this->val($options, 'limit')
+            'Offset'       => $this->val($options, 'offset'),
+            'Limit'        => $this->val($options, 'limit')
         );
 
         //set HTTP basic auth parameters
@@ -815,11 +824,11 @@ class EmailController extends BaseController
     }
 
     /**
-     * This endpoint allows you to delete entries in the Invalid Emails list.
+     * Remove an email from the invalid email list.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['email']        Email that was marked invalid
-     * @param string $options['responseType'] Json or xml
+     * @param string $options['email']        A valid email address that is to be remove from the invalid email list.
+     * @param string $options['responseType'] Response Type either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -853,7 +862,7 @@ class EmailController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'email'        => $this->val($options, 'email')
+            'Email'        => $this->val($options, 'email')
         );
 
         //set HTTP basic auth parameters

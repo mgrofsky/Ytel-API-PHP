@@ -133,7 +133,7 @@ class AddressController extends BaseController
      * View Address Specific address Book by providing the address id
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['addressSID']   The identifier of the address to be retrieved.
+     * @param string $options['addressid']    The identifier of the address to be retrieved.
      * @param string $options['responseType'] Response Type either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -142,7 +142,7 @@ class AddressController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['addressSID'], $options['responseType'])) {
+        if (!isset($options['addressid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -168,7 +168,7 @@ class AddressController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'AddressSID'   => $this->val($options, 'addressSID')
+            'addressid'    => $this->val($options, 'addressid')
         );
 
         //set HTTP basic auth parameters
@@ -202,11 +202,11 @@ class AddressController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['responseType'] Response Type either json or xml
-     * @param integer $options['page']         (optional) Return requested # of items starting the value, default=0,
-     *                                         must be an integer
-     * @param integer $options['pageSize']     (optional) How many results to return, default is 10, max is 100, must
+     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
+     *                                         collection. Page indexing starts at 1.
+     * @param integer $options['pagesize']     (optional) How many results to return, default is 10, max is 100, must
      *                                         be an integer
-     * @param string  $options['addressSID']   (optional) addresses Sid
+     * @param string  $options['addressid']    (optional) addresses Sid
      * @param string  $options['dateCreated']  (optional) date created address.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -241,10 +241,10 @@ class AddressController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'Page'         => $this->val($options, 'page', 1),
-            'PageSize'     => $this->val($options, 'pageSize', 10),
-            'AddressSID'   => $this->val($options, 'addressSID'),
-            'DateCreated'  => $this->val($options, 'dateCreated')
+            'page'         => $this->val($options, 'page', 1),
+            'pagesize'     => $this->val($options, 'pagesize', 10),
+            'addressid'    => $this->val($options, 'addressid'),
+            'dateCreated'  => $this->val($options, 'dateCreated')
         );
 
         //set HTTP basic auth parameters
@@ -277,7 +277,7 @@ class AddressController extends BaseController
      * Validates an address given.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['addressSID']   The identifier of the address to be verified.
+     * @param string $options['addressid']    The identifier of the address to be verified.
      * @param string $options['responseType'] Response type either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -286,7 +286,7 @@ class AddressController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['addressSID'], $options['responseType'])) {
+        if (!isset($options['addressid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -312,7 +312,7 @@ class AddressController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'AddressSID'   => $this->val($options, 'addressSID')
+            'addressid'    => $this->val($options, 'addressid')
         );
 
         //set HTTP basic auth parameters
@@ -345,7 +345,7 @@ class AddressController extends BaseController
      * To delete Address to your address book
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['addressSID']   The identifier of the address to be deleted.
+     * @param string $options['addressid']    The identifier of the address to be deleted.
      * @param string $options['responseType'] Response type either json or xml
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -354,7 +354,7 @@ class AddressController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['addressSID'], $options['responseType'])) {
+        if (!isset($options['addressid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -380,7 +380,7 @@ class AddressController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'AddressSID'   => $this->val($options, 'addressSID')
+            'addressid'    => $this->val($options, 'addressid')
         );
 
         //set HTTP basic auth parameters

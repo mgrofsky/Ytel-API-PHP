@@ -43,12 +43,13 @@ class CarrierController extends BaseController
     }
 
     /**
-     * Get the All Purchase Number's Carrier lookup
+     * Retrieve a list of carrier lookup objects.
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['responseType'] Response type format xml or json
-     * @param integer $options['page']         (optional) Page Number
-     * @param integer $options['pagesize']     (optional) Page Size
+     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
+     *                                         collection. Page indexing starts at 1.
+     * @param integer $options['pageSize']     (optional) The count of objects to return per page.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -82,8 +83,8 @@ class CarrierController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'page'         => $this->val($options, 'page', 1),
-            'pagesize'     => $this->val($options, 'pagesize', 10)
+            'Page'         => $this->val($options, 'page', 1),
+            'PageSize'     => $this->val($options, 'pageSize', 10)
         );
 
         //set HTTP basic auth parameters
@@ -116,7 +117,7 @@ class CarrierController extends BaseController
      * Get the Carrier Lookup
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['phonenumber']  The number to lookup
+     * @param string $options['phoneNumber']  A valid 10-digit number (E.164 format).
      * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -125,7 +126,7 @@ class CarrierController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['phonenumber'], $options['responseType'])) {
+        if (!isset($options['phoneNumber'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -151,7 +152,7 @@ class CarrierController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'phonenumber'  => $this->val($options, 'phonenumber')
+            'PhoneNumber'  => $this->val($options, 'phoneNumber')
         );
 
         //set HTTP basic auth parameters

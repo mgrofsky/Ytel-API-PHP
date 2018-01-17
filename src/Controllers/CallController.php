@@ -47,14 +47,16 @@ class CallController extends BaseController
      * when doing so and get the response in json
      *
      * @param  array  $options    Array with all options for search
-     * @param string  $options['from']                  This number to display on Caller ID as calling
+     * @param string  $options['from']                  A valid message360 Voice enabled number (E.164 format) that
+     *                                                  will be initiating the phone call.
      * @param string  $options['to']                    To number
      * @param string  $options['url']                   URL requested once the call connects
      * @param string  $options['responseType']          Response type format xml or json
      * @param string  $options['method']                (optional) Specifies the HTTP method used to request the
      *                                                  required URL once call connects.
-     * @param string  $options['statusCallBackUrl']     (optional) specifies the HTTP methodlinkclass used to request
-     *                                                  StatusCallbackUrl.
+     * @param string  $options['statusCallBackUrl']     (optional) URL that can be requested to receive notification
+     *                                                  when call has ended. A set of default parameters will be sent
+     *                                                  here once the call is finished.
      * @param string  $options['statusCallBackMethod']  (optional) Specifies the HTTP methodlinkclass used to request
      *                                                  StatusCallbackUrl.
      * @param string  $options['fallBackUrl']           (optional) URL requested if the initial Url parameter fails or
@@ -120,24 +122,24 @@ class CallController extends BaseController
             'From'                  => $this->val($options, 'from'),
             'To'                    => $this->val($options, 'to'),
             'Url'                   => $this->val($options, 'url'),
-            'Method'                => $this->val($options, 'method'),
+            'Method'              => APIHelper::prepareFormFields($this->val($options, 'method')),
             'StatusCallBackUrl'     => $this->val($options, 'statusCallBackUrl'),
-            'StatusCallBackMethod'  => $this->val($options, 'statusCallBackMethod'),
+            'StatusCallBackMethod' => APIHelper::prepareFormFields($this->val($options, 'statusCallBackMethod')),
             'FallBackUrl'           => $this->val($options, 'fallBackUrl'),
-            'FallBackMethod'        => $this->val($options, 'fallBackMethod'),
+            'FallBackMethod'      => APIHelper::prepareFormFields($this->val($options, 'fallBackMethod')),
             'HeartBeatUrl'          => $this->val($options, 'heartBeatUrl'),
-            'HeartBeatMethod'       => $this->val($options, 'heartBeatMethod'),
+            'HeartBeatMethod'     => APIHelper::prepareFormFields($this->val($options, 'heartBeatMethod')),
             'Timeout'               => $this->val($options, 'timeout'),
             'PlayDtmf'              => $this->val($options, 'playDtmf'),
             'HideCallerId'          => $this->val($options, 'hideCallerId'),
             'Record'                => $this->val($options, 'record'),
             'RecordCallBackUrl'     => $this->val($options, 'recordCallBackUrl'),
-            'RecordCallBackMethod'  => $this->val($options, 'recordCallBackMethod'),
+            'RecordCallBackMethod' => APIHelper::prepareFormFields($this->val($options, 'recordCallBackMethod')),
             'Transcribe'            => $this->val($options, 'transcribe'),
             'TranscribeCallBackUrl' => $this->val($options, 'transcribeCallBackUrl'),
-            'IfMachine'             => $this->val($options, 'ifMachine'),
+            'IfMachine'           => APIHelper::prepareFormFields($this->val($options, 'ifMachine')),
             'IfMachineUrl'          => $this->val($options, 'ifMachineUrl'),
-            'IfMachineMethod'       => $this->val($options, 'ifMachineMethod'),
+            'IfMachineMethod'     => APIHelper::prepareFormFields($this->val($options, 'ifMachineMethod')),
             'Feedback'              => $this->val($options, 'feedback'),
             'SurveyId'              => $this->val($options, 'surveyId')
         );
@@ -218,7 +220,7 @@ class CallController extends BaseController
             'AudioUrl'     => $this->val($options, 'audioUrl'),
             'SayText'      => $this->val($options, 'sayText'),
             'Length'       => $this->val($options, 'length'),
-            'Direction'    => $this->val($options, 'direction'),
+            'Direction'  => APIHelper::prepareFormFields($this->val($options, 'direction')),
             'Mix'          => $this->val($options, 'mix')
         );
 
@@ -249,7 +251,7 @@ class CallController extends BaseController
     }
 
     /**
-     * Record a Call
+     * Start or stop recording of an in-progress voice call.
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['callSid']      The unique identifier of each call resource
@@ -294,10 +296,10 @@ class CallController extends BaseController
         $_parameters = array (
             'CallSid'      => $this->val($options, 'callSid'),
             'Record'       => $this->val($options, 'record'),
-            'Direction'    => $this->val($options, 'direction'),
+            'Direction'  => APIHelper::prepareFormFields($this->val($options, 'direction')),
             'TimeLimit'    => $this->val($options, 'timeLimit'),
             'CallBackUrl'  => $this->val($options, 'callBackUrl'),
-            'Fileformat'   => $this->val($options, 'fileformat')
+            'Fileformat' => APIHelper::prepareFormFields($this->val($options, 'fileformat'))
         );
 
         //set HTTP basic auth parameters
@@ -327,7 +329,7 @@ class CallController extends BaseController
     }
 
     /**
-     * Voice Effect
+     * Add audio voice effects to the an in-progress voice call.
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['callSid']        The unique identifier for the in-progress voice call.
@@ -335,11 +337,15 @@ class CallController extends BaseController
      * @param string $options['audioDirection'] (optional) The direction the audio effect should be placed on. If IN,
      *                                          the effects will occur on the incoming audio stream. If OUT, the
      *                                          effects will occur on the outgoing audio stream.
-     * @param double $options['pitchSemiTones'] (optional) value between -14 and 14
-     * @param double $options['pitchOctaves']   (optional) value between -1 and 1
-     * @param double $options['pitch']          (optional) value greater than 0
-     * @param double $options['rate']           (optional) value greater than 0
-     * @param double $options['tempo']          (optional) value greater than 0
+     * @param double $options['pitchSemiTones'] (optional) Set the pitch in semitone (half-step) intervals. Value
+     *                                          between -14 and 14
+     * @param double $options['pitchOctaves']   (optional) Set the pitch in octave intervals.. Value between -1 and 1
+     * @param double $options['pitch']          (optional) Set the pitch (lowness/highness) of the audio. The higher
+     *                                          the value, the higher the pitch. Value greater than 0
+     * @param double $options['rate']           (optional) Set the rate for audio. The lower the value, the lower the
+     *                                          rate. value greater than 0
+     * @param double $options['tempo']          (optional) Set the tempo (speed) of the audio. A higher value denotes a
+     *                                          faster tempo. Value greater than 0
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -374,7 +380,7 @@ class CallController extends BaseController
         //prepare parameters
         $_parameters = array (
             'CallSid'        => $this->val($options, 'callSid'),
-            'AudioDirection' => $this->val($options, 'audioDirection'),
+            'AudioDirection' => APIHelper::prepareFormFields($this->val($options, 'audioDirection')),
             'PitchSemiTones' => $this->val($options, 'pitchSemiTones'),
             'PitchOctaves'   => $this->val($options, 'pitchOctaves'),
             'Pitch'          => $this->val($options, 'pitch'),
@@ -451,7 +457,7 @@ class CallController extends BaseController
         $_parameters = array (
             'CallSid'           => $this->val($options, 'callSid'),
             'PlayDtmf'          => $this->val($options, 'playDtmf'),
-            'PlayDtmfDirection' => $this->val($options, 'playDtmfDirection')
+            'PlayDtmfDirection' => APIHelper::prepareFormFields($this->val($options, 'playDtmfDirection'))
         );
 
         //set HTTP basic auth parameters
@@ -484,7 +490,7 @@ class CallController extends BaseController
      * Interrupt the Call by Call Sid
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['callSid']      Call SId
+     * @param string $options['callSid']      The unique identifier for voice call that is in progress.
      * @param string $options['responseType'] Response type format xml or json
      * @param string $options['url']          (optional) URL the in-progress call will be redirected to
      * @param string $options['method']       (optional) The method used to request the above Url parameter
@@ -524,8 +530,8 @@ class CallController extends BaseController
         $_parameters = array (
             'CallSid'      => $this->val($options, 'callSid'),
             'Url'          => $this->val($options, 'url'),
-            'Method'       => $this->val($options, 'method'),
-            'Status'       => $this->val($options, 'status')
+            'Method'     => APIHelper::prepareFormFields($this->val($options, 'method')),
+            'Status'     => APIHelper::prepareFormFields($this->val($options, 'status'))
         );
 
         //set HTTP basic auth parameters
@@ -569,8 +575,9 @@ class CallController extends BaseController
      *                                                  picks up the call
      * @param string  $options['method']                (optional) Specifies the HTTP method used to request the
      *                                                  required URL once call connects.
-     * @param string  $options['statusCallBackUrl']     (optional) Specifies the HTTP method used to request the
-     *                                                  required URL once call connects.
+     * @param string  $options['statusCallBackUrl']     (optional) URL that can be requested to receive notification
+     *                                                  when call has ended. A set of default parameters will be sent
+     *                                                  here once the call is finished.
      * @param string  $options['statusCallBackMethod']  (optional) Specifies the HTTP methodlinkclass used to request
      *                                                  StatusCallbackUrl.
      * @param string  $options['fallBackUrl']           (optional) URL requested if the initial Url parameter fails or
@@ -578,7 +585,8 @@ class CallController extends BaseController
      * @param string  $options['fallBackMethod']        (optional) Specifies the HTTP method used to request the
      *                                                  required FallbackUrl once call connects.
      * @param string  $options['heartBeatUrl']          (optional) URL that can be requested every 60 seconds during
-     *                                                  the call to notify of elapsed tim
+     *                                                  the call to notify of elapsed time and pass other general
+     *                                                  information.
      * @param string  $options['heartBeatMethod']       (optional) Specifies the HTTP method used to request
      *                                                  HeartbeatUrl.
      * @param integer $options['timeout']               (optional) Time (in seconds) Message360 should wait while the
@@ -631,20 +639,20 @@ class CallController extends BaseController
             'To'                    => $this->val($options, 'to'),
             'Url'                   => $this->val($options, 'url'),
             'GroupConfirmKey'       => $this->val($options, 'groupConfirmKey'),
-            'GroupConfirmFile'      => $this->val($options, 'groupConfirmFile'),
-            'Method'                => $this->val($options, 'method'),
+            'GroupConfirmFile'    => APIHelper::prepareFormFields($this->val($options, 'groupConfirmFile')),
+            'Method'              => APIHelper::prepareFormFields($this->val($options, 'method')),
             'StatusCallBackUrl'     => $this->val($options, 'statusCallBackUrl'),
-            'StatusCallBackMethod'  => $this->val($options, 'statusCallBackMethod'),
+            'StatusCallBackMethod' => APIHelper::prepareFormFields($this->val($options, 'statusCallBackMethod')),
             'FallBackUrl'           => $this->val($options, 'fallBackUrl'),
-            'FallBackMethod'        => $this->val($options, 'fallBackMethod'),
+            'FallBackMethod'      => APIHelper::prepareFormFields($this->val($options, 'fallBackMethod')),
             'HeartBeatUrl'          => $this->val($options, 'heartBeatUrl'),
-            'HeartBeatMethod'       => $this->val($options, 'heartBeatMethod'),
+            'HeartBeatMethod'     => APIHelper::prepareFormFields($this->val($options, 'heartBeatMethod')),
             'Timeout'               => $this->val($options, 'timeout'),
             'PlayDtmf'              => $this->val($options, 'playDtmf'),
             'HideCallerId'          => $this->val($options, 'hideCallerId'),
             'Record'                => $this->val($options, 'record'),
             'RecordCallBackUrl'     => $this->val($options, 'recordCallBackUrl'),
-            'RecordCallBackMethod'  => $this->val($options, 'recordCallBackMethod'),
+            'RecordCallBackMethod' => APIHelper::prepareFormFields($this->val($options, 'recordCallBackMethod')),
             'Transcribe'            => $this->val($options, 'transcribe'),
             'TranscribeCallBackUrl' => $this->val($options, 'transcribeCallBackUrl')
         );
@@ -680,13 +688,15 @@ class CallController extends BaseController
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['responseType'] Response type format xml or json
-     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
-     *                                         indexed
+     * @param integer $options['page']         (optional) The page count to retrieve from the total results in the
+     *                                         collection. Page indexing starts at 1.
      * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
      *                                         page
-     * @param string  $options['to']           (optional) Only list calls to this number
-     * @param string  $options['from']         (optional) Only list calls from this number
-     * @param string  $options['dateCreated']  (optional) Only list calls starting within the specified date range
+     * @param string  $options['to']           (optional) Filter calls that were sent to this 10-digit number (E.164
+     *                                         format).
+     * @param string  $options['from']         (optional) Filter calls that were sent from this 10-digit number (E.164
+     *                                         format).
+     * @param string  $options['dateCreated']  (optional) Return calls that are from a specified date.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -754,17 +764,23 @@ class CallController extends BaseController
     }
 
     /**
-     * API endpoint used to send a Ringless Voicemail
+     * Initiate an outbound Ringless Voicemail through message360.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['from']                This number to display on Caller ID as calling
-     * @param string $options['rVMCallerId']         Alternate caller ID required for RVM
-     * @param string $options['to']                  To number
-     * @param string $options['voiceMailURL']        URL to an audio file
+     * @param string $options['from']                A valid message360 Voice enabled number (E.164 format) that will
+     *                                               be initiating the phone call.
+     * @param string $options['rVMCallerId']         A required secondary Caller ID for RVM to work.
+     * @param string $options['to']                  A valid number (E.164 format) that will receive the phone call.
+     * @param string $options['voiceMailURL']        The URL requested once the RVM connects. A set of default
+     *                                               parameters will be sent here.
      * @param string $options['responseType']        Response type format xml or json
-     * @param string $options['method']              (optional) Not currently used in this version
-     * @param string $options['statusCallBackUrl']   (optional) URL to post the status of the Ringless request
-     * @param string $options['statsCallBackMethod'] (optional) POST or GET
+     * @param string $options['method']              (optional) Specifies the HTTP method used to request the required
+     *                                               URL once call connects.
+     * @param string $options['statusCallBackUrl']   (optional) URL that can be requested to receive notification when
+     *                                               call has ended. A set of default parameters will be sent here once
+     *                                               the call is finished.
+     * @param string $options['statsCallBackMethod'] (optional) Specifies the HTTP method used to request the required
+     *                                               StatusCallBackUrl once call connects.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -802,9 +818,9 @@ class CallController extends BaseController
             'RVMCallerId'         => $this->val($options, 'rVMCallerId'),
             'To'                  => $this->val($options, 'to'),
             'VoiceMailURL'        => $this->val($options, 'voiceMailURL'),
-            'Method'              => $this->val($options, 'method', Models\HttpActionEnum::GET),
+            'Method'            => APIHelper::prepareFormFields($this->val($options, 'method')),
             'StatusCallBackUrl'   => $this->val($options, 'statusCallBackUrl'),
-            'StatsCallBackMethod' => $this->val($options, 'statsCallBackMethod')
+            'StatsCallBackMethod' => APIHelper::prepareFormFields($this->val($options, 'statsCallBackMethod'))
         );
 
         //set HTTP basic auth parameters
@@ -834,10 +850,10 @@ class CallController extends BaseController
     }
 
     /**
-     * View Call Response
+     * Retrieve a single voice call’s information by its CallSid.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['callsid']      Call Sid id for particular Call
+     * @param string $options['callsid']      The unique identifier for the voice call.
      * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -873,6 +889,74 @@ class CallController extends BaseController
         //prepare parameters
         $_parameters = array (
             'callsid'      => $this->val($options, 'callsid')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Retrieve a single voice call’s information by its CallSid.
+     *
+     * @param string $callSid      The unique identifier for the voice call.
+     * @param string $responseType Response type format xml or json
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function viewCallDetail(
+        $callSid,
+        $responseType
+    ) {
+        //check that all required arguments are provided
+        if (!isset($callSid, $responseType)) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/calls/viewcalldetail.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $responseType,
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'callSid'      => $callSid
         );
 
         //set HTTP basic auth parameters

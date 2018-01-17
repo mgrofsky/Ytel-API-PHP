@@ -43,13 +43,15 @@ class PhoneNumberController extends BaseController
     }
 
     /**
-     * Available Phone Number
+     * Retrieve a list of available phone numbers that can be purchased and used for your message360
+     * account.
      *
      * @param  array  $options    Array with all options for search
-     * @param string  $options['numberType']   Number type either SMS,Voice or all
-     * @param string  $options['areaCode']     Phone Number Area Code
+     * @param string  $options['numbertype']   Number type either SMS,Voice or all
+     * @param string  $options['areacode']     Specifies the area code for the returned list of available numbers. Only
+     *                                         available for North American numbers.
      * @param string  $options['responseType'] Response type format xml or json
-     * @param integer $options['pageSize']     (optional) Page Size
+     * @param integer $options['pagesize']     (optional) The count of objects to return.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -57,7 +59,7 @@ class PhoneNumberController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['numberType'], $options['areaCode'], $options['responseType'])) {
+        if (!isset($options['numbertype'], $options['areacode'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -83,9 +85,9 @@ class PhoneNumberController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'NumberType'   => $this->val($options, 'numberType'),
-            'AreaCode'     => $this->val($options, 'areaCode'),
-            'PageSize'     => $this->val($options, 'pageSize', 10)
+            'numbertype' => APIHelper::prepareFormFields($this->val($options, 'numbertype')),
+            'areacode'     => $this->val($options, 'areacode'),
+            'pagesize'     => $this->val($options, 'pagesize', 10)
         );
 
         //set HTTP basic auth parameters
@@ -115,86 +117,10 @@ class PhoneNumberController extends BaseController
     }
 
     /**
-     * List Account's Phone number details
+     * Retrieve the details for a phone number by its number.
      *
      * @param  array  $options    Array with all options for search
-     * @param string  $options['responseType'] Response type format xml or json
-     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Zero
-     *                                         indexed
-     * @param integer $options['pageSize']     (optional) Number of individual resources listed in the response per
-     *                                         page
-     * @param string  $options['numberType']   (optional) SMS or Voice
-     * @param string  $options['friendlyName'] (optional) Friendly name of the number
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function listNumber(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['responseType'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/incomingphone/listnumber.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'Page'         => $this->val($options, 'page', 1),
-            'PageSize'     => $this->val($options, 'pageSize', 10),
-            'NumberType'   => $this->val($options, 'numberType'),
-            'FriendlyName' => $this->val($options, 'friendlyName')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
-     * Get Phone Number Details
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string $options['phoneNumber']  Get Phone number Detail
+     * @param string $options['phoneNumber']  A valid message360 10-digit phone number (E.164 format).
      * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -259,10 +185,10 @@ class PhoneNumberController extends BaseController
     }
 
     /**
-     * Release number from account
+     * Remove a purchased message360 number from your account.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['phoneNumber']  Phone number to be relase
+     * @param string $options['phoneNumber']  A valid 10-digit message360 number (E.164 format).
      * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -327,10 +253,10 @@ class PhoneNumberController extends BaseController
     }
 
     /**
-     * Buy Phone Number
+     * Purchase a phone number to be used with your message360 account
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['phoneNumber']  Phone number to be purchase
+     * @param string $options['phoneNumber']  A valid 10-digit message360 number (E.164 format).
      * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -395,10 +321,79 @@ class PhoneNumberController extends BaseController
     }
 
     /**
-     * Update Phone Number Details
+     * Remove a purchased message360 number from your account.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['phoneNumber']          The phone number to update
+     * @param string $options['phoneNumber']  A valid message360 comma separated numbers (E.164 format).
+     * @param string $options['responseType'] Response type format xml or json
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function massReleaseNumber(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['phoneNumber'], $options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/incomingphone/massreleasenumber.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'PhoneNumber'  => $this->val($options, 'phoneNumber')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Update properties for a message360 number that has been purchased for your account. Refer to the
+     * parameters list for the list of properties that can be updated.
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string $options['phoneNumber']          A valid message360 number (E.164 format).
      * @param string $options['voiceUrl']             URL requested once the call connects
      * @param string $options['responseType']         Response type format xml or json
      * @param string $options['friendlyName']         (optional) Phone number friendly name description
@@ -412,8 +407,10 @@ class PhoneNumberController extends BaseController
      *                                                call to notify of elapsed time
      * @param string $options['smsUrl']               (optional) URL requested when an SMS is received
      * @param string $options['smsMethod']            (optional) Post or Get
-     * @param string $options['smsFallbackUrl']       (optional) URL requested once the call connects
-     * @param string $options['smsFallbackMethod']    (optional) URL requested if the sms URL is not available
+     * @param string $options['smsFallbackUrl']       (optional) URL used if any errors occur during execution of
+     *                                                InboundXML from an SMS or at initial request of the SmsUrl.
+     * @param string $options['smsFallbackMethod']    (optional) The HTTP method message360 will use when URL requested
+     *                                                if the SmsUrl is not available.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -450,17 +447,414 @@ class PhoneNumberController extends BaseController
             'PhoneNumber'          => $this->val($options, 'phoneNumber'),
             'VoiceUrl'             => $this->val($options, 'voiceUrl'),
             'FriendlyName'         => $this->val($options, 'friendlyName'),
-            'VoiceMethod'          => $this->val($options, 'voiceMethod'),
+            'VoiceMethod'        => APIHelper::prepareFormFields($this->val($options, 'voiceMethod')),
             'VoiceFallbackUrl'     => $this->val($options, 'voiceFallbackUrl'),
-            'VoiceFallbackMethod'  => $this->val($options, 'voiceFallbackMethod'),
+            'VoiceFallbackMethod' => APIHelper::prepareFormFields($this->val($options, 'voiceFallbackMethod')),
             'HangupCallback'       => $this->val($options, 'hangupCallback'),
-            'HangupCallbackMethod' => $this->val($options, 'hangupCallbackMethod'),
+            'HangupCallbackMethod' => APIHelper::prepareFormFields($this->val($options, 'hangupCallbackMethod')),
             'HeartbeatUrl'         => $this->val($options, 'heartbeatUrl'),
-            'HeartbeatMethod'      => $this->val($options, 'heartbeatMethod'),
+            'HeartbeatMethod'    => APIHelper::prepareFormFields($this->val($options, 'heartbeatMethod')),
             'SmsUrl'               => $this->val($options, 'smsUrl'),
-            'SmsMethod'            => $this->val($options, 'smsMethod'),
+            'SmsMethod'          => APIHelper::prepareFormFields($this->val($options, 'smsMethod')),
             'SmsFallbackUrl'       => $this->val($options, 'smsFallbackUrl'),
-            'SmsFallbackMethod'    => $this->val($options, 'smsFallbackMethod')
+            'SmsFallbackMethod'  => APIHelper::prepareFormFields($this->val($options, 'smsFallbackMethod'))
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Retrieve a list of purchased phones numbers associated with your message360 account.
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string  $options['responseType'] Response type format xml or json
+     * @param integer $options['page']         (optional) Which page of the overall response will be returned. Page
+     *                                         indexing starts at 1.
+     * @param integer $options['pageSize']     (optional) The page count to retrieve from the total results in the
+     *                                         collection. Page indexing starts at 1.
+     * @param string  $options['numberType']   (optional) The capability supported by the number.Number type either SMS,
+     *                                         Voice or all
+     * @param string  $options['friendlyName'] (optional) A human-readable label added to the number object.
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function listNumber(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/incomingphone/listnumber.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'Page'         => $this->val($options, 'page', 1),
+            'PageSize'     => $this->val($options, 'pageSize', 10),
+            'NumberType' => APIHelper::prepareFormFields($this->val($options, 'numberType')),
+            'FriendlyName' => $this->val($options, 'friendlyName')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Update properties for a message360 numbers that has been purchased for your account. Refer to the
+     * parameters list for the list of properties that can be updated.
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string $options['phoneNumber']          A valid comma(,) separated message360 numbers. (E.164 format).
+     * @param string $options['voiceUrl']             The URL returning InboundXML incoming calls should execute when
+     *                                                connected.
+     * @param string $options['responseType']         Response type format xml or json
+     * @param string $options['friendlyName']         (optional) A human-readable value for labeling the number.
+     * @param string $options['voiceMethod']          (optional) Specifies the HTTP method used to request the VoiceUrl
+     *                                                once incoming call connects.
+     * @param string $options['voiceFallbackUrl']     (optional) URL used if any errors occur during execution of
+     *                                                InboundXML on a call or at initial request of the voice url
+     * @param string $options['voiceFallbackMethod']  (optional) Specifies the HTTP method used to request the
+     *                                                VoiceFallbackUrl once incoming call connects.
+     * @param string $options['hangupCallback']       (optional) URL that can be requested to receive notification when
+     *                                                and how incoming call has ended.
+     * @param string $options['hangupCallbackMethod'] (optional) The HTTP method message360 will use when requesting
+     *                                                the HangupCallback URL.
+     * @param string $options['heartbeatUrl']         (optional) URL that can be used to monitor the phone number.
+     * @param string $options['heartbeatMethod']      (optional) The HTTP method message360 will use when requesting
+     *                                                the HeartbeatUrl.
+     * @param string $options['smsUrl']               (optional) URL requested when an SMS is received.
+     * @param string $options['smsMethod']            (optional) The HTTP method message360 will use when requesting
+     *                                                the SmsUrl.
+     * @param string $options['smsFallbackUrl']       (optional) URL used if any errors occur during execution of
+     *                                                InboundXML from an SMS or at initial request of the SmsUrl.
+     * @param string $options['smsFallbackMethod']    (optional) The HTTP method message360 will use when URL requested
+     *                                                if the SmsUrl is not available.
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function massUpdateNumber(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['phoneNumber'], $options['voiceUrl'], $options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/incomingphone/massupdatenumber.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType'         => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'         => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'PhoneNumber'          => $this->val($options, 'phoneNumber'),
+            'VoiceUrl'             => $this->val($options, 'voiceUrl'),
+            'FriendlyName'         => $this->val($options, 'friendlyName'),
+            'VoiceMethod'        => APIHelper::prepareFormFields($this->val($options, 'voiceMethod')),
+            'VoiceFallbackUrl'     => $this->val($options, 'voiceFallbackUrl'),
+            'VoiceFallbackMethod' => APIHelper::prepareFormFields($this->val($options, 'voiceFallbackMethod')),
+            'HangupCallback'       => $this->val($options, 'hangupCallback'),
+            'HangupCallbackMethod' => APIHelper::prepareFormFields($this->val($options, 'hangupCallbackMethod')),
+            'HeartbeatUrl'         => $this->val($options, 'heartbeatUrl'),
+            'HeartbeatMethod'    => APIHelper::prepareFormFields($this->val($options, 'heartbeatMethod')),
+            'SmsUrl'               => $this->val($options, 'smsUrl'),
+            'SmsMethod'          => APIHelper::prepareFormFields($this->val($options, 'smsMethod')),
+            'SmsFallbackUrl'       => $this->val($options, 'smsFallbackUrl'),
+            'SmsFallbackMethod'  => APIHelper::prepareFormFields($this->val($options, 'smsFallbackMethod'))
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Get DID Score Number
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string $options['phonenumber']  Specifies the multiple phone numbers for check updated spamscore .
+     * @param string $options['responseType'] Response type format xml or json
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function getDIDScoreNumber(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['phonenumber'], $options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/incomingphone/getdidscore.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'Phonenumber'  => $this->val($options, 'phonenumber')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Purchase a selected number of DID's from specific area codes to be used with your message360 account.
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string $options['numberType']   The capability the number supports.
+     * @param string $options['areaCode']     Specifies the area code for the returned list of available numbers. Only
+     *                                        available for North American numbers.
+     * @param string $options['quantity']     A positive integer that tells how many number you want to buy at a time.
+     * @param string $options['responseType'] Response type format xml or json
+     * @param string $options['leftover']     (optional) If desired quantity is unavailable purchase what is available .
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function bulkBuyNumber(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['numberType'], $options['areaCode'], $options['quantity'], $options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/incomingphone/bulkbuy.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'NumberType' => APIHelper::prepareFormFields($this->val($options, 'numberType')),
+            'AreaCode'     => $this->val($options, 'areaCode'),
+            'Quantity'     => $this->val($options, 'quantity'),
+            'Leftover'     => $this->val($options, 'leftover')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Transfer phone number that has been purchased for from one account to another account.
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string $options['phonenumber']    A valid 10-digit message360 number (E.164 format).
+     * @param string $options['fromaccountsid'] A specific Accountsid from where Number is getting transfer.
+     * @param string $options['toaccountsid']   A specific Accountsid to which Number is getting transfer.
+     * @param string $options['responseType']   Response type format xml or json
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function transferNumber(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['phonenumber'], $options['fromaccountsid'], $options['toaccountsid'], $options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/incomingphone/transferphonenumbers.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType'   => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'phonenumber'    => $this->val($options, 'phonenumber'),
+            'fromaccountsid' => $this->val($options, 'fromaccountsid'),
+            'toaccountsid'   => $this->val($options, 'toaccountsid')
         );
 
         //set HTTP basic auth parameters

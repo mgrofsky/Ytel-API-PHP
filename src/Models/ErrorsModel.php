@@ -18,7 +18,7 @@ class ErrorsModel implements JsonSerializable
      * @todo Write general description for this property
      * @required
      * @maps Error
-     * @var ErrorModel[] $error public property
+     * @var \Message360Lib\Models\ErrorModel[] $error public property
      */
     public $error;
 

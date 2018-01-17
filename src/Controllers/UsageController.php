@@ -43,13 +43,15 @@ class UsageController extends BaseController
     }
 
     /**
-     * Get all usage
+     * Retrieve usage metrics regarding your message360 account. The results includes inbound/outbound
+     * voice calls and inbound/outbound SMS messages as well as carrier lookup requests.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['responseType'] Response type format xml or json
-     * @param int    $options['productCode']  (optional) Product Code
-     * @param string $options['startDate']    (optional) Start Usage Date
-     * @param string $options['endDate']      (optional) End Usage Date
+     * @param string $options['responseType']       Response type format xml or json
+     * @param int    $options['productCode']        (optional) Filter usage results by product type.
+     * @param string $options['startDate']          (optional) Filter usage objects by start date.
+     * @param string $options['endDate']            (optional) Filter usage objects by end date.
+     * @param string $options['includeSubAccounts'] (optional) Will include all subaccount usage data
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -70,7 +72,7 @@ class UsageController extends BaseController
 
         //process optional query parameters
         $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType'),
+            'ResponseType'       => $this->val($options, 'responseType'),
             ));
 
         //validate and preprocess url
@@ -78,14 +80,15 @@ class UsageController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'       => 'message360-api'
         );
 
         //prepare parameters
         $_parameters = array (
-            'ProductCode'  => $this->val($options, 'productCode', Models\ProductCodeEnum::ALL),
-            'startDate'    => $this->val($options, 'startDate', '2016-09-06'),
-            'endDate'      => $this->val($options, 'endDate', '2016-09-06')
+            'ProductCode'      => APIHelper::prepareFormFields($this->val($options, 'productCode')),
+            'startDate'          => $this->val($options, 'startDate', '2016-09-06'),
+            'endDate'            => $this->val($options, 'endDate', '2016-09-06'),
+            'IncludeSubAccounts' => $this->val($options, 'includeSubAccounts')
         );
 
         //set HTTP basic auth parameters

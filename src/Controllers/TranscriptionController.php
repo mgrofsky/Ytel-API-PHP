@@ -43,84 +43,10 @@ class TranscriptionController extends BaseController
     }
 
     /**
-     * Get All transcriptions
+     * Retrieve information about a transaction by its TranscriptionSid.
      *
      * @param  array  $options    Array with all options for search
-     * @param string  $options['responseType']    Response type format xml or json
-     * @param integer $options['page']            (optional) page number
-     * @param integer $options['pageSize']        (optional) Amount of data per page
-     * @param string  $options['status']          (optional) Transcription status
-     * @param string  $options['dateTranscribed'] (optional) Transcription date
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function listTranscription(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['responseType'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/transcriptions/listtranscription.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'    => $this->val($options, 'responseType'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'Page'            => $this->val($options, 'page', 1),
-            'PageSize'        => $this->val($options, 'pageSize', 10),
-            'Status'          => $this->val($options, 'status'),
-            'DateTranscribed' => $this->val($options, 'dateTranscribed')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
-     * View Specific Transcriptions
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string $options['transcriptionSid'] Unique Transcription ID
+     * @param string $options['transcriptionsid'] The unique identifier for a transcription object.
      * @param string $options['responseType']     Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -129,7 +55,7 @@ class TranscriptionController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['transcriptionSid'], $options['responseType'])) {
+        if (!isset($options['transcriptionsid'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -155,7 +81,7 @@ class TranscriptionController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'TranscriptionSid' => $this->val($options, 'transcriptionSid')
+            'transcriptionsid' => $this->val($options, 'transcriptionsid')
         );
 
         //set HTTP basic auth parameters
@@ -185,10 +111,10 @@ class TranscriptionController extends BaseController
     }
 
     /**
-     * Recording Transcriptions
+     * Transcribe a message360 recording by its RecordingSid.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['recordingSid'] Unique Recording sid
+     * @param string $options['recordingSid'] The unique identifier for a recording object.
      * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -223,7 +149,7 @@ class TranscriptionController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'RecordingSid' => $this->val($options, 'recordingSid')
+            'recordingSid' => $this->val($options, 'recordingSid')
         );
 
         //set HTTP basic auth parameters
@@ -253,10 +179,10 @@ class TranscriptionController extends BaseController
     }
 
     /**
-     * Audio URL Transcriptions
+     * Transcribe an audio recording from a file.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['audioUrl']     Audio url
+     * @param string $options['audiourl']     URL pointing to the location of the audio file that is to be transcribed.
      * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -265,7 +191,7 @@ class TranscriptionController extends BaseController
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['audioUrl'], $options['responseType'])) {
+        if (!isset($options['audiourl'], $options['responseType'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -291,7 +217,82 @@ class TranscriptionController extends BaseController
 
         //prepare parameters
         $_parameters = array (
-            'AudioUrl'     => $this->val($options, 'audioUrl')
+            'audiourl'     => $this->val($options, 'audiourl')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Retrieve a list of transcription objects for your message360 account.
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string  $options['responseType']    Response type format xml or json
+     * @param integer $options['page']            (optional) The page count to retrieve from the total results in the
+     *                                            collection. Page indexing starts at 1.
+     * @param integer $options['pagesize']        (optional) The count of objects to return per page.
+     * @param string  $options['status']          (optional) The state of the transcription.
+     * @param string  $options['dateTranscribed'] (optional) The date the transcription took place.
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function listTranscription(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/transcriptions/listtranscription.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType'    => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'message360-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'page'            => $this->val($options, 'page', 1),
+            'pagesize'        => $this->val($options, 'pagesize', 10),
+            'status'        => APIHelper::prepareFormFields($this->val($options, 'status')),
+            'dateTranscribed' => $this->val($options, 'dateTranscribed')
         );
 
         //set HTTP basic auth parameters
