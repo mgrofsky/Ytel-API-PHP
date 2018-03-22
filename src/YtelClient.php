@@ -1,18 +1,18 @@
 <?php
 /*
- * Message360
+ * Ytel
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
+ * This file was automatically generated for ytel by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
-namespace Message360Lib;
+namespace YtelLib;
 
-use Message360Lib\Controllers;
+use YtelLib\Controllers;
 
 /**
- * Message360 client class
+ * Ytel client class
  */
-class Message360Client
+class YtelClient
 {
     /**
      * Constructor with authentication and configuration parameters
@@ -23,6 +23,14 @@ class Message360Client
     ) {
         Configuration::$basicAuthUserName = $basicAuthUserName ? $basicAuthUserName : Configuration::$basicAuthUserName;
         Configuration::$basicAuthPassword = $basicAuthPassword ? $basicAuthPassword : Configuration::$basicAuthPassword;
+    }
+    /**
+     * Singleton access to WebRTC controller
+     * @return Controllers\WebRTCController The *Singleton* instance
+     */
+    public function getWebRTC()
+    {
+        return Controllers\WebRTCController::getInstance();
     }
     /**
      * Singleton access to SharedShortCode controller
@@ -47,14 +55,6 @@ class Message360Client
     public function getPhoneNumber()
     {
         return Controllers\PhoneNumberController::getInstance();
-    }
-    /**
-     * Singleton access to WebRTC controller
-     * @return Controllers\WebRTCController The *Singleton* instance
-     */
-    public function getWebRTC()
-    {
-        return Controllers\WebRTCController::getInstance();
     }
     /**
      * Singleton access to Transcription controller

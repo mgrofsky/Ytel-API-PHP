@@ -1,17 +1,17 @@
 <?php
 /*
- * Message360
+ * Ytel
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
+ * This file was automatically generated for ytel by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
-namespace Message360Lib\Controllers;
+namespace YtelLib\Controllers;
 
-use Message360Lib\Http\HttpCallBack;
-use Message360Lib\Http\HttpContext;
-use Message360Lib\Http\HttpResponse;
-use Message360Lib\APIException;
-use Message360Lib\Exceptions;
+use YtelLib\Http\HttpCallBack;
+use YtelLib\Http\HttpContext;
+use YtelLib\Http\HttpResponse;
+use YtelLib\APIException;
+use YtelLib\Exceptions;
 use \apimatic\jsonmapper\JsonMapper;
 use Unirest\Request;
 

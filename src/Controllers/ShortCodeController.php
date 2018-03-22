@@ -1,22 +1,22 @@
 <?php
 /*
- * Message360
+ * Ytel
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
+ * This file was automatically generated for ytel by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
-namespace Message360Lib\Controllers;
+namespace YtelLib\Controllers;
 
-use Message360Lib\APIException;
-use Message360Lib\APIHelper;
-use Message360Lib\Configuration;
-use Message360Lib\Models;
-use Message360Lib\Exceptions;
-use Message360Lib\Http\HttpRequest;
-use Message360Lib\Http\HttpResponse;
-use Message360Lib\Http\HttpMethod;
-use Message360Lib\Http\HttpContext;
-use Message360Lib\Servers;
+use YtelLib\APIException;
+use YtelLib\APIHelper;
+use YtelLib\Configuration;
+use YtelLib\Models;
+use YtelLib\Exceptions;
+use YtelLib\Http\HttpRequest;
+use YtelLib\Http\HttpResponse;
+use YtelLib\Http\HttpMethod;
+use YtelLib\Http\HttpContext;
+use YtelLib\Servers;
 use Unirest\Request;
 
 /**
@@ -82,7 +82,7 @@ class ShortCodeController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'          => 'message360-api'
+            'user-agent'          => 'ytel-api'
         );
 
         //prepare parameters
@@ -154,7 +154,7 @@ class ShortCodeController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -227,7 +227,7 @@ class ShortCodeController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -266,7 +266,7 @@ class ShortCodeController extends BaseController
     }
 
     /**
-     * Retrive a list of inbound Sms Short Code messages associated with your message360 account.
+     * Retrive a list of inbound Sms Short Code messages associated with your Ytel account.
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['responseType'] Response type format xml or json
@@ -306,7 +306,7 @@ class ShortCodeController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -348,7 +348,7 @@ class ShortCodeController extends BaseController
      * Retrieve a single Short Code object by its shortcode assignment.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['shortcode']    List of valid Dedicated Short Code to your message360 account
+     * @param string $options['shortcode']    List of valid Dedicated Short Code to your Ytel account
      * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -378,7 +378,7 @@ class ShortCodeController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -416,7 +416,7 @@ class ShortCodeController extends BaseController
      * Update a dedicated shortcode.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['shortcode']      List of valid dedicated shortcode to your message360 account.
+     * @param string $options['shortcode']      List of valid dedicated shortcode to your Ytel account.
      * @param string $options['responseType']   Response type format xml or json
      * @param string $options['friendlyName']   (optional) User generated name of the dedicated shortcode.
      * @param string $options['callbackMethod'] (optional) Specifies the HTTP method used to request the required
@@ -456,7 +456,7 @@ class ShortCodeController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -496,7 +496,7 @@ class ShortCodeController extends BaseController
     }
 
     /**
-     * Retrieve a list of Short Code assignment associated with your message360 account.
+     * Retrieve a list of Short Code assignment associated with your Ytel account.
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['responseType'] Response type format xml or json
@@ -532,7 +532,7 @@ class ShortCodeController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters

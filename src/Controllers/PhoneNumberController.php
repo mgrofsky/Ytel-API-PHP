@@ -1,22 +1,22 @@
 <?php
 /*
- * Message360
+ * Ytel
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
+ * This file was automatically generated for ytel by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
-namespace Message360Lib\Controllers;
+namespace YtelLib\Controllers;
 
-use Message360Lib\APIException;
-use Message360Lib\APIHelper;
-use Message360Lib\Configuration;
-use Message360Lib\Models;
-use Message360Lib\Exceptions;
-use Message360Lib\Http\HttpRequest;
-use Message360Lib\Http\HttpResponse;
-use Message360Lib\Http\HttpMethod;
-use Message360Lib\Http\HttpContext;
-use Message360Lib\Servers;
+use YtelLib\APIException;
+use YtelLib\APIHelper;
+use YtelLib\Configuration;
+use YtelLib\Models;
+use YtelLib\Exceptions;
+use YtelLib\Http\HttpRequest;
+use YtelLib\Http\HttpResponse;
+use YtelLib\Http\HttpMethod;
+use YtelLib\Http\HttpContext;
+use YtelLib\Servers;
 use Unirest\Request;
 
 /**
@@ -43,8 +43,7 @@ class PhoneNumberController extends BaseController
     }
 
     /**
-     * Retrieve a list of available phone numbers that can be purchased and used for your message360
-     * account.
+     * Retrieve a list of available phone numbers that can be purchased and used for your Ytel account.
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['numbertype']   Number type either SMS,Voice or all
@@ -80,7 +79,7 @@ class PhoneNumberController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -117,214 +116,10 @@ class PhoneNumberController extends BaseController
     }
 
     /**
-     * Retrieve the details for a phone number by its number.
+     * Remove a purchased Ytel number from your account.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['phoneNumber']  A valid message360 10-digit phone number (E.164 format).
-     * @param string $options['responseType'] Response type format xml or json
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function viewNumberDetails(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['phoneNumber'], $options['responseType'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/incomingphone/viewnumber.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'PhoneNumber'  => $this->val($options, 'phoneNumber')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
-     * Remove a purchased message360 number from your account.
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string $options['phoneNumber']  A valid 10-digit message360 number (E.164 format).
-     * @param string $options['responseType'] Response type format xml or json
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function releaseNumber(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['phoneNumber'], $options['responseType'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/incomingphone/releasenumber.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'PhoneNumber'  => $this->val($options, 'phoneNumber')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
-     * Purchase a phone number to be used with your message360 account
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string $options['phoneNumber']  A valid 10-digit message360 number (E.164 format).
-     * @param string $options['responseType'] Response type format xml or json
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function buyNumber(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['phoneNumber'], $options['responseType'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/incomingphone/buynumber.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType' => $this->val($options, 'responseType'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'PhoneNumber'  => $this->val($options, 'phoneNumber')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
-     * Remove a purchased message360 number from your account.
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string $options['phoneNumber']  A valid message360 comma separated numbers (E.164 format).
+     * @param string $options['phoneNumber']  A valid Ytel comma separated numbers (E.164 format).
      * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -354,7 +149,7 @@ class PhoneNumberController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -389,11 +184,215 @@ class PhoneNumberController extends BaseController
     }
 
     /**
-     * Update properties for a message360 number that has been purchased for your account. Refer to the
+     * Retrieve the details for a phone number by its number.
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string $options['phoneNumber']  A valid Ytel 10-digit phone number (E.164 format).
+     * @param string $options['responseType'] Response type format xml or json
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function viewNumberDetails(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['phoneNumber'], $options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/incomingphone/viewnumber.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'ytel-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'PhoneNumber'  => $this->val($options, 'phoneNumber')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Remove a purchased Ytel number from your account.
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string $options['phoneNumber']  A valid 10-digit Ytel number (E.164 format).
+     * @param string $options['responseType'] Response type format xml or json
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function releaseNumber(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['phoneNumber'], $options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/incomingphone/releasenumber.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'ytel-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'PhoneNumber'  => $this->val($options, 'phoneNumber')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Purchase a phone number to be used with your Ytel account
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string $options['phoneNumber']  A valid 10-digit Ytel number (E.164 format).
+     * @param string $options['responseType'] Response type format xml or json
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function buyNumber(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['phoneNumber'], $options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/incomingphone/buynumber.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType' => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'ytel-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'PhoneNumber'  => $this->val($options, 'phoneNumber')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Update properties for a Ytel number that has been purchased for your account. Refer to the
      * parameters list for the list of properties that can be updated.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['phoneNumber']          A valid message360 number (E.164 format).
+     * @param string $options['phoneNumber']          A valid Ytel number (E.164 format).
      * @param string $options['voiceUrl']             URL requested once the call connects
      * @param string $options['responseType']         Response type format xml or json
      * @param string $options['friendlyName']         (optional) Phone number friendly name description
@@ -409,8 +408,8 @@ class PhoneNumberController extends BaseController
      * @param string $options['smsMethod']            (optional) Post or Get
      * @param string $options['smsFallbackUrl']       (optional) URL used if any errors occur during execution of
      *                                                InboundXML from an SMS or at initial request of the SmsUrl.
-     * @param string $options['smsFallbackMethod']    (optional) The HTTP method message360 will use when URL requested
-     *                                                if the SmsUrl is not available.
+     * @param string $options['smsFallbackMethod']    (optional) The HTTP method Ytel will use when URL requested if
+     *                                                the SmsUrl is not available.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -439,7 +438,7 @@ class PhoneNumberController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'         => 'message360-api'
+            'user-agent'         => 'ytel-api'
         );
 
         //prepare parameters
@@ -487,7 +486,79 @@ class PhoneNumberController extends BaseController
     }
 
     /**
-     * Retrieve a list of purchased phones numbers associated with your message360 account.
+     * Transfer phone number that has been purchased for from one account to another account.
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string $options['phonenumber']    A valid 10-digit Ytel number (E.164 format).
+     * @param string $options['fromaccountsid'] A specific Accountsid from where Number is getting transfer.
+     * @param string $options['toaccountsid']   A specific Accountsid to which Number is getting transfer.
+     * @param string $options['responseType']   Response type format xml or json
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function transferNumber(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['phonenumber'], $options['fromaccountsid'], $options['toaccountsid'], $options['responseType'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/incomingphone/transferphonenumbers.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType'   => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'    => 'ytel-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'phonenumber'    => $this->val($options, 'phonenumber'),
+            'fromaccountsid' => $this->val($options, 'fromaccountsid'),
+            'toaccountsid'   => $this->val($options, 'toaccountsid')
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Retrieve a list of purchased phones numbers associated with your Ytel account.
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['responseType'] Response type format xml or json
@@ -526,7 +597,7 @@ class PhoneNumberController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -564,11 +635,11 @@ class PhoneNumberController extends BaseController
     }
 
     /**
-     * Update properties for a message360 numbers that has been purchased for your account. Refer to the
+     * Update properties for a Ytel numbers that has been purchased for your account. Refer to the
      * parameters list for the list of properties that can be updated.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['phoneNumber']          A valid comma(,) separated message360 numbers. (E.164 format).
+     * @param string $options['phoneNumber']          A valid comma(,) separated Ytel numbers. (E.164 format).
      * @param string $options['voiceUrl']             The URL returning InboundXML incoming calls should execute when
      *                                                connected.
      * @param string $options['responseType']         Response type format xml or json
@@ -581,18 +652,18 @@ class PhoneNumberController extends BaseController
      *                                                VoiceFallbackUrl once incoming call connects.
      * @param string $options['hangupCallback']       (optional) URL that can be requested to receive notification when
      *                                                and how incoming call has ended.
-     * @param string $options['hangupCallbackMethod'] (optional) The HTTP method message360 will use when requesting
-     *                                                the HangupCallback URL.
+     * @param string $options['hangupCallbackMethod'] (optional) The HTTP method Ytel will use when requesting the
+     *                                                HangupCallback URL.
      * @param string $options['heartbeatUrl']         (optional) URL that can be used to monitor the phone number.
-     * @param string $options['heartbeatMethod']      (optional) The HTTP method message360 will use when requesting
-     *                                                the HeartbeatUrl.
+     * @param string $options['heartbeatMethod']      (optional) The HTTP method Ytel will use when requesting the
+     *                                                HeartbeatUrl.
      * @param string $options['smsUrl']               (optional) URL requested when an SMS is received.
-     * @param string $options['smsMethod']            (optional) The HTTP method message360 will use when requesting
-     *                                                the SmsUrl.
+     * @param string $options['smsMethod']            (optional) The HTTP method Ytel will use when requesting the
+     *                                                SmsUrl.
      * @param string $options['smsFallbackUrl']       (optional) URL used if any errors occur during execution of
      *                                                InboundXML from an SMS or at initial request of the SmsUrl.
-     * @param string $options['smsFallbackMethod']    (optional) The HTTP method message360 will use when URL requested
-     *                                                if the SmsUrl is not available.
+     * @param string $options['smsFallbackMethod']    (optional) The HTTP method Ytel will use when URL requested if
+     *                                                the SmsUrl is not available.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -621,7 +692,7 @@ class PhoneNumberController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'         => 'message360-api'
+            'user-agent'         => 'ytel-api'
         );
 
         //prepare parameters
@@ -702,7 +773,7 @@ class PhoneNumberController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -737,7 +808,7 @@ class PhoneNumberController extends BaseController
     }
 
     /**
-     * Purchase a selected number of DID's from specific area codes to be used with your message360 account.
+     * Purchase a selected number of DID's from specific area codes to be used with your Ytel account.
      *
      * @param  array  $options    Array with all options for search
      * @param string $options['numberType']   The capability the number supports.
@@ -774,7 +845,7 @@ class PhoneNumberController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -783,78 +854,6 @@ class PhoneNumberController extends BaseController
             'AreaCode'     => $this->val($options, 'areaCode'),
             'Quantity'     => $this->val($options, 'quantity'),
             'Leftover'     => $this->val($options, 'leftover')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
-     * Transfer phone number that has been purchased for from one account to another account.
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string $options['phonenumber']    A valid 10-digit message360 number (E.164 format).
-     * @param string $options['fromaccountsid'] A specific Accountsid from where Number is getting transfer.
-     * @param string $options['toaccountsid']   A specific Accountsid to which Number is getting transfer.
-     * @param string $options['responseType']   Response type format xml or json
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function transferNumber(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['phonenumber'], $options['fromaccountsid'], $options['toaccountsid'], $options['responseType'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/incomingphone/transferphonenumbers.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'   => $this->val($options, 'responseType'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'    => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'phonenumber'    => $this->val($options, 'phonenumber'),
-            'fromaccountsid' => $this->val($options, 'fromaccountsid'),
-            'toaccountsid'   => $this->val($options, 'toaccountsid')
         );
 
         //set HTTP basic auth parameters

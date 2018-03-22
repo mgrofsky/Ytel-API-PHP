@@ -1,8 +1,8 @@
 {
-    "name": "apimatic/message360apiv3",
+    "name": "apimatic/ytelapiv3",
     "type": "library",
-    "description": "message360 API version 3",
-    "keywords": ["message360 API V3","API","SDK"],
+    "description": "Ytel API version 3",
+    "keywords": ["Ytel API V3","API","SDK"],
     "homepage": "https://apimatic.io",
     "license": "MIT",
     "authors": [
@@ -26,7 +26,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Message360Lib\\": "src/"
+            "YtelLib\\": "src/"
         }
     }
 }
