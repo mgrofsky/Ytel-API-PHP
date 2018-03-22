@@ -1,11 +1,11 @@
 <?php
 /*
- * Message360
+ * Ytel
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
+ * This file was automatically generated for ytel by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
-namespace Message360Lib\Models;
+namespace YtelLib\Models;
 
 use JsonSerializable;
 
@@ -90,7 +90,7 @@ class MessageModel implements JsonSerializable
      * @todo Write general description for this property
      * @required
      * @maps TemplateData
-     * @var \Message360Lib\Models\TemplateDataModel $templateData public property
+     * @var \YtelLib\Models\TemplateDataModel $templateData public property
      */
     public $templateData;
 

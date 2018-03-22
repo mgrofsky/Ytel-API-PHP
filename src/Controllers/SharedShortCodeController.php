@@ -1,22 +1,22 @@
 <?php
 /*
- * Message360
+ * Ytel
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
+ * This file was automatically generated for ytel by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
-namespace Message360Lib\Controllers;
+namespace YtelLib\Controllers;
 
-use Message360Lib\APIException;
-use Message360Lib\APIHelper;
-use Message360Lib\Configuration;
-use Message360Lib\Models;
-use Message360Lib\Exceptions;
-use Message360Lib\Http\HttpRequest;
-use Message360Lib\Http\HttpResponse;
-use Message360Lib\Http\HttpMethod;
-use Message360Lib\Http\HttpContext;
-use Message360Lib\Servers;
+use YtelLib\APIException;
+use YtelLib\APIHelper;
+use YtelLib\Configuration;
+use YtelLib\Models;
+use YtelLib\Exceptions;
+use YtelLib\Http\HttpRequest;
+use YtelLib\Http\HttpResponse;
+use YtelLib\Http\HttpMethod;
+use YtelLib\Http\HttpContext;
+use YtelLib\Servers;
 use Unirest\Request;
 
 /**
@@ -46,8 +46,8 @@ class SharedShortCodeController extends BaseController
      * View a Shared ShortCode Template
      *
      * @param  array  $options    Array with all options for search
-     * @param uuid|string $options['templateId']   The unique identifier for a template object
-     * @param string      $options['responseType'] Response type format xml or json
+     * @param string $options['templateId']   The unique identifier for a template object
+     * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -76,7 +76,7 @@ class SharedShortCodeController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -144,7 +144,7 @@ class SharedShortCodeController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -218,7 +218,7 @@ class SharedShortCodeController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -301,7 +301,7 @@ class SharedShortCodeController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -339,20 +339,18 @@ class SharedShortCodeController extends BaseController
     }
 
     /**
-     * Send an SMS from a message360 ShortCode
+     * Send an SMS from a Ytel ShortCode
      *
      * @param  array  $options    Array with all options for search
-     * @param string      $options['shortcode']             The Short Code number that is the sender of this message
-     * @param string      $options['to']                    A valid 10-digit number that should receive the message
-     * @param uuid|string $options['templateid']            The unique identifier for the template used for the
-     *                                                      message
-     * @param string      $options['responseType']          Response type format xml or json
-     * @param string      $options['data']                  format of your data, example: {companyname}:test,{otpcode}:
-     *                                                      1234
-     * @param string      $options['method']                (optional) Specifies the HTTP method used to request the
-     *                                                      required URL once the Short Code message is sent.
-     * @param string      $options['messageStatusCallback'] (optional) URL that can be requested to receive
-     *                                                      notification when Short Code message was sent.
+     * @param string $options['shortcode']             The Short Code number that is the sender of this message
+     * @param string $options['to']                    A valid 10-digit number that should receive the message
+     * @param string $options['templateid']            The unique identifier for the template used for the message
+     * @param string $options['responseType']          Response type format xml or json
+     * @param string $options['data']                  format of your data, example: {companyname}:test,{otpcode}:1234
+     * @param string $options['method']                (optional) Specifies the HTTP method used to request the
+     *                                                 required URL once the Short Code message is sent.
+     * @param string $options['messageStatusCallback'] (optional) URL that can be requested to receive notification
+     *                                                 when Short Code message was sent.
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
@@ -381,7 +379,7 @@ class SharedShortCodeController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'          => 'message360-api'
+            'user-agent'          => 'ytel-api'
         );
 
         //prepare parameters
@@ -459,7 +457,7 @@ class SharedShortCodeController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -530,7 +528,7 @@ class SharedShortCodeController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -565,7 +563,7 @@ class SharedShortCodeController extends BaseController
     }
 
     /**
-     * Retrieve a list of keywords associated with your message360 account.
+     * Retrieve a list of keywords associated with your Ytel account.
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['responseType'] Response type format xml or json
@@ -603,7 +601,7 @@ class SharedShortCodeController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -644,7 +642,7 @@ class SharedShortCodeController extends BaseController
      * The response returned here contains all resource properties associated with the given Shortcode.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['shortcode']    List of valid Shortcode to your message360 account
+     * @param string $options['shortcode']    List of valid Shortcode to your Ytel account
      * @param string $options['responseType'] Response type format xml or json
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
@@ -674,7 +672,7 @@ class SharedShortCodeController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -709,7 +707,7 @@ class SharedShortCodeController extends BaseController
     }
 
     /**
-     * Retrieve a list of shortcode assignment associated with your message360 account.
+     * Retrieve a list of shortcode assignment associated with your Ytel account.
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['responseType'] Response type format xml or json
@@ -751,7 +749,7 @@ class SharedShortCodeController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -790,7 +788,7 @@ class SharedShortCodeController extends BaseController
      * @todo Add general description for this endpoint
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['shortcode']         List of valid shortcode to your message360 account
+     * @param string $options['shortcode']         List of valid shortcode to your Ytel account
      * @param string $options['responseType']      Response type format xml or json
      * @param string $options['friendlyName']      (optional) User generated name of the shortcode
      * @param string $options['callbackUrl']       (optional) URL that can be requested to receive notification when
@@ -831,7 +829,7 @@ class SharedShortCodeController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'      => 'message360-api'
+            'user-agent'      => 'ytel-api'
         );
 
         //prepare parameters

@@ -1,22 +1,22 @@
 <?php
 /*
- * Message360
+ * Ytel
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
+ * This file was automatically generated for ytel by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
-namespace Message360Lib\Controllers;
+namespace YtelLib\Controllers;
 
-use Message360Lib\APIException;
-use Message360Lib\APIHelper;
-use Message360Lib\Configuration;
-use Message360Lib\Models;
-use Message360Lib\Exceptions;
-use Message360Lib\Http\HttpRequest;
-use Message360Lib\Http\HttpResponse;
-use Message360Lib\Http\HttpMethod;
-use Message360Lib\Http\HttpContext;
-use Message360Lib\Servers;
+use YtelLib\APIException;
+use YtelLib\APIHelper;
+use YtelLib\Configuration;
+use YtelLib\Models;
+use YtelLib\Exceptions;
+use YtelLib\Http\HttpRequest;
+use YtelLib\Http\HttpResponse;
+use YtelLib\Http\HttpMethod;
+use YtelLib\Http\HttpContext;
+use YtelLib\Servers;
 use Unirest\Request;
 
 /**
@@ -79,7 +79,7 @@ class ConferenceController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -151,7 +151,7 @@ class ConferenceController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -220,7 +220,7 @@ class ConferenceController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -292,7 +292,7 @@ class ConferenceController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'      => 'message360-api'
+            'user-agent'      => 'ytel-api'
         );
 
         //prepare parameters
@@ -330,8 +330,8 @@ class ConferenceController extends BaseController
     }
 
     /**
-     * Here you can experiment with initiating a conference call through message360 and view the request
-     * response generated when doing so.
+     * Here you can experiment with initiating a conference call through Ytel and view the request response
+     * generated when doing so.
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['from']                 A valid 10-digit number (E.164 format) that will be initiating
@@ -394,7 +394,7 @@ class ConferenceController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'         => 'message360-api'
+            'user-agent'         => 'ytel-api'
         );
 
         //prepare parameters
@@ -479,7 +479,7 @@ class ConferenceController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -550,7 +550,7 @@ class ConferenceController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -626,7 +626,7 @@ class ConferenceController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -703,7 +703,7 @@ class ConferenceController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters

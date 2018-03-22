@@ -1,22 +1,22 @@
 <?php
 /*
- * Message360
+ * Ytel
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
+ * This file was automatically generated for ytel by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
-namespace Message360Lib\Controllers;
+namespace YtelLib\Controllers;
 
-use Message360Lib\APIException;
-use Message360Lib\APIHelper;
-use Message360Lib\Configuration;
-use Message360Lib\Models;
-use Message360Lib\Exceptions;
-use Message360Lib\Http\HttpRequest;
-use Message360Lib\Http\HttpResponse;
-use Message360Lib\Http\HttpMethod;
-use Message360Lib\Http\HttpContext;
-use Message360Lib\Servers;
+use YtelLib\APIException;
+use YtelLib\APIHelper;
+use YtelLib\Configuration;
+use YtelLib\Models;
+use YtelLib\Exceptions;
+use YtelLib\Http\HttpRequest;
+use YtelLib\Http\HttpResponse;
+use YtelLib\Http\HttpMethod;
+use YtelLib\Http\HttpContext;
+use YtelLib\Servers;
 use Unirest\Request;
 
 /**
@@ -43,19 +43,21 @@ class WebRTCController extends BaseController
     }
 
     /**
-     * @todo Add general description for this endpoint
+     * Ytel webrtc
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['accountSid']  Your message360 Account SID
-     * @param string $options['authToken']   Your message360 Token
+     * @param string $options['accountSid']  Your Ytel Account SID
+     * @param string $options['authToken']   Your Ytel Token
+     * @param string $options['username']    WebRTC username authentication
+     * @param string $options['password']    WebRTC password authentication
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function checkFunds(
+    public function createToken(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['accountSid'], $options['authToken'])) {
+        if (!isset($options['accountSid'], $options['authToken'], $options['username'], $options['password'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -64,20 +66,22 @@ class WebRTCController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/webrtc/checkFunds.json';
+        $_queryBuilder = $_queryBuilder.'/webrtc/agentLogin.json';
 
         //validate and preprocess url
         $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
         $_parameters = array (
             'account_sid' => $this->val($options, 'accountSid'),
-            'auth_token'  => $this->val($options, 'authToken')
+            'auth_token'  => $this->val($options, 'authToken'),
+            'username'    => $this->val($options, 'username'),
+            'password'    => $this->val($options, 'password')
         );
 
         //set HTTP basic auth parameters
@@ -107,21 +111,19 @@ class WebRTCController extends BaseController
     }
 
     /**
-     * message360 webrtc
+     * @todo Add general description for this endpoint
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['accountSid']  Your message360 Account SID
-     * @param string $options['authToken']   Your message360 Token
-     * @param string $options['username']    WebRTC username authentication
-     * @param string $options['password']    WebRTC password authentication
+     * @param string $options['accountSid']  Your Ytel Account SID
+     * @param string $options['authToken']   Your Ytel Token
      * @return string response from the API call
      * @throws APIException Thrown if API call fails
      */
-    public function createToken(
+    public function checkFunds(
         $options
     ) {
         //check that all required arguments are provided
-        if (!isset($options['accountSid'], $options['authToken'], $options['username'], $options['password'])) {
+        if (!isset($options['accountSid'], $options['authToken'])) {
             throw new \InvalidArgumentException("One or more required arguments were NULL.");
         }
 
@@ -130,22 +132,20 @@ class WebRTCController extends BaseController
         $_queryBuilder = Configuration::getBaseUri();
         
         //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/webrtc/agentLogin.json';
+        $_queryBuilder = $_queryBuilder.'/webrtc/checkFunds.json';
 
         //validate and preprocess url
         $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
         $_parameters = array (
             'account_sid' => $this->val($options, 'accountSid'),
-            'auth_token'  => $this->val($options, 'authToken'),
-            'username'    => $this->val($options, 'username'),
-            'password'    => $this->val($options, 'password')
+            'auth_token'  => $this->val($options, 'authToken')
         );
 
         //set HTTP basic auth parameters

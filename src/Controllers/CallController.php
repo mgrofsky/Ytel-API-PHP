@@ -1,22 +1,22 @@
 <?php
 /*
- * Message360
+ * Ytel
  *
- * This file was automatically generated for message360 by APIMATIC v2.0 ( https://apimatic.io ).
+ * This file was automatically generated for ytel by APIMATIC v2.0 ( https://apimatic.io ).
  */
 
-namespace Message360Lib\Controllers;
+namespace YtelLib\Controllers;
 
-use Message360Lib\APIException;
-use Message360Lib\APIHelper;
-use Message360Lib\Configuration;
-use Message360Lib\Models;
-use Message360Lib\Exceptions;
-use Message360Lib\Http\HttpRequest;
-use Message360Lib\Http\HttpResponse;
-use Message360Lib\Http\HttpMethod;
-use Message360Lib\Http\HttpContext;
-use Message360Lib\Servers;
+use YtelLib\APIException;
+use YtelLib\APIHelper;
+use YtelLib\Configuration;
+use YtelLib\Models;
+use YtelLib\Exceptions;
+use YtelLib\Http\HttpRequest;
+use YtelLib\Http\HttpResponse;
+use YtelLib\Http\HttpMethod;
+use YtelLib\Http\HttpContext;
+use YtelLib\Servers;
 use Unirest\Request;
 
 /**
@@ -43,12 +43,12 @@ class CallController extends BaseController
     }
 
     /**
-     * You can experiment with initiating a call through Message360 and view the request response generated
-     * when doing so and get the response in json
+     * You can experiment with initiating a call through Ytel and view the request response generated when
+     * doing so and get the response in json
      *
      * @param  array  $options    Array with all options for search
-     * @param string  $options['from']                  A valid message360 Voice enabled number (E.164 format) that
-     *                                                  will be initiating the phone call.
+     * @param string  $options['from']                  A valid Ytel Voice enabled number (E.164 format) that will be
+     *                                                  initiating the phone call.
      * @param string  $options['to']                    To number
      * @param string  $options['url']                   URL requested once the call connects
      * @param string  $options['responseType']          Response type format xml or json
@@ -67,8 +67,8 @@ class CallController extends BaseController
      *                                                  the call to notify of elapsed tim
      * @param string  $options['heartBeatMethod']       (optional) Specifies the HTTP method used to request
      *                                                  HeartbeatUrl.
-     * @param integer $options['timeout']               (optional) Time (in seconds) Message360 should wait while the
-     *                                                  call is ringing before canceling the call
+     * @param integer $options['timeout']               (optional) Time (in seconds) Ytel should wait while the call is
+     *                                                  ringing before canceling the call
      * @param string  $options['playDtmf']              (optional) DTMF Digits to play to the call once it connects. 0-
      *                                                  9, #, or *
      * @param bool    $options['hideCallerId']          (optional) Specifies if the caller id will be hidden
@@ -80,7 +80,7 @@ class CallController extends BaseController
      *                                                  transcribed
      * @param string  $options['transcribeCallBackUrl'] (optional) Transcription parameters will be sent here upon
      *                                                  completion
-     * @param string  $options['ifMachine']             (optional) How Message360 should handle the receiving numbers
+     * @param string  $options['ifMachine']             (optional) How Ytel should handle the receiving numbers
      *                                                  voicemail machine
      * @param string  $options['ifMachineUrl']          (optional) URL requested when IfMachine=continue
      * @param string  $options['ifMachineMethod']       (optional) Method used to request the IfMachineUrl.
@@ -114,7 +114,7 @@ class CallController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'          => 'message360-api'
+            'user-agent'          => 'ytel-api'
         );
 
         //prepare parameters
@@ -211,7 +211,7 @@ class CallController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -289,7 +289,7 @@ class CallController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -374,7 +374,7 @@ class CallController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -450,7 +450,7 @@ class CallController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'      => 'message360-api'
+            'user-agent'      => 'ytel-api'
         );
 
         //prepare parameters
@@ -523,7 +523,7 @@ class CallController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -561,130 +561,7 @@ class CallController extends BaseController
     }
 
     /**
-     * Group Call
-     *
-     * @param  array  $options    Array with all options for search
-     * @param string  $options['from']                  This number to display on Caller ID as calling
-     * @param string  $options['to']                    Please enter multiple E164 number. You can add max 10 numbers.
-     *                                                  Add numbers separated with comma. e.g : 1111111111,2222222222
-     * @param string  $options['url']                   URL requested once the call connects
-     * @param string  $options['responseType']          Example: json
-     * @param string  $options['groupConfirmKey']       Define the DTMF that the called party should send to bridge the
-     *                                                  call. Allowed Values : 0-9, #, *
-     * @param string  $options['groupConfirmFile']      Specify the audio file you want to play when the called party
-     *                                                  picks up the call
-     * @param string  $options['method']                (optional) Specifies the HTTP method used to request the
-     *                                                  required URL once call connects.
-     * @param string  $options['statusCallBackUrl']     (optional) URL that can be requested to receive notification
-     *                                                  when call has ended. A set of default parameters will be sent
-     *                                                  here once the call is finished.
-     * @param string  $options['statusCallBackMethod']  (optional) Specifies the HTTP methodlinkclass used to request
-     *                                                  StatusCallbackUrl.
-     * @param string  $options['fallBackUrl']           (optional) URL requested if the initial Url parameter fails or
-     *                                                  encounters an error
-     * @param string  $options['fallBackMethod']        (optional) Specifies the HTTP method used to request the
-     *                                                  required FallbackUrl once call connects.
-     * @param string  $options['heartBeatUrl']          (optional) URL that can be requested every 60 seconds during
-     *                                                  the call to notify of elapsed time and pass other general
-     *                                                  information.
-     * @param string  $options['heartBeatMethod']       (optional) Specifies the HTTP method used to request
-     *                                                  HeartbeatUrl.
-     * @param integer $options['timeout']               (optional) Time (in seconds) Message360 should wait while the
-     *                                                  call is ringing before canceling the call
-     * @param string  $options['playDtmf']              (optional) DTMF Digits to play to the call once it connects. 0-
-     *                                                  9, #, or *
-     * @param string  $options['hideCallerId']          (optional) Specifies if the caller id will be hidden
-     * @param bool    $options['record']                (optional) Specifies if the call should be recorded
-     * @param string  $options['recordCallBackUrl']     (optional) Recording parameters will be sent here upon
-     *                                                  completion
-     * @param string  $options['recordCallBackMethod']  (optional) Method used to request the RecordCallback URL.
-     * @param bool    $options['transcribe']            (optional) Specifies if the call recording should be
-     *                                                  transcribed
-     * @param string  $options['transcribeCallBackUrl'] (optional) Transcription parameters will be sent here upon
-     *                                                  completion
-     * @return string response from the API call
-     * @throws APIException Thrown if API call fails
-     */
-    public function groupCall(
-        $options
-    ) {
-        //check that all required arguments are provided
-        if (!isset($options['from'], $options['to'], $options['url'], $options['responseType'], $options['groupConfirmKey'], $options['groupConfirmFile'])) {
-            throw new \InvalidArgumentException("One or more required arguments were NULL.");
-        }
-
-
-        //the base uri for api requests
-        $_queryBuilder = Configuration::getBaseUri();
-        
-        //prepare query string for API call
-        $_queryBuilder = $_queryBuilder.'/calls/groupcall.{ResponseType}';
-
-        //process optional query parameters
-        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
-            'ResponseType'          => $this->val($options, 'responseType'),
-            ));
-
-        //validate and preprocess url
-        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
-
-        //prepare headers
-        $_headers = array (
-            'user-agent'          => 'message360-api'
-        );
-
-        //prepare parameters
-        $_parameters = array (
-            'From'                  => $this->val($options, 'from'),
-            'To'                    => $this->val($options, 'to'),
-            'Url'                   => $this->val($options, 'url'),
-            'GroupConfirmKey'       => $this->val($options, 'groupConfirmKey'),
-            'GroupConfirmFile'    => APIHelper::prepareFormFields($this->val($options, 'groupConfirmFile')),
-            'Method'              => APIHelper::prepareFormFields($this->val($options, 'method')),
-            'StatusCallBackUrl'     => $this->val($options, 'statusCallBackUrl'),
-            'StatusCallBackMethod' => APIHelper::prepareFormFields($this->val($options, 'statusCallBackMethod')),
-            'FallBackUrl'           => $this->val($options, 'fallBackUrl'),
-            'FallBackMethod'      => APIHelper::prepareFormFields($this->val($options, 'fallBackMethod')),
-            'HeartBeatUrl'          => $this->val($options, 'heartBeatUrl'),
-            'HeartBeatMethod'     => APIHelper::prepareFormFields($this->val($options, 'heartBeatMethod')),
-            'Timeout'               => $this->val($options, 'timeout'),
-            'PlayDtmf'              => $this->val($options, 'playDtmf'),
-            'HideCallerId'          => $this->val($options, 'hideCallerId'),
-            'Record'                => $this->val($options, 'record'),
-            'RecordCallBackUrl'     => $this->val($options, 'recordCallBackUrl'),
-            'RecordCallBackMethod' => APIHelper::prepareFormFields($this->val($options, 'recordCallBackMethod')),
-            'Transcribe'            => $this->val($options, 'transcribe'),
-            'TranscribeCallBackUrl' => $this->val($options, 'transcribeCallBackUrl')
-        );
-
-        //set HTTP basic auth parameters
-        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
-
-        //call on-before Http callback
-        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
-        }
-
-        //and invoke the API call request to fetch the response
-        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
-
-        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
-        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
-
-        //call on-after Http callback
-        if ($this->getHttpCallBack() != null) {
-            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
-        }
-
-        //handle errors defined at the API level
-        $this->validateResponse($_httpResponse, $_httpContext);
-
-        return $response->body;
-    }
-
-    /**
-     * A list of calls associated with your Message360 account
+     * A list of calls associated with your Ytel account
      *
      * @param  array  $options    Array with all options for search
      * @param string  $options['responseType'] Response type format xml or json
@@ -725,7 +602,7 @@ class CallController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -764,11 +641,11 @@ class CallController extends BaseController
     }
 
     /**
-     * Initiate an outbound Ringless Voicemail through message360.
+     * Initiate an outbound Ringless Voicemail through Ytel.
      *
      * @param  array  $options    Array with all options for search
-     * @param string $options['from']                A valid message360 Voice enabled number (E.164 format) that will
-     *                                               be initiating the phone call.
+     * @param string $options['from']                A valid Ytel Voice enabled number (E.164 format) that will be
+     *                                               initiating the phone call.
      * @param string $options['rVMCallerId']         A required secondary Caller ID for RVM to work.
      * @param string $options['to']                  A valid number (E.164 format) that will receive the phone call.
      * @param string $options['voiceMailURL']        The URL requested once the RVM connects. A set of default
@@ -809,7 +686,7 @@ class CallController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'        => 'message360-api'
+            'user-agent'        => 'ytel-api'
         );
 
         //prepare parameters
@@ -883,7 +760,7 @@ class CallController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
@@ -951,12 +828,135 @@ class CallController extends BaseController
 
         //prepare headers
         $_headers = array (
-            'user-agent'    => 'message360-api'
+            'user-agent'    => 'ytel-api'
         );
 
         //prepare parameters
         $_parameters = array (
             'callSid'      => $callSid
+        );
+
+        //set HTTP basic auth parameters
+        Request::auth(Configuration::$basicAuthUserName, Configuration::$basicAuthPassword);
+
+        //call on-before Http callback
+        $_httpRequest = new HttpRequest(HttpMethod::POST, $_headers, $_queryUrl, $_parameters);
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnBeforeRequest($_httpRequest);
+        }
+
+        //and invoke the API call request to fetch the response
+        $response = Request::post($_queryUrl, $_headers, Request\Body::Form($_parameters));
+
+        $_httpResponse = new HttpResponse($response->code, $response->headers, $response->raw_body);
+        $_httpContext = new HttpContext($_httpRequest, $_httpResponse);
+
+        //call on-after Http callback
+        if ($this->getHttpCallBack() != null) {
+            $this->getHttpCallBack()->callOnAfterRequest($_httpContext);
+        }
+
+        //handle errors defined at the API level
+        $this->validateResponse($_httpResponse, $_httpContext);
+
+        return $response->body;
+    }
+
+    /**
+     * Group Call
+     *
+     * @param  array  $options    Array with all options for search
+     * @param string  $options['from']                  This number to display on Caller ID as calling
+     * @param string  $options['to']                    Please enter multiple E164 number. You can add max 10 numbers.
+     *                                                  Add numbers separated with comma. e.g : 1111111111,2222222222
+     * @param string  $options['url']                   URL requested once the call connects
+     * @param string  $options['responseType']          Example: json
+     * @param string  $options['groupConfirmKey']       Define the DTMF that the called party should send to bridge the
+     *                                                  call. Allowed Values : 0-9, #, *
+     * @param string  $options['groupConfirmFile']      Specify the audio file you want to play when the called party
+     *                                                  picks up the call
+     * @param string  $options['method']                (optional) Specifies the HTTP method used to request the
+     *                                                  required URL once call connects.
+     * @param string  $options['statusCallBackUrl']     (optional) URL that can be requested to receive notification
+     *                                                  when call has ended. A set of default parameters will be sent
+     *                                                  here once the call is finished.
+     * @param string  $options['statusCallBackMethod']  (optional) Specifies the HTTP methodlinkclass used to request
+     *                                                  StatusCallbackUrl.
+     * @param string  $options['fallBackUrl']           (optional) URL requested if the initial Url parameter fails or
+     *                                                  encounters an error
+     * @param string  $options['fallBackMethod']        (optional) Specifies the HTTP method used to request the
+     *                                                  required FallbackUrl once call connects.
+     * @param string  $options['heartBeatUrl']          (optional) URL that can be requested every 60 seconds during
+     *                                                  the call to notify of elapsed time and pass other general
+     *                                                  information.
+     * @param string  $options['heartBeatMethod']       (optional) Specifies the HTTP method used to request
+     *                                                  HeartbeatUrl.
+     * @param integer $options['timeout']               (optional) Time (in seconds) we should wait while the call is
+     *                                                  ringing before canceling the call
+     * @param string  $options['playDtmf']              (optional) DTMF Digits to play to the call once it connects. 0-
+     *                                                  9, #, or *
+     * @param string  $options['hideCallerId']          (optional) Specifies if the caller id will be hidden
+     * @param bool    $options['record']                (optional) Specifies if the call should be recorded
+     * @param string  $options['recordCallBackUrl']     (optional) Recording parameters will be sent here upon
+     *                                                  completion
+     * @param string  $options['recordCallBackMethod']  (optional) Method used to request the RecordCallback URL.
+     * @param bool    $options['transcribe']            (optional) Specifies if the call recording should be
+     *                                                  transcribed
+     * @param string  $options['transcribeCallBackUrl'] (optional) Transcription parameters will be sent here upon
+     *                                                  completion
+     * @return string response from the API call
+     * @throws APIException Thrown if API call fails
+     */
+    public function groupCall(
+        $options
+    ) {
+        //check that all required arguments are provided
+        if (!isset($options['from'], $options['to'], $options['url'], $options['responseType'], $options['groupConfirmKey'], $options['groupConfirmFile'])) {
+            throw new \InvalidArgumentException("One or more required arguments were NULL.");
+        }
+
+
+        //the base uri for api requests
+        $_queryBuilder = Configuration::getBaseUri();
+        
+        //prepare query string for API call
+        $_queryBuilder = $_queryBuilder.'/calls/groupcall.{ResponseType}';
+
+        //process optional query parameters
+        $_queryBuilder = APIHelper::appendUrlWithTemplateParameters($_queryBuilder, array (
+            'ResponseType'          => $this->val($options, 'responseType'),
+            ));
+
+        //validate and preprocess url
+        $_queryUrl = APIHelper::cleanUrl($_queryBuilder);
+
+        //prepare headers
+        $_headers = array (
+            'user-agent'          => 'ytel-api'
+        );
+
+        //prepare parameters
+        $_parameters = array (
+            'From'                  => $this->val($options, 'from'),
+            'To'                    => $this->val($options, 'to'),
+            'Url'                   => $this->val($options, 'url'),
+            'GroupConfirmKey'       => $this->val($options, 'groupConfirmKey'),
+            'GroupConfirmFile'    => APIHelper::prepareFormFields($this->val($options, 'groupConfirmFile')),
+            'Method'              => APIHelper::prepareFormFields($this->val($options, 'method')),
+            'StatusCallBackUrl'     => $this->val($options, 'statusCallBackUrl'),
+            'StatusCallBackMethod' => APIHelper::prepareFormFields($this->val($options, 'statusCallBackMethod')),
+            'FallBackUrl'           => $this->val($options, 'fallBackUrl'),
+            'FallBackMethod'      => APIHelper::prepareFormFields($this->val($options, 'fallBackMethod')),
+            'HeartBeatUrl'          => $this->val($options, 'heartBeatUrl'),
+            'HeartBeatMethod'     => APIHelper::prepareFormFields($this->val($options, 'heartBeatMethod')),
+            'Timeout'               => $this->val($options, 'timeout'),
+            'PlayDtmf'              => $this->val($options, 'playDtmf'),
+            'HideCallerId'          => $this->val($options, 'hideCallerId'),
+            'Record'                => $this->val($options, 'record'),
+            'RecordCallBackUrl'     => $this->val($options, 'recordCallBackUrl'),
+            'RecordCallBackMethod' => APIHelper::prepareFormFields($this->val($options, 'recordCallBackMethod')),
+            'Transcribe'            => $this->val($options, 'transcribe'),
+            'TranscribeCallBackUrl' => $this->val($options, 'transcribeCallBackUrl')
         );
 
         //set HTTP basic auth parameters
