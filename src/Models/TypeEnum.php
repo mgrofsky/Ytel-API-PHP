@@ -8,17 +8,17 @@
 namespace YtelAPILib\Models;
 
 /**
- * Audio Format file type mp3 or wav
+ * @todo Write general description for this enumeration
  */
-class AudioFormatEnum
+class TypeEnum
 {
     /**
-     * mp3 file
+     * Email send as text format
      */
-    const MP3 = "mp3";
+    const TEXT = "text";
 
     /**
-     * wav file
+     * Email send as HTML format
      */
-    const WAV = "wav";
+    const HTML = "html";
 }

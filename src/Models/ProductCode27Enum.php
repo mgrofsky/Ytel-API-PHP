@@ -8,9 +8,9 @@
 namespace YtelAPILib\Models;
 
 /**
- * Returns a list of all usage for a specific "product" or feature of Message360.
+ * @todo Write general description for this enumeration
  */
-class ProductCodeEnum
+class ProductCode27Enum
 {
     /**
      * TODO: Write general description for this element

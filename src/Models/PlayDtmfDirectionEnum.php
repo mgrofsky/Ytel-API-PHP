@@ -8,17 +8,22 @@
 namespace YtelAPILib\Models;
 
 /**
- * Audio Direction
+ * @todo Write general description for this enumeration
  */
-class AudioDirectionEnum
+class PlayDtmfDirectionEnum
 {
     /**
-     * TODO: Write general description for this element
+     * in direction
      */
     const IN = "in";
 
     /**
-     * TODO: Write general description for this element
+     * out direction
      */
     const OUT = "out";
+
+    /**
+     * both
+     */
+    const BOTH = "both";
 }
