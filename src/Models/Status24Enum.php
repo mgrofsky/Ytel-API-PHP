@@ -8,9 +8,9 @@
 namespace YtelAPILib\Models;
 
 /**
- * Interrupted Call Status
+ * @todo Write general description for this enumeration
  */
-class InterruptedCallStatusEnum
+class Status24Enum
 {
     /**
      * Interrupt Call will be cancel

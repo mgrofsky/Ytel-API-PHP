@@ -8,17 +8,17 @@
 namespace YtelAPILib\Models;
 
 /**
- * How Message360 should handle the receiving numbers voicemail machine
+ * @todo Write general description for this enumeration
  */
-class IfMachineEnum
+class MergeNumberEnum
 {
     /**
      * TODO: Write general description for this element
      */
-    const CONTINUE_ = "continue";
+    const DELETE = 0;
 
     /**
      * TODO: Write general description for this element
      */
-    const HANGUP = "hangup";
+    const MERGE = 1;
 }

@@ -8,9 +8,9 @@
 namespace YtelAPILib\Models;
 
 /**
- * Audio Format file type mp3 or wav
+ * @todo Write general description for this enumeration
  */
-class AudioFormatEnum
+class FileformatEnum
 {
     /**
      * mp3 file

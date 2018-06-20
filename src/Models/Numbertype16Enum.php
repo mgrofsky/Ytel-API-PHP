@@ -8,9 +8,9 @@
 namespace YtelAPILib\Models;
 
 /**
- * Phone Number Type All,SMS or Voice
+ * @todo Write general description for this enumeration
  */
-class NumberTypeEnum
+class Numbertype16Enum
 {
     /**
      * Get all phone Number type
