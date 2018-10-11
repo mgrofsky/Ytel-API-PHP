@@ -1,8 +1,8 @@
 {
-    "name": "apimatic/ytelapi",
+    "name": "apimatic/ytelapiv3",
     "type": "library",
     "description": "Ytel API version 3",
-    "keywords": ["Ytel API","API","SDK"],
+    "keywords": ["Ytel API V3","API","SDK"],
     "homepage": "https://apimatic.io",
     "license": "MIT",
     "authors": [
@@ -22,11 +22,12 @@
         "apimatic/jsonmapper": "~1.3.0"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "^2.7"
+        "squizlabs/php_codesniffer": "^2.7",
+        "phpunit/phpunit": "4.8.*"
     },
     "autoload": {
         "psr-4": {
-            "YtelAPILib\\": "src/"
+            "YtelAPIV3Lib\\": "src/"
         }
     }
 }
